@@ -57,4 +57,7 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    //Lottie animation
+    implementation("com.airbnb.android:lottie:6.3.0")
 }
