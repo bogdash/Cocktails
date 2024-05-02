@@ -8,10 +8,8 @@ object Constants {
         }
     }
 
-    class Splash {
-        companion object {
-            const val DELAY_TIME: Long = 2000
-        }
+    object Splash {
+        const val DELAY_TIME: Long = 2000
     }
 
 }
