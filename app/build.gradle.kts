@@ -49,6 +49,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.android.shape.imageview)
 
     //OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.12.0")

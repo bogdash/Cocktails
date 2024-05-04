@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Cocktails</string>
+
+    <!-- ShakeDialog -->
+    <string name="mock_mojito">Mojito</string>
+    <string name="mock_time">15 mins</string>
+    <string name="mock_ingredients">4 ingredients</string>
+    <string name="cancel">Cancel</string>
+    <string name="read_more">Read more</string>
 </resources>
