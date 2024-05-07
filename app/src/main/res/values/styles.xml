@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TitleText" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/tiber</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
         <item name="android:textSize">16sp</item>
     </style>
