@@ -19,7 +19,6 @@
         app:titleCentered="true"
         app:titleTextAppearance="@style/ToolBarText">
 
-
         <ImageButton
             android:id="@+id/btnFilter"
             android:layout_width="42dp"
@@ -37,9 +36,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_coctail_on_home">
-
+        tools:listitem="@layout/item_cocktail_at_home">
     </androidx.recyclerview.widget.RecyclerView>
-
-
 </LinearLayout>

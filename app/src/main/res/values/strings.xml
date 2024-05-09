@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="homescreen">НомеScreen</string>
+    <!--home screen-->
+    <string name="title_text">Title Text</string>
+    <string name="count_ingredients">4 ingredients</string>
 </resources>

@@ -23,24 +23,24 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/tvTitlee"
+        android:id="@+id/tvTitle"
         style="@style/TitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Title Text"
+        android:text="@string/title_text"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/cardViewRoundCorners"
         app:layout_constraintStart_toStartOf="@id/cardViewRoundCorners"
         app:layout_constraintTop_toBottomOf="@id/cardViewRoundCorners" />
 
     <ImageView
-        android:id="@+id/icSheett"
+        android:id="@+id/icSheet"
         android:layout_width="14dp"
         android:layout_height="14dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="@id/tvTitlee"
-        app:layout_constraintTop_toBottomOf="@id/tvTitlee"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:srcCompat="@drawable/ic_sheet" />
 
     <TextView
@@ -49,11 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:fontFamily="@font/google_sans_regular"
-        android:text="4 ingredients"
+        android:text="@string/count_ingredients"
         android:textColor="@color/dark_gray"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/icSheett"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitlee" />
-
-
+        app:layout_constraintStart_toEndOf="@+id/icSheet"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
