@@ -2,7 +2,19 @@
     <string name="app_name">Cocktails</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="homescreen">НомеScreen</string>
-    <string name="title_filters">Фильтрация</string>
-    <string name="title_alcohol">Алкоголь</string>
+    <string name="home_screen">НомеScreen</string>
+    <string name="title_filters">Filtration</string>
+    <string name="title_alcohol">Alcohol</string>
+    <string name="filter_alcoholic">Alcoholic</string>
+    <string name="filter_non_alcoholic">Non-alcoholic</string>
+    <string name="filter_optional">Optional</string>
+    <string name="filter_gin">Gin</string>
+    <string name="filter_vodka">Vodka</string>
+    <string name="filter_tekila">Tekila</string>
+    <string name="filter_rum">Rum</string>
+    <string name="filter_whiskey">Whiskey</string>
+    <string name="filter_brandy">Brandy</string>
+    <string name="filter_champagne">Champagne</string>
+    <string name="filter_btn_reset">Reset</string>
+    <string name="filter_btn_apply">Apply</string>
 </resources>

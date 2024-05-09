@@ -24,162 +24,162 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOnn"
+        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOn"
         app:layout_constraintTop_toTopOf="@id/tvTitle" />
 
     <TextView
-        android:id="@+id/tvAlcoholl"
+        android:id="@+id/tvAlcohol"
         style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/title_alcohol"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOnn"
+        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOn"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-
     <TextView
-        android:id="@+id/btnFilterAlcoholOnn"
+        android:id="@+id/btnFilterAlcoholOn"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
-        android:text="Алкогольные"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterAlcoholOfff"
+        android:text="@string/filter_alcoholic"
+        app:layout_constraintEnd_toStartOf="@id/btnFilterAlcoholOff"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAlcoholl" />
+        app:layout_constraintTop_toBottomOf="@id/tvAlcohol" />
 
     <TextView
-        android:id="@+id/btnFilterAlcoholOfff"
+        android:id="@+id/btnFilterAlcoholOff"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Не алкогольные"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterAlcoholOnn"
+        android:text="@string/filter_non_alcoholic"
+        app:layout_constraintBottom_toBottomOf="@id/btnFilterAlcoholOn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterAlcoholOnn"
-        app:layout_constraintTop_toTopOf="@id/btnFilterAlcoholOnn" />
+        app:layout_constraintStart_toEndOf="@id/btnFilterAlcoholOn"
+        app:layout_constraintTop_toTopOf="@id/btnFilterAlcoholOn" />
 
     <TextView
-        android:id="@+id/btnFilterAlcoholOptionn"
+        android:id="@+id/btnFilterAlcoholOption"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Опционально"
-        app:layout_constraintEnd_toEndOf="@id/btnFilterAlcoholOnn"
-        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOnn"
-        app:layout_constraintTop_toBottomOf="@id/btnFilterAlcoholOnn" />
+        android:text="@string/filter_optional"
+        app:layout_constraintEnd_toEndOf="@id/btnFilterAlcoholOn"
+        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOn"
+        app:layout_constraintTop_toBottomOf="@id/btnFilterAlcoholOn" />
 
     <TextView
-        android:id="@+id/tvIngredientss"
+        android:id="@+id/tvIngredients"
         style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:text="Игредиенты"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/tvAlcoholl"
-        app:layout_constraintTop_toBottomOf="@id/btnFilterAlcoholOptionn" />
+        app:layout_constraintStart_toStartOf="@id/tvAlcohol"
+        app:layout_constraintTop_toBottomOf="@id/btnFilterAlcoholOption" />
 
     <TextView
-        android:id="@+id/btnFilterJinee"
+        android:id="@+id/btnFilterGin"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
-        android:text="Джин"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterVodkaa"
+        android:text="@string/filter_gin"
+        app:layout_constraintEnd_toStartOf="@id/btnFilterVodka"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvIngredientss" />
+        app:layout_constraintTop_toBottomOf="@id/tvIngredients" />
 
     <TextView
-        android:id="@+id/btnFilterVodkaa"
+        android:id="@+id/btnFilterVodka"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
-        android:text="Водка"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterJinee"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterTekilaa"
+        android:text="@string/filter_vodka"
+        app:layout_constraintBottom_toBottomOf="@id/btnFilterGin"
+        app:layout_constraintEnd_toStartOf="@id/btnFilterTekila"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterJinee"
-        app:layout_constraintTop_toTopOf="@id/btnFilterJinee" />
+        app:layout_constraintStart_toEndOf="@id/btnFilterGin"
+        app:layout_constraintTop_toTopOf="@id/btnFilterGin" />
 
     <TextView
-        android:id="@+id/btnFilterTekilaa"
+        android:id="@+id/btnFilterTekila"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Текила"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterJinee"
+        android:text="@string/filter_tekila"
+        app:layout_constraintBottom_toBottomOf="@id/btnFilterGin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterVodkaa"
-        app:layout_constraintTop_toTopOf="@id/btnFilterJinee" />
+        app:layout_constraintStart_toEndOf="@id/btnFilterVodka"
+        app:layout_constraintTop_toTopOf="@id/btnFilterGin" />
 
     <TextView
-        android:id="@+id/btnFilterRommm"
+        android:id="@+id/btnFilterRum"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="12dp"
-        android:text="Ром"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterWhiskeyyy"
+        android:text="@string/filter_rum"
+        app:layout_constraintEnd_toStartOf="@id/btnFilterWhiskey"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnFilterJinee" />
+        app:layout_constraintTop_toBottomOf="@id/btnFilterGin" />
 
     <TextView
-        android:id="@+id/btnFilterWhiskeyyy"
+        android:id="@+id/btnFilterWhiskey"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
-        android:text="Виски"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterRommm"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterBrendyyyy"
+        android:text="@string/filter_whiskey"
+        app:layout_constraintBottom_toBottomOf="@id/btnFilterRum"
+        app:layout_constraintEnd_toStartOf="@id/btnFilterBrandy"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterRommm"
-        app:layout_constraintTop_toTopOf="@id/btnFilterRommm" />
+        app:layout_constraintStart_toEndOf="@id/btnFilterRum"
+        app:layout_constraintTop_toTopOf="@id/btnFilterRum" />
 
     <TextView
-        android:id="@+id/btnFilterBrendyyyy"
+        android:id="@+id/btnFilterBrandy"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Бренди"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterWhiskeyyy"
+        android:text="@string/filter_brandy"
+        app:layout_constraintBottom_toBottomOf="@id/btnFilterWhiskey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterWhiskeyyy"
-        app:layout_constraintTop_toTopOf="@id/btnFilterWhiskeyyy" />
+        app:layout_constraintStart_toEndOf="@id/btnFilterWhiskey"
+        app:layout_constraintTop_toTopOf="@id/btnFilterWhiskey" />
 
     <TextView
-        android:id="@+id/btnFilterChampange"
+        android:id="@+id/btnFilterChampagne"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="12dp"
-        android:text="Шампанское"
+        android:text="@string/filter_champagne"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnFilterRommm" />
+        app:layout_constraintTop_toBottomOf="@id/btnFilterRum" />
 
     <TextView
         android:id="@+id/btnReset"
         style="@style/TextOnButtonFilters"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="50dp"
         android:backgroundTint="@color/orange_red"
-        android:text="Сбросить"
+        android:text="@string/filter_btn_reset"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnApply"
@@ -188,15 +188,13 @@
     <TextView
         android:id="@+id/btnApply"
         style="@style/TextOnButtonFilters"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/sunglow"
-        android:text="Применить"
+        android:text="@string/filter_btn_apply"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/btnReset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnReset"
         app:layout_constraintTop_toTopOf="@id/btnReset" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
