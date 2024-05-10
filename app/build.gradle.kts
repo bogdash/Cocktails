@@ -60,4 +60,7 @@ dependencies {
 
     //Lottie animation
     implementation("com.airbnb.android:lottie:6.3.0")
+
+    //Rounded image
+    implementation("com.github.siyamed:android-shape-imageview:0.9.+@aar")
 }
