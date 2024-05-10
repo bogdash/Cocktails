@@ -14,9 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_filters"
+        app:layout_constraintBottom_toBottomOf="@id/imgClose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/imgClose" />
 
     <ImageButton
         android:id="@+id/imgClose"
@@ -24,9 +25,8 @@
         android:layout_height="20dp"
         android:backgroundTint="#00FFFFFF"
         android:src="@drawable/ic_close"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOn"
-        app:layout_constraintTop_toTopOf="@id/tvTitle" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvAlcohol"
@@ -36,44 +36,39 @@
         android:layout_marginTop="40dp"
         android:text="@string/title_alcohol"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <TextView
-        android:id="@+id/btnFilterAlcoholOn"
-        style="@style/TextOnButtonFilters"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupAlcohol"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="12dp"
-        android:text="@string/filter_alcoholic"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterAlcoholOff"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAlcohol" />
-
-    <TextView
-        android:id="@+id/btnFilterAlcoholOff"
-        style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/filter_non_alcoholic"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterAlcoholOn"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterAlcoholOn"
-        app:layout_constraintTop_toTopOf="@id/btnFilterAlcoholOn" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAlcohol">
 
-    <TextView
-        android:id="@+id/btnFilterAlcoholOption"
-        style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/filter_optional"
-        app:layout_constraintEnd_toEndOf="@id/btnFilterAlcoholOn"
-        app:layout_constraintStart_toStartOf="@id/btnFilterAlcoholOn"
-        app:layout_constraintTop_toBottomOf="@id/btnFilterAlcoholOn" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipAlcoholic"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_alcoholic" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipNonAlcoholic"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_non_alcoholic" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipOptional"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_optional" />
+    </com.google.android.material.chip.ChipGroup>
 
     <TextView
         android:id="@+id/tvIngredients"
@@ -81,117 +76,88 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:text="Игредиенты"
+        android:text="@string/title_ingredients"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/tvAlcohol"
-        app:layout_constraintTop_toBottomOf="@id/btnFilterAlcoholOption" />
-
-    <TextView
-        android:id="@+id/btnFilterGin"
-        style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:text="@string/filter_gin"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterVodka"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvIngredients" />
+        app:layout_constraintTop_toBottomOf="@id/chipGroupAlcohol" />
 
-    <TextView
-        android:id="@+id/btnFilterVodka"
-        style="@style/TextOnButtonFilters"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupIngredients"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:text="@string/filter_vodka"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterGin"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterTekila"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterGin"
-        app:layout_constraintTop_toTopOf="@id/btnFilterGin" />
-
-    <TextView
-        android:id="@+id/btnFilterTekila"
-        style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/filter_tekila"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterGin"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterVodka"
-        app:layout_constraintTop_toTopOf="@id/btnFilterGin" />
-
-    <TextView
-        android:id="@+id/btnFilterRum"
-        style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="12dp"
-        android:text="@string/filter_rum"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterWhiskey"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnFilterGin" />
+        app:layout_constraintTop_toBottomOf="@id/tvIngredients">
 
-    <TextView
-        android:id="@+id/btnFilterWhiskey"
-        style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:text="@string/filter_whiskey"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterRum"
-        app:layout_constraintEnd_toStartOf="@id/btnFilterBrandy"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterRum"
-        app:layout_constraintTop_toTopOf="@id/btnFilterRum" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipVodka"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_vodka" />
 
-    <TextView
-        android:id="@+id/btnFilterBrandy"
-        style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/filter_brandy"
-        app:layout_constraintBottom_toBottomOf="@id/btnFilterWhiskey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/btnFilterWhiskey"
-        app:layout_constraintTop_toTopOf="@id/btnFilterWhiskey" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipGin"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_gin" />
 
-    <TextView
-        android:id="@+id/btnFilterChampagne"
-        style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="12dp"
-        android:text="@string/filter_champagne"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnFilterRum" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTequila"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_tequila" />
 
-    <TextView
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipRum"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_rum" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipWhiskey"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_whiskey" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipBrandy"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_brandy" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipChampagne"
+            style="@style/ChipFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_champagne" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <Button
         android:id="@+id/btnReset"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="50dp"
-        android:backgroundTint="@color/orange_red"
         android:text="@string/filter_btn_reset"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnApply"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <Button
         android:id="@+id/btnApply"
         style="@style/TextOnButtonFilters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/sunglow"
         android:text="@string/filter_btn_apply"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/btnReset"

@@ -1,16 +1,14 @@
 <resources>
     <string name="app_name">Cocktails</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home_screen">НомеScreen</string>
     <string name="title_filters">Filtration</string>
     <string name="title_alcohol">Alcohol</string>
+    <string name="title_ingredients">Ingredients</string>
     <string name="filter_alcoholic">Alcoholic</string>
     <string name="filter_non_alcoholic">Non-alcoholic</string>
     <string name="filter_optional">Optional</string>
     <string name="filter_gin">Gin</string>
     <string name="filter_vodka">Vodka</string>
-    <string name="filter_tekila">Tekila</string>
+    <string name="filter_tequila">Tequila</string>
     <string name="filter_rum">Rum</string>
     <string name="filter_whiskey">Whiskey</string>
     <string name="filter_brandy">Brandy</string>
