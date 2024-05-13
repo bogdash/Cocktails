@@ -7,6 +7,12 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import kotlin.math.sqrt
 
+/**
+ * ShakeDeviceService lets you perform actions on detected device shakes.
+ *
+ * @param context activity's context
+ * @param action action to perform when device's been shaken
+ */
 class ShakeDeviceService(
     context: Context,
     val action: () -> Unit
