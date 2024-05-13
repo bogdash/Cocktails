@@ -46,7 +46,9 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAlcohol">
+        app:layout_constraintTop_toBottomOf="@id/tvAlcohol"
+        app:selectionRequired="true"
+        app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipAlcoholic"
@@ -150,7 +152,7 @@
         android:background="@drawable/bg_btn_bottom_filter"
         android:text="@string/filter_btn_reset"
         android:textColor="@color/white"
-        app:backgroundTint="@color/orange_red"
+        app:backgroundTint="@color/btn_filter_reset_background_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnApply"
         app:layout_constraintStart_toStartOf="parent" />
@@ -162,7 +164,7 @@
         android:layout_height="wrap_content"
         android:text="@string/filter_btn_apply"
         android:textColor="@color/black"
-        app:backgroundTint="@color/sunglow"
+        app:backgroundTint="@color/btn_filter_apply_background_color"
         app:layout_constraintBottom_toBottomOf="@id/btnReset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnReset"
