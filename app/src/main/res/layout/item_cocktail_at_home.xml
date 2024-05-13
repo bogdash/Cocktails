@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:fontFamily="@font/google_sans_regular"
-        android:text="@string/count_ingredients"
+        tools:text="@string/count_ingredients"
         android:textColor="@color/dark_gray"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/icSheet"
