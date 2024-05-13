@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Cocktails</string>
+    <string name="saved_title_toolbar">Избранное</string>
 </resources>
