@@ -16,12 +16,7 @@
         <item name="expandedTitleTextColor">@color/white</item>
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
-    </style>
-
-    <style name="CollapsedTitleText" parent="Widget.Design.CollapsingToolbar">
-        <item name="collapsedTitleTextColor">@color/black</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="background">@drawable/bg_title_collapsing_toolbar</item>
     </style>
 
 </resources>

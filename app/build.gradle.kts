@@ -63,4 +63,5 @@ dependencies {
 
     //Rounded image
     implementation("com.github.siyamed:android-shape-imageview:0.9.+@aar")
+
 }
