@@ -16,7 +16,7 @@
         <item name="expandedTitleTextColor">@color/white</item>
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
-        <item name="background">@drawable/bg_title_collapsing_toolbar</item>
+        <item name="android:background">@drawable/bg_title_collapsing_toolbar</item>
     </style>
 
 </resources>
