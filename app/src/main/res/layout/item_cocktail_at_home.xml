@@ -19,6 +19,7 @@
             android:id="@+id/imageView"
             android:layout_width="325dp"
             android:layout_height="173dp"
+            android:scaleType="centerCrop"
             tools:src="@drawable/test_png" />
     </androidx.cardview.widget.CardView>
 
@@ -49,9 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:fontFamily="@font/google_sans_regular"
-        tools:text="@string/count_ingredients"
         android:textColor="@color/dark_gray"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/icSheet"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:text="@string/count_ingredients" />
 </androidx.constraintlayout.widget.ConstraintLayout>
