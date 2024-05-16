@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_filer_screen"
     android:padding="30dp"
-    tools:context=".filters.FiltersFragment">
+    tools:context=".home.FiltersFragment">
 
     <TextView
         android:id="@+id/tvTitle"

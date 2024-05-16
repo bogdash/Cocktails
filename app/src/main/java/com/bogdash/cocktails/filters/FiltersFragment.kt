@@ -7,11 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bogdash.cocktails.R
 
-<<<<<<<< HEAD:app/src/main/java/com/bogdash/cocktails/filters/FiltersFragment.kt
 class FiltersFragment : Fragment() {
-========
-class HomeScreenFragment : Fragment() {
->>>>>>>> master:app/src/main/java/com/bogdash/cocktails/filters/HomeScreenFragment.kt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +22,6 @@ class HomeScreenFragment : Fragment() {
 
     companion object {
         @JvmStatic
-<<<<<<<< HEAD:app/src/main/java/com/bogdash/cocktails/filters/FiltersFragment.kt
         fun newInstance() = FiltersFragment()
-========
-        fun newInstance() = HomeScreenFragment()
->>>>>>>> master:app/src/main/java/com/bogdash/cocktails/filters/HomeScreenFragment.kt
     }
 }
