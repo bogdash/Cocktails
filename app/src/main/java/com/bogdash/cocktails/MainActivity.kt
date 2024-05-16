@@ -9,7 +9,10 @@ import com.bogdash.cocktails.databinding.ActivityMainBinding
 import com.bogdash.cocktails.databinding.FragmentFiltersBinding
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
+    private lateinit var shakeDeviceService: ShakeDeviceService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,5 +25,21 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        shakeDeviceService = ShakeDeviceService(
+            this,
+            CocktailOfTheDay(this).dialog
+        )
     }
+
+    override fun onResume() {
+        super.onResume()
+        shakeDeviceService.subscribe()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        shakeDeviceService.unsubscribe()
+    }
+
 }

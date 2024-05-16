@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:andriod="http://schemas.android.com/apk/res/android">
     <style name="TextOnButtonFilters" parent="Widget.Material3.Button">
         <item name="android:textColor">@color/regent_grey</item>
         <item name="android:background">@drawable/btn_bottom_filter</item>
@@ -7,6 +6,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingHorizontal">40dp</item>
+<resources xmlns:andriod="http://schemas.android.com/apk/res/android">
     </style>
 
     <style name="TitleText" parent="Widget.AppCompat.TextView">

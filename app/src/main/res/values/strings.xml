@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">Cocktails</string>
+    <string name="saved_title_toolbar">Избранное</string>
+
+    <!-- ShakeDialog -->
+    <string name="mock_mojito">Mojito</string>
+    <string name="mock_time">15 mins</string>
+    <string name="mock_ingredients">4 ingredients</string>
+    <string name="cancel">Cancel</string>
+    <string name="read_more">Read more</string>
+    <!--home screen-->
+    <string name="homescreen">Home</string>
+    <string name="title_text">Title Text</string>
+    <string name="count_ingredients">4 ingredients</string>
     <string name="title_filters">Filtration</string>
     <string name="title_alcohol">Alcohol</string>
     <string name="title_ingredients">Ingredients</string>

@@ -2,12 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="solitude">#F1F2F6</color>
-    <color name="dark_gray">#A5A5A5</color>
-    <color name="regent_grey">#798184</color>
-    <color name="tiber">#0A191E</color>
-    <color name="sunglow">#FFD338</color>
-    <color name="golden_dream">#EFC635</color>
     <color name="orange_red">#FF400C</color>
+    <color name="sunglow">#FFD338</color>
+    <color name="dark_gray">#A5A5A5</color>
+    <color name="solitude">#F1F2F6</color>
+    <color name="ghost">#D2D1D7</color>
+    <color name="tiber">#0A191E</color>
+    <color name="regent_grey">#798184</color>
+    <color name="golden_dream">#EFC635</color>
     <color name="harley_davidson_orange">#DE380B</color>
 </resources>
