@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_filer_screen"
     android:padding="30dp"
-    tools:context=".filters.FragmentFilters">
+    tools:context=".filters.FiltersFragment">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/title_alcohol"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
@@ -79,7 +78,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:text="@string/title_ingredients"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chipGroupAlcohol" />
 
@@ -145,28 +143,32 @@
     <Button
         android:id="@+id/btnReset"
         style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="50dp"
         android:background="@drawable/bg_btn_bottom_filter"
         android:text="@string/filter_btn_reset"
         android:textColor="@color/white"
         app:backgroundTint="@color/btn_filter_reset_background_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnApply"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
 
     <Button
         android:id="@+id/btnApply"
         style="@style/TextOnButtonFilters"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/filter_btn_apply"
         android:textColor="@color/black"
         app:backgroundTint="@color/btn_filter_apply_background_color"
-        app:layout_constraintBottom_toBottomOf="@id/btnReset"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnReset"
-        app:layout_constraintTop_toTopOf="@id/btnReset" />
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
 </androidx.constraintlayout.widget.ConstraintLayout>

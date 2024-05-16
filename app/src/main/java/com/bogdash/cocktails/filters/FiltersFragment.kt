@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bogdash.cocktails.R
 
-class FragmentFilters : Fragment() {
+class FiltersFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +22,6 @@ class FragmentFilters : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = FragmentFilters()
+        fun newInstance() = FiltersFragment()
     }
 }
