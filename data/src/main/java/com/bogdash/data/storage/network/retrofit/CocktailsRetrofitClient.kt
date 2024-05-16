@@ -1,6 +1,7 @@
-package com.bogdash.data.storage.network
+package com.bogdash.data.storage.network.retrofit
 
-import com.bogdash.data.storage.network.ConstantsForNetwork.Network.Companion.BASE_URL
+import com.bogdash.data.storage.network.ConstantsForNetwork.BASE_URL
+import com.bogdash.data.storage.network.okhttp.CocktailsOkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
