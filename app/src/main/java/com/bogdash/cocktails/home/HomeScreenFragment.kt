@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bogdash.cocktails.R
 
-class FragmentHomeScreen : Fragment() {
+class HomeScreenFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +22,6 @@ class FragmentHomeScreen : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = FragmentHomeScreen()
+        fun newInstance() = HomeScreenFragment()
     }
 }
