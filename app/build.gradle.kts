@@ -46,9 +46,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.android.shape.imageview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.android.shape.imageview)
 
     //OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
@@ -57,4 +59,7 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    //Lottie animation
+    implementation("com.airbnb.android:lottie:6.3.0")
 }
