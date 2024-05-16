@@ -8,4 +8,8 @@
     <string name="mock_ingredients">4 ingredients</string>
     <string name="cancel">Cancel</string>
     <string name="read_more">Read more</string>
+    <!--home screen-->
+    <string name="homescreen">Home</string>
+    <string name="title_text">Title Text</string>
+    <string name="count_ingredients">4 ingredients</string>
 </resources>
