@@ -1,4 +1,3 @@
 package com.bogdash.cocktails.presentation.cocktailoftheday
 
-class CocktailOfTheDayViewModel {
-}
+class CocktailOfTheDayViewModel {}
