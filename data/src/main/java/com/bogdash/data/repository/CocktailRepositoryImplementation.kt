@@ -1,4 +1,3 @@
 package com.bogdash.data.repository
 
-class CocktailRepositoryImplementation {
-}
+class CocktailRepositoryImplementation {}

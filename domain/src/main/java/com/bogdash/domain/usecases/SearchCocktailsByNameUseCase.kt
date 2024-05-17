@@ -1,4 +1,3 @@
 package com.bogdash.domain.usecases
 
-class SearchCocktailsByNameUseCase {
-}
+class SearchCocktailsByNameUseCase {}

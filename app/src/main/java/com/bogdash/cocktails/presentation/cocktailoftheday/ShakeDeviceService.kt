@@ -1,4 +1,4 @@
-package com.bogdash.cocktails
+package com.bogdash.cocktails.presentation.cocktailoftheday
 
 import android.content.Context
 import android.hardware.Sensor

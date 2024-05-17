@@ -1,4 +1,3 @@
 package com.bogdash.domain.repository
 
-interface CocktailRepository {
-}
+interface CocktailRepository {}

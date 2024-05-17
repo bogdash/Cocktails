@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bogdash.cocktails.presentation.cocktailoftheday.CocktailOfTheDay
 import com.bogdash.cocktails.R
-import com.bogdash.cocktails.ShakeDeviceService
+import com.bogdash.cocktails.presentation.cocktailoftheday.ShakeDeviceService
 import com.bogdash.cocktails.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
