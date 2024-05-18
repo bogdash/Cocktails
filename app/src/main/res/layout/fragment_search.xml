@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/bg_search_view"
         app:iconifiedByDefault="false"
@@ -22,15 +22,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@android:color/transparent"
         app:queryHint="Search for a recipe / an ingredient"
+        app:searchHintIcon="@null"
         app:searchIcon="@drawable/ic_search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_rv"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="40dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/search_sv"
         app:layout_constraintStart_toStartOf="@+id/search_sv"
         app:layout_constraintTop_toBottomOf="@+id/search_sv"
