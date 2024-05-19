@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.home
+package com.bogdash.cocktails.filters
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bogdash.cocktails.R
 
-class HomeScreenFragment : Fragment() {
+class FiltersFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +22,6 @@ class HomeScreenFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = HomeScreenFragment()
+        fun newInstance() = FiltersFragment()
     }
 }
