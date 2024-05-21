@@ -11,21 +11,18 @@ import com.bogdash.cocktails.databinding.FragmentSavedBinding
 class SavedFragment : Fragment(R.layout.fragment_saved) {
 
     private lateinit var binding: FragmentSavedBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_saved, container, false)
+        binding = FragmentSavedBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSavedBinding.bind(view)
     }
 
     companion object {

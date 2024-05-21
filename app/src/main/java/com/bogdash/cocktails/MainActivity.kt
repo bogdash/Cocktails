@@ -35,16 +35,7 @@ class MainActivity : AppCompatActivity() {
             CocktailOfTheDay(this).dialog
         )
 
-        binding.bottomNavigationView.itemIconTintList = null
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.home -> replaceFragment(HomeScreenFragment())
-                R.id.saved -> replaceFragment(SavedFragment())
-                R.id.search -> replaceFragment(SearchFragment())
-            }
-            true
-        }
-        binding.bottomNavigationView.selectedItemId = R.id.home
+        setupBottomNavigationBar()
     }
 
     override fun onResume() {
@@ -57,8 +48,24 @@ class MainActivity : AppCompatActivity() {
         shakeDeviceService.unsubscribe()
     }
     private fun replaceFragment(fragment: Fragment){
-        supportFragmentManager.
-        beginTransaction().
-        replace(R.id.fragment_container,fragment).commit()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container,fragment)
+            .commit()
+    }
+
+    private fun setupBottomNavigationBar(){
+        with(binding){
+            bottomNavigationView.itemIconTintList = null
+            bottomNavigationView.setOnItemSelectedListener {
+                when(it.itemId){
+                    R.id.home -> replaceFragment(HomeScreenFragment())
+                    R.id.saved -> replaceFragment(SavedFragment())
+                    R.id.search -> replaceFragment(SearchFragment())
+                }
+                true
+            }
+            bottomNavigationView.selectedItemId = R.id.home
+        }
     }
 }
