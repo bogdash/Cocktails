@@ -18,5 +18,30 @@
         <item name="android:fontFamily">@font/google_sans_medium</item>
         <item name="android:background">@drawable/bg_title_collapsing_toolbar</item>
     </style>
+    <!--    detailedScreen-->
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="android:background">@drawable/tablayout_background</item>
+        <item name="tabBackground">@drawable/tab_background_selector</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Tab.Unselected</item>
+        <item name="tabSelectedTextAppearance">@style/TextAppearance.Tab.Selected</item>
+    </style>
+
+    <style name="DetailedTitleTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
+    </style>
+
+    <style name="TextAppearance.Tab.Selected" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.Tab.Unselected" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/submarine</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+    </style>
 
 </resources>
