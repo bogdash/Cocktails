@@ -1,15 +1,30 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
+# === idea ===
+.idea/
+**/*.iml
+!.idea/codeStyles/Project.xml
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/dictionaries/*
+!.idea/vcs.xml
+!.idea/inspectionProfiles/*
+
+# === gradle ===
+**/.gradle/
+**/local.properties
+
+# === native ===
+**/.cxx/
+**/captures/
+**/.externalNativeBuild/
+
+# === OS specific ===
+**/.DS_Store
+
+# === signing ===
+**/keystore/*release*
+**/keystore/*private*
+
+# === temp ===
+**/build/
+**/temp/
+**/bin/
+**/mapping.txt
