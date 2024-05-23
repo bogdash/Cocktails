@@ -1,3 +1,5 @@
 package com.bogdash.data.repository
 
-class CocktailRepositoryImplementation {}
+import com.bogdash.domain.repository.CocktailRepository
+
+class CocktailRepositoryImplementation : CocktailRepository
