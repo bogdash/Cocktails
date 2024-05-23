@@ -50,9 +50,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Domain module
     implementation(project(":domain"))
+
+    // Data module
     implementation(project(":data"))
 
     //Lottie animation
-    implementation("com.airbnb.android:lottie:6.3.0")
+    implementation(libs.lottie)
 }
