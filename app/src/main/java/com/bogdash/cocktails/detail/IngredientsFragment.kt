@@ -16,9 +16,9 @@ class IngredientsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: IngredientAdapter
     private val ingredientsList = arrayListOf(
-        Ingredient(1, "Tequila", "4.5 cl"),
-        Ingredient(2, "Lime Juice", "1.5 cl"),
-        Ingredient(3, "Agave syrup", "2 spoons")
+        Ingredient("Tequila", "4.5 cl"),
+        Ingredient("Lime Juice", "1.5 cl"),
+        Ingredient( "Agave syrup", "2 spoons")
     )
 
     override fun onCreateView(
