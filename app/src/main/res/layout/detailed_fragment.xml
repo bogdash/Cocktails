@@ -5,26 +5,26 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".detail.Detailed">
+    tools:context=".detail.DetailedFragment">
 
     <ImageView
-        android:id="@+id/food_image"
+        android:id="@+id/foodImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         tools:src="@drawable/test_png_for_detail" />
 
     <TextView
-        android:id="@+id/food_title"
+        android:id="@+id/foodTitle"
         style="@style/DetailedTitleTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="37dp"
-        android:text="Fish Dabu-Dabu" />
+        tools:text="Fish Dabu-Dabu" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
+        android:id="@+id/tabLayout"
         style="@style/TabLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,15 +32,29 @@
         android:layout_marginTop="37dp">
 
         <com.google.android.material.tabs.TabItem
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ingredients" />
 
         <com.google.android.material.tabs.TabItem
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Directions" />
     </com.google.android.material.tabs.TabLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.fragment.app.FragmentContainerView>
+    </ScrollView>
+
 
 
 </LinearLayout>

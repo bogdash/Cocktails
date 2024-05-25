@@ -3,20 +3,16 @@ package com.bogdash.cocktails
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.bogdash.cocktails.databinding.ActivityMainBinding
-import com.bogdash.cocktails.databinding.FragmentDetailedBinding
-import com.bogdash.cocktails.detail.Detailed
+import com.bogdash.cocktails.databinding.DetailedFragmentBinding
 
 class MainActivity : AppCompatActivity() {
     //private lateinit var binding: ActivityMainBinding
-    private lateinit var binding: FragmentDetailedBinding
+    private lateinit var binding: DetailedFragmentBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        binding = FragmentDetailedBinding.inflate(layoutInflater)
+        binding = DetailedFragmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

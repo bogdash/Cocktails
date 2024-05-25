@@ -44,4 +44,15 @@
         <item name="android:fontFamily">@font/google_sans_regular</item>
     </style>
 
+    <style name="IngredientsTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="MeasureTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+        <item name="android:textColor">@color/regent_grey</item>
+    </style>
+
 </resources>
