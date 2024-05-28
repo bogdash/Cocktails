@@ -18,6 +18,7 @@
         <item name="android:fontFamily">@font/google_sans_medium</item>
         <item name="android:background">@drawable/bg_title_collapsing_toolbar</item>
     </style>
+
     <!--    detailedScreen-->
     <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="android:background">@drawable/tablayout_background</item>
@@ -49,10 +50,17 @@
         <item name="android:fontFamily">@font/google_sans_medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="MeasureTextStyle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:textColor">@color/regent_grey</item>
+    </style>
+
+    <style name="DirectionsTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 </resources>

@@ -8,7 +8,7 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.IngredientItemBinding
 import com.bogdash.cocktails.model.Ingredient
 
-class IngredientAdapter(val ingredientsList: ArrayList<Ingredient>) : RecyclerView.Adapter<IngredientAdapter.IngredientHolder>() {
+class IngredientAdapter(private val ingredientsList: ArrayList<Ingredient>) : RecyclerView.Adapter<IngredientAdapter.IngredientHolder>() {
 
     class IngredientHolder(item: View): RecyclerView.ViewHolder(item) {
         val binding = IngredientItemBinding.bind(item)

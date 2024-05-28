@@ -60,13 +60,11 @@
         android:layout_marginTop="37dp">
 
         <com.google.android.material.tabs.TabItem
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ingredients" />
 
         <com.google.android.material.tabs.TabItem
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/directions" />
@@ -84,6 +82,4 @@
 
         </androidx.fragment.app.FragmentContainerView>
     </ScrollView>
-
-
 </LinearLayout>

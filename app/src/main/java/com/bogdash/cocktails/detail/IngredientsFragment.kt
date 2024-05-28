@@ -25,7 +25,7 @@ class IngredientsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.ingredients_fragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_ingredients, container, false)
 
         recyclerView = view.findViewById(R.id.rcIngredients)
         adapter = IngredientAdapter(ingredientsList)
