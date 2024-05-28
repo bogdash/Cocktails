@@ -22,7 +22,7 @@ class DirectionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.directions_fragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_directions, container, false)
         tvInstruction = view.findViewById(R.id.tvInstruction)
         return view
     }

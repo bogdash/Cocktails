@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <TextView
@@ -14,7 +14,7 @@
         android:padding="8dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        tools:text="Tequila" />
+        android:text="@string/tequila" />
 
     <TextView
         android:id="@+id/ingredientMeasure"
@@ -22,6 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        tools:text="4.5 cl" />
+        android:text="@string/_4_5_cl" />
 
 </LinearLayout>
