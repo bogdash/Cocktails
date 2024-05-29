@@ -10,9 +10,9 @@ import com.bogdash.cocktails.presentation.cocktailoftheday.CocktailOfTheDay
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.presentation.cocktailoftheday.ShakeDeviceService
 import com.bogdash.cocktails.databinding.ActivityMainBinding
-import com.bogdash.cocktails.home.HomeScreenFragment
-import com.bogdash.cocktails.saved.SavedFragment
-import com.bogdash.cocktails.search.SearchFragment
+import com.bogdash.cocktails.presentation.home.HomeFragment
+import com.bogdash.cocktails.presentation.saved.SavedFragment
+import com.bogdash.cocktails.presentation.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.itemIconTintList = null
             bottomNavigationView.setOnItemSelectedListener {
                 when(it.itemId){
-                    R.id.home -> replaceFragment(HomeScreenFragment())
+                    R.id.home -> replaceFragment(HomeFragment())
                     R.id.saved -> replaceFragment(SavedFragment())
                     R.id.search -> replaceFragment(SearchFragment())
                 }

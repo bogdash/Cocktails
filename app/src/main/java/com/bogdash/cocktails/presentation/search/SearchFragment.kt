@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.search
+package com.bogdash.cocktails.presentation.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
