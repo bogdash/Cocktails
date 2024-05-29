@@ -1,7 +1,7 @@
 package com.bogdash.data.storage.network.dto
 
-import com.bogdash.data.storage.network.models.Drink
-import com.bogdash.data.storage.network.models.Ingredient
+import com.bogdash.data.storage.models.Drink
+import com.bogdash.data.storage.models.Ingredient
 
 class DrinkDto(
     private val idDrink: String,

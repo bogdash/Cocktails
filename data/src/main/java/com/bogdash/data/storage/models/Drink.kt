@@ -1,4 +1,4 @@
-package com.bogdash.data.storage.network.models
+package com.bogdash.data.storage.models
 
 data class Drink(
     val id: String,
