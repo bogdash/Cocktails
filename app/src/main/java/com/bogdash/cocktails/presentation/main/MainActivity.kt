@@ -1,7 +1,9 @@
 package com.bogdash.cocktails.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,7 +19,9 @@ import com.bogdash.cocktails.presentation.search.SearchFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var shakeDeviceService: ShakeDeviceService
+    private var shakeDeviceService: ShakeDeviceService? = null
+    private val mainViewModel: MainViewModel by viewModels()
+    private var isDialogOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,35 +36,31 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        observeViewModel()
+
         shakeDeviceService = ShakeDeviceService(
-            this,
-            CocktailOfTheDay(this).dialog
-        )
+            this
+        ) {
+            if (!isDialogOpen) {
+                mainViewModel.getCocktailOfTheDay()
+            }
+        }
 
         setupBottomNavigationBar()
     }
 
-    override fun onResume() {
-        super.onResume()
-        shakeDeviceService.subscribe()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        shakeDeviceService.unsubscribe()
-    }
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container,fragment)
+            .replace(R.id.fragment_container, fragment)
             .commit()
     }
 
-    private fun setupBottomNavigationBar(){
-        with(binding){
+    private fun setupBottomNavigationBar() {
+        with(binding) {
             bottomNavigationView.itemIconTintList = null
             bottomNavigationView.setOnItemSelectedListener {
-                when(it.itemId){
+                when (it.itemId) {
                     R.id.home -> replaceFragment(HomeFragment())
                     R.id.saved -> replaceFragment(SavedFragment())
                     R.id.search -> replaceFragment(SearchFragment())
@@ -70,4 +70,29 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.selectedItemId = R.id.home
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        shakeDeviceService?.subscribe()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        shakeDeviceService?.unsubscribe()
+    }
+
+    private fun observeViewModel() {
+        mainViewModel.resultCocktailOfTheDay.observe(this) { drink ->
+            if (drink != null) {
+                val dialog = CocktailOfTheDay(this, drink)
+                isDialogOpen = true
+                dialog.dialog()
+            }
+        }
+    }
+
+    fun onDialogDismiss() {
+        isDialogOpen = false
+    }
+
 }
