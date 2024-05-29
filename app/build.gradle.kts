@@ -51,12 +51,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Domain module
-    implementation(project(":domain"))
+    //OkHttp
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
-    // Data module
-    implementation(project(":data"))
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     //Lottie animation
-    implementation(libs.lottie)
+    implementation("com.airbnb.android:lottie:6.3.0")
 }
