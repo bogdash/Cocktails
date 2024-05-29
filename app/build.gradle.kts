@@ -66,4 +66,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.fragment.ktx.v170)
+
+    // Glide
+    implementation (libs.glide)
 }
