@@ -4,10 +4,14 @@
     <string name="saved_title_toolbar">Saved</string>
     <!-- ShakeDialog -->
     <string name="mock_mojito">Mojito</string>
-    <string name="mock_time">15 mins</string>
+    <string name="mock_alcohol">Alcoholic</string>
     <string name="mock_ingredients">4 ingredients</string>
     <string name="cancel">Cancel</string>
     <string name="read_more">Read more</string>
+    <plurals name="number_of_ingredients">
+        <item quantity="one">%d ingredient</item>
+        <item quantity="other">%d ingredients</item>
+    </plurals>
     <!--home screen-->
     <string name="homescreen">Home</string>
     <string name="title_text">Title Text</string>
