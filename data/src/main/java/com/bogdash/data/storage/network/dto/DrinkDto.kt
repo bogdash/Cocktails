@@ -47,7 +47,7 @@ class DrinkDto(
     private val dateModified: String
 ) {
 
-    fun transform(): Drink {
+    fun toData(): Drink {
         return Drink(
             id = idDrink,
             name = strDrink,
