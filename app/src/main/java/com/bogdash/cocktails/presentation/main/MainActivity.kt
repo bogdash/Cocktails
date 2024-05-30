@@ -15,7 +15,9 @@ import com.bogdash.cocktails.databinding.ActivityMainBinding
 import com.bogdash.cocktails.presentation.home.HomeFragment
 import com.bogdash.cocktails.presentation.saved.SavedFragment
 import com.bogdash.cocktails.presentation.search.SearchFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
