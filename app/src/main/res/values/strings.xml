@@ -31,4 +31,7 @@
     <string name="home_title_menu">Home</string>
     <string name="saved_title_menu">Saved</string>
     <string name="search_title_menu">Search</string>
+    <!--Onboarding-->
+    <string name="onboarding_title">Shake your phone to get the cocktail of the day</string>
+    <string name="onboarding_title_close">Close</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.bogdash.cocktails.Constants
 import com.bogdash.cocktails.presentation.main.MainActivity
 import com.bogdash.cocktails.R
+import com.bogdash.cocktails.presentation.onboarding.OnboardingActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -27,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            val i = Intent(this@SplashActivity, MainActivity::class.java)
+            val i = Intent(this@SplashActivity, OnboardingActivity::class.java)
             startActivity(i)
             finish()
         }, Constants.Splash.DELAY_TIME)
