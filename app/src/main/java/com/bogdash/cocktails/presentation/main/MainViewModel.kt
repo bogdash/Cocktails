@@ -16,9 +16,6 @@ class MainViewModel @Inject constructor(
     private val getCocktailOfTheDayUseCase: GetCocktailOfTheDayUseCase
 ) : ViewModel() {
 
-    private var resultLiveDataMutable = MutableLiveData<String>()
-    val resultLiveData: LiveData<String> = resultLiveDataMutable
-
     private val cocktailOfTheDayMutable = MutableLiveData<Drink>()
     val resultCocktailOfTheDay: LiveData<Drink> = cocktailOfTheDayMutable
 
