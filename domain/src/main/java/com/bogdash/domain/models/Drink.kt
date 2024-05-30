@@ -8,6 +8,10 @@ data class Drink (
     val glass: String,
     val instructions: String,
     val thumb: String,
-    val ingredients: List<String>,
-    val measures: List<String>
+    val ingredients: List<Ingredient>
+)
+
+data class Ingredient(
+    val name: String,
+    val measure: String?
 )
