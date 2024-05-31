@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.adapter
+package com.bogdash.cocktails.presentation.detail.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.IngredientItemBinding
-import com.bogdash.cocktails.model.Ingredient
+import com.bogdash.cocktails.presentation.detail.model.Ingredient
 
 class IngredientAdapter(private val ingredientsList: ArrayList<Ingredient>) : RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
 

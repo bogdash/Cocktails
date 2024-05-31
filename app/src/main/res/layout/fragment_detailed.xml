@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".detail.DetailedFragment">
+    tools:context=".presentation.detail.DetailedFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
