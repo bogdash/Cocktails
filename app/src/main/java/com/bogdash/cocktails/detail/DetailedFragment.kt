@@ -1,7 +1,6 @@
 package com.bogdash.cocktails.detail
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,16 +22,14 @@ class DetailedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("DetailedFragment", "onCreateView called")
         binding = FragmentDetailedBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("DetailedFragment", "onViewCreated called")
 
-        // Установка начального фрагмента
+        // Start fragment
         childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragmentList[0]).commit()
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -59,13 +56,13 @@ class DetailedFragment : Fragment() {
         })
 
         binding.btnBack.setOnClickListener {
-            activity?.onBackPressed()
+            parentFragmentManager.popBackStack()
         }
 
         binding.btnFavorite.setOnClickListener {
             isFavorite = !isFavorite
             binding.btnFavorite.isSelected = isFavorite
-            // TODO: логика сохранения состояния избранного
+            // TODO: Add logic saved actions
         }
     }
 

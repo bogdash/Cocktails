@@ -16,7 +16,7 @@
         <item name="expandedTitleTextColor">@color/white</item>
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
-        <item name="android:background">@drawable/bg_title_collapsing_toolbar</item>
+        <item name="android:background">@drawable/bg_button_on_title</item>
     </style>
 
     <!--    detailedScreen-->
@@ -31,6 +31,7 @@
     <style name="DetailedTitleTextStyle">
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="TextAppearance.Tab.Selected" parent="TextAppearance.AppCompat">

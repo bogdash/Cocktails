@@ -22,6 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/_4_5_cl" />
+        android:text="@string/testMeasure" />
 
 </LinearLayout>

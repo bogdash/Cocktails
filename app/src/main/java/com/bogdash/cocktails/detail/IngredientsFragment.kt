@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.adapter.IngredientAdapter
+import com.bogdash.cocktails.databinding.FragmentIngredientsBinding
 import com.bogdash.cocktails.model.Ingredient
 
 class IngredientsFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: IngredientAdapter
+    private lateinit var binding: FragmentIngredientsBinding
+
     private val ingredientsList = arrayListOf(
         Ingredient("Tequila", "4.5 cl"),
         Ingredient("Lime Juice", "1.5 cl"),
@@ -25,14 +26,10 @@ class IngredientsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_ingredients, container, false)
-
-        recyclerView = view.findViewById(R.id.rcIngredients)
-        adapter = IngredientAdapter(ingredientsList)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
-
-        return view
+        binding = FragmentIngredientsBinding.inflate(inflater, container, false)
+        binding.rcIngredients.layoutManager = LinearLayoutManager(context)
+        binding.rcIngredients.adapter = IngredientAdapter(ingredientsList)
+        return binding.root
     }
 
     companion object {

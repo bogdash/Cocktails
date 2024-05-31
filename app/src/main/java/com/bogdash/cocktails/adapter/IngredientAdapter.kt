@@ -8,26 +8,26 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.IngredientItemBinding
 import com.bogdash.cocktails.model.Ingredient
 
-class IngredientAdapter(private val ingredientsList: ArrayList<Ingredient>) : RecyclerView.Adapter<IngredientAdapter.IngredientHolder>() {
+class IngredientAdapter(private val ingredientsList: ArrayList<Ingredient>) : RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
 
-    class IngredientHolder(item: View): RecyclerView.ViewHolder(item) {
+    class IngredientViewHolder(item: View): RecyclerView.ViewHolder(item) {
         val binding = IngredientItemBinding.bind(item)
         fun bind(ingredient: Ingredient) = with(binding) {
-            ingredientName.text = ingredient.ingredientName
+            ingredientName.text = ingredient.name
             ingredientMeasure.text = ingredient.measure
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.ingredient_item, parent, false)
-        return IngredientHolder(view)
+        return IngredientViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return ingredientsList.size
     }
 
-    override fun onBindViewHolder(holder: IngredientHolder, position: Int) {
+    override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         holder.bind(ingredientsList[position])
     }
 }

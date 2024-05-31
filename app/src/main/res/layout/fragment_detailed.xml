@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".detail.DetailedFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,15 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+        app:contentInsetStart="0dp">
 
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="18dp"
-            android:background="@drawable/bg_title_collapsing_toolbar"
+            android:background="@drawable/bg_button_on_title"
             android:src="@drawable/ic_arrow_back" />
 
         <ImageButton
@@ -29,15 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginEnd="18dp"
-            android:background="@drawable/bg_title_collapsing_toolbar"
-            android:src="@drawable/favorite_state" />
+            android:background="@drawable/bg_button_on_title"
+            android:src="@drawable/favorite_selector" />
     </androidx.appcompat.widget.Toolbar>
 
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/foodImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         app:siRadius="18dp"
         android:src="@drawable/test_png_for_detail" />
@@ -47,7 +46,6 @@
         style="@style/DetailedTitleTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
         android:layout_marginTop="37dp"
         android:text="@string/fish_dabu_dabu" />
 
@@ -56,7 +54,6 @@
         style="@style/TabLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="37dp">
 
         <com.google.android.material.tabs.TabItem
@@ -78,7 +75,7 @@
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp">
+            android:paddingVertical="20dp">
 
         </androidx.fragment.app.FragmentContainerView>
     </ScrollView>

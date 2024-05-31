@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">Cocktails</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+<!--    Detailed Fragment-->
     <string name="test_title_detail">Fish Dabu-Dabu</string>
     <string name="tequila">Tequila</string>
-    <string name="_4_5_cl">4.5 cl</string>
+    <string name="testMeasure">4.5 cl</string>
     <string name="fish_dabu_dabu">Fish Dabu-Dabu</string>
     <string name="ingredients">Ingredients</string>
     <string name="directions">Directions</string>

@@ -1,3 +1,3 @@
 package com.bogdash.cocktails.model
 
-data class Ingredient(val ingredientName: String, val measure: String)
+data class Ingredient(val name: String, val measure: String)
