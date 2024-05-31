@@ -27,13 +27,17 @@ class IngredientsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentIngredientsBinding.inflate(inflater, container, false)
-        binding.rcIngredients.layoutManager = LinearLayoutManager(context)
-        binding.rcIngredients.adapter = IngredientAdapter(ingredientsList)
+        setupRecyclerView()
         return binding.root
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = IngredientsFragment()
+    }
+
+    private fun setupRecyclerView() {
+        binding.rcIngredients.layoutManager = LinearLayoutManager(context)
+        binding.rcIngredients.adapter = IngredientAdapter(ingredientsList)
     }
 }
