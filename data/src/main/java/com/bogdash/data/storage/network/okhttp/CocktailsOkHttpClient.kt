@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.network
+package com.bogdash.data.storage.network.okhttp
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

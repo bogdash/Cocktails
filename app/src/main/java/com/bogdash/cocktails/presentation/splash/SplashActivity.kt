@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.splash
+package com.bogdash.cocktails.presentation.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bogdash.cocktails.Constants
-import com.bogdash.cocktails.MainActivity
+import com.bogdash.cocktails.presentation.main.MainActivity
 import com.bogdash.cocktails.R
 
 @SuppressLint("CustomSplashScreen")
@@ -29,6 +29,7 @@ class SplashActivity : AppCompatActivity() {
         handler.postDelayed({
             val i = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(i)
+            finish()
         }, Constants.Splash.DELAY_TIME)
     }
 }

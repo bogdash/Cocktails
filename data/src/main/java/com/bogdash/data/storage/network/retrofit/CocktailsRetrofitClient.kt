@@ -1,10 +1,11 @@
-package com.bogdash.cocktails.network
+package com.bogdash.data.storage.network.retrofit
 
-import com.bogdash.cocktails.Constants.Network.Companion.BASE_URL
+import com.bogdash.data.storage.network.ConstantsForNetwork.BASE_URL
+import com.bogdash.data.storage.network.okhttp.CocktailsOkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class CocktailsRetrofitClient {
+object CocktailsRetrofitClient {
     val client: Retrofit = getRetrofitClient()
 
     private fun getRetrofitClient(): Retrofit {

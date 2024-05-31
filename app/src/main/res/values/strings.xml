@@ -1,5 +1,36 @@
 <resources>
     <string name="app_name">Cocktails</string>
+    <!--saved screen-->
+    <string name="saved_title_toolbar">Saved</string>
+    <!-- ShakeDialog -->
+    <string name="mock_mojito">Mojito</string>
+    <string name="mock_time">15 mins</string>
+    <string name="mock_ingredients">4 ingredients</string>
+    <string name="cancel">Cancel</string>
+    <string name="read_more">Read more</string>
+    <!--home screen-->
+    <string name="homescreen">Home</string>
+    <string name="title_text">Title Text</string>
+    <string name="count_ingredients">4 ingredients</string>
+    <string name="title_filters">Filtration</string>
+    <string name="title_alcohol">Alcohol</string>
+    <string name="title_ingredients">Ingredients</string>
+    <string name="filter_alcoholic">Alcoholic</string>
+    <string name="filter_non_alcoholic">Non-alcoholic</string>
+    <string name="filter_optional">Optional</string>
+    <string name="filter_gin">Gin</string>
+    <string name="filter_vodka">Vodka</string>
+    <string name="filter_tequila">Tequila</string>
+    <string name="filter_rum">Rum</string>
+    <string name="filter_whiskey">Whiskey</string>
+    <string name="filter_brandy">Brandy</string>
+    <string name="filter_champagne">Champagne</string>
+    <string name="filter_btn_reset">Reset</string>
+    <string name="filter_btn_apply">Apply</string>
+    <!--bottom nav menu-->
+    <string name="home_title_menu">Home</string>
+    <string name="saved_title_menu">Saved</string>
+    <string name="search_title_menu">Search</string>
 <!--    Detailed Fragment-->
     <string name="test_title_detail">Fish Dabu-Dabu</string>
     <string name="tequila">Tequila</string>
