@@ -30,4 +30,57 @@
         <item name="chipCornerRadius">10dp</item>
         <item name="chipMinHeight">40dp</item>
     </style>
+
+    <style name="ExpandedTitleText" parent="Widget.Material3.CollapsingToolbar">
+        <item name="expandedTitleTextColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="android:background">@drawable/bg_button_on_title</item>
+    </style>
+
+    <!--    detailedScreen-->
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="android:background">@drawable/tablayout_background</item>
+        <item name="tabBackground">@drawable/tab_background_selector</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Tab.Unselected</item>
+        <item name="tabSelectedTextAppearance">@style/TextAppearance.Tab.Selected</item>
+    </style>
+
+    <style name="DetailedTitleTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.Tab.Selected" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.Tab.Unselected" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/submarine</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+    </style>
+
+    <style name="IngredientsTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="MeasureTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+        <item name="android:textColor">@color/regent_grey</item>
+    </style>
+
+    <style name="DirectionsTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
