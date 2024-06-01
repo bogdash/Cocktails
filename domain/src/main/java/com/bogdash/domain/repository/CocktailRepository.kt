@@ -1,3 +1,7 @@
 package com.bogdash.domain.repository
 
-interface CocktailRepository {}
+import com.bogdash.domain.models.Cocktails
+
+interface CocktailRepository {
+    suspend fun searchCocktailsByName(name: String): Cocktails
+}
