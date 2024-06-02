@@ -2,6 +2,7 @@ package com.bogdash.cocktails.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.bogdash.cocktails.Constants.Data.APP_PREFS
 import com.bogdash.data.repository.OnboardingRepositoryImplementation
 import com.bogdash.domain.repository.OnboardingRepository
 import dagger.Module
@@ -18,7 +19,7 @@ class DataModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        return context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
     }
 
     @Provides
