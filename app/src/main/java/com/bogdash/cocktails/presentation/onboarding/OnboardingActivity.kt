@@ -1,19 +1,19 @@
 package com.bogdash.cocktails.presentation.onboarding
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bogdash.cocktails.databinding.ActivityOnboardingBinding
-import com.bogdash.cocktails.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
+    private val viewModel: OnboardingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +32,8 @@ class OnboardingActivity : AppCompatActivity() {
 
     private fun initListeners() {
         binding.btnCloseOnboarding.setOnClickListener {
-            navigateToMainActivity()
+            viewModel.showNext(this)
         }
-    }
-
-    private fun navigateToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
 }
