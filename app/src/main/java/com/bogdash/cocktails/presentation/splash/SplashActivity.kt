@@ -1,21 +1,21 @@
 package com.bogdash.cocktails.presentation.splash
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bogdash.cocktails.Constants
-import com.bogdash.cocktails.presentation.main.MainActivity
 import com.bogdash.cocktails.R
-import com.bogdash.cocktails.presentation.onboarding.OnboardingActivity
+import dagger.hilt.android.AndroidEntryPoint
+import androidx.activity.viewModels
 
+@AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
+
+    private val viewModel: SplashViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,11 +26,7 @@ class SplashActivity : AppCompatActivity() {
             insets
         }
 
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
-            val i = Intent(this@SplashActivity, OnboardingActivity::class.java)
-            startActivity(i)
-            finish()
-        }, Constants.Splash.DELAY_TIME)
+        viewModel.showNextScreen(this)
     }
+
 }
