@@ -1,4 +1,4 @@
-package com.bogdash.data.storage.network.preferences
+package com.bogdash.data.storage.preferences
 
 internal object ConstantsForSharedPreferences {
 

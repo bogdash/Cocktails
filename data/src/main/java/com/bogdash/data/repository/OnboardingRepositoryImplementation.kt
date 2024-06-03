@@ -1,7 +1,7 @@
 package com.bogdash.data.repository
 
 import android.content.SharedPreferences
-import com.bogdash.data.storage.network.preferences.ConstantsForSharedPreferences
+import com.bogdash.data.storage.preferences.ConstantsForSharedPreferences
 import com.bogdash.domain.repository.OnboardingRepository
 
 class OnboardingRepositoryImplementation(private val sharedPreferences: SharedPreferences) :
