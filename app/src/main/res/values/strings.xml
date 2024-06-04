@@ -12,6 +12,7 @@
         <item quantity="one">%d ingredient</item>
         <item quantity="other">%d ingredients</item>
     </plurals>
+    <string name="no_internet_connection">No internet connection</string>
     <!--home screen-->
     <string name="homescreen">Home</string>
     <string name="title_text">Title Text</string>
