@@ -1,7 +1,6 @@
 package com.bogdash.data.storage.preferences
 
-import com.bogdash.data.storage.models.Drink
-import com.bogdash.data.storage.network.dto.DrinkDto
+import com.bogdash.domain.models.Drink
 
 interface CocktailPreferences {
     fun saveCocktail(drink: Drink)

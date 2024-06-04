@@ -2,10 +2,10 @@ package com.bogdash.data.storage.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.bogdash.data.storage.models.Drink
 import com.bogdash.data.storage.preferences.ConstantsForSharedPreferences.COCKTAIL_PREFS
 import com.bogdash.data.storage.preferences.ConstantsForSharedPreferences.LAST_UPDATE_DATE
 import com.bogdash.data.storage.preferences.ConstantsForSharedPreferences.SAVED_COCKTAIL
+import com.bogdash.domain.models.Drink
 import com.google.gson.Gson
 
 class CocktailPreferencesImplementation(context: Context) : CocktailPreferences {

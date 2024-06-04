@@ -23,17 +23,17 @@ class CocktailRepositoryImplementation(
             val today = dateFormat.format(Date())
 
             val lastUpdateDate = cocktailPreferences.getLastUpdateDate()
-            val savedDrink = cocktailPreferences.getCocktail()?.toDomain()
+            val savedDrink = cocktailPreferences.getCocktail()
 
             if (lastUpdateDate == today && savedDrink != null) {
                 Cocktails(listOf(savedDrink))
             } else {
                 val dataCocktails = cocktailApiService.getCocktailOfTheDay()
-                val domainCocktails = Cocktails(dataCocktails.drinks.map { it.toData().toDomain() })
+                val domainCocktails = Cocktails(dataCocktails.drinks.map { it.toDomain() })
 
                 val drink = dataCocktails.drinks.firstOrNull()
                 if (drink != null) {
-                    cocktailPreferences.saveCocktail(drink.toData())
+                    cocktailPreferences.saveCocktail(drink.toDomain())
                     cocktailPreferences.saveLastUpdateDate(today)
                 }
 
