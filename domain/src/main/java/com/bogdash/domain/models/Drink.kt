@@ -1,18 +1,14 @@
-package com.bogdash.data.storage.network.models
+package com.bogdash.domain.models
 
-data class Drink(
+data class Drink (
     val id: String,
     val name: String,
-    val tags: String,
     val category: String,
-    val iba: String,
     val alcoholic: String,
     val glass: String,
     val instructions: String,
     val thumb: String,
-    val ingredients: List<Ingredient>,
-    val creativeCommonsConfirmed: String?,
-    val dateModified: String
+    val ingredients: List<Ingredient>
 )
 
 data class Ingredient(

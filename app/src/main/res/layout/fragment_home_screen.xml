@@ -36,6 +36,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_cocktail_at_home">
+        tools:listitem="@layout/cocktail_card_homescreen_item">
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
