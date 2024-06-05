@@ -43,4 +43,5 @@
     <string name="fish_dabu_dabu">Fish Dabu-Dabu</string>
     <string name="ingredients">Ingredients</string>
     <string name="directions">Directions</string>
+    <string name="category">%s, %s</string>
 </resources>
