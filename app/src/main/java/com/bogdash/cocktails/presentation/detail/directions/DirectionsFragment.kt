@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.presentation.detail
+package com.bogdash.cocktails.presentation.detail.directions
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

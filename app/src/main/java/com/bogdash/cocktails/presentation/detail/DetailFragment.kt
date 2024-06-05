@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
+import com.bogdash.cocktails.presentation.detail.directions.DirectionsFragment
+import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
 import com.google.android.material.tabs.TabLayout
 
 class DetailFragment : Fragment() {

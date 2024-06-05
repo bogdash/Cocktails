@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.presentation.detail
+package com.bogdash.cocktails.presentation.detail.ingredients
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bogdash.cocktails.R
 import com.bogdash.cocktails.presentation.detail.adapter.IngredientAdapter
 import com.bogdash.cocktails.databinding.FragmentIngredientsBinding
 import com.bogdash.cocktails.presentation.detail.model.Ingredient
