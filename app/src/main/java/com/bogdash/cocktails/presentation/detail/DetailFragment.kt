@@ -17,6 +17,7 @@ class DetailFragment : Fragment() {
         DirectionsFragment.newInstance()
     )
     private var isFavorite = false
+    private var drinkId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +29,9 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            drinkId = it.getString(ARG_DRINK_ID)
+        }
 
         // Start fragment
         childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragmentList[0]).commit()
@@ -67,7 +71,12 @@ class DetailFragment : Fragment() {
     }
 
     companion object {
+        private const val ARG_DRINK_ID = "drink_id"
         @JvmStatic
-        fun newInstance() = DetailFragment()
+        fun newInstance(id: String) = DetailFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_DRINK_ID, id)
+            }
+        }
     }
 }
