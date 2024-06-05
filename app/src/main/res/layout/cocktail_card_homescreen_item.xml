@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewRoundCorners"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         app:cardCornerRadius="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,13 +46,23 @@
 
     <TextView
         android:id="@+id/tvCountIngredients"
+        style="@style/FooterText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:fontFamily="@font/google_sans_regular"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/icSheet"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintStart_toEndOf="@id/icSheet"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:text="@string/count_ingredients" />
+
+    <TextView
+        android:id="@+id/tvTextIngredients"
+        style="@style/FooterText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/text_ingredients"
+        app:layout_constraintStart_toEndOf="@id/tvCountIngredients"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

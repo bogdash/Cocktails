@@ -3,9 +3,9 @@ package com.bogdash.data.storage.models
 data class Drink(
     val id: String,
     val name: String,
-    val tags: String,
+    val tags: String?,
     val category: String,
-    val iba: String,
+    val iba: String?,
     val alcoholic: String,
     val glass: String,
     val instructions: String,

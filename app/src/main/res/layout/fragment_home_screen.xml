@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:paddingHorizontal="20dp"
     tools:context=".presentation.home.HomeFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -26,7 +27,6 @@
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_ic_filter"
-            android:padding="8dp"
             android:src="@drawable/ic_btn_filter" />
     </com.google.android.material.appbar.MaterialToolbar>
 

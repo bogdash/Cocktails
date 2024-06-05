@@ -11,7 +11,8 @@
     <!--home screen-->
     <string name="homescreen">Home</string>
     <string name="title_text">Title Text</string>
-    <string name="count_ingredients">4 ingredients</string>
+    <string name="count_ingredients">4</string>
+    <string name="text_ingredients">ingredients</string>
     <string name="title_filters">Filtration</string>
     <string name="title_alcohol">Alcohol</string>
     <string name="title_ingredients">Ingredients</string>

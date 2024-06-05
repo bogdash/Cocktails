@@ -8,15 +8,19 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.CocktailCardHomescreenItemBinding
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
+import com.bumptech.glide.Glide
 
-class HomeItemsAdapter(private val cocktails: Cocktails) : RecyclerView.Adapter<HomeItemsAdapter.ItemsViewHolder>() {
+class HomeItemsAdapter(var cocktails: Cocktails) : RecyclerView.Adapter<HomeItemsAdapter.ItemsViewHolder>() {
 
     class ItemsViewHolder(item: View): RecyclerView.ViewHolder(item) {
         val binding = CocktailCardHomescreenItemBinding.bind(item)
-        fun bind(drink: Drink) = with(binding) {
-            tvTitle.text = drink.name
-            tvCountIngredients.text = drink.ingredients.size.toString()
-            //binding.imageView
+        fun bind(drink: Drink) {
+            val context = this.itemView.context
+            with(binding) {
+                tvTitle.text = drink.name
+                tvCountIngredients.text = drink.ingredients.size.toString()
+                Glide.with(context).load(drink.thumb).into(imageView)
+            }
         }
     }
 
@@ -31,6 +35,11 @@ class HomeItemsAdapter(private val cocktails: Cocktails) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
         holder.bind(cocktails.drinks[position])
+    }
+
+    fun updateCocktails(newCocktails: Cocktails) {
+        this.cocktails = newCocktails
+        notifyDataSetChanged()
     }
 
 }

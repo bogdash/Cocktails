@@ -1,6 +1,7 @@
 package com.bogdash.cocktails.presentation.home
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +18,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val cocktailsByPageMutable = MutableLiveData<Cocktails>()
+    val resultCocktailsByPage: LiveData<Cocktails> = cocktailsByPageMutable
 
     fun GetCocktailsByPage() {
         viewModelScope.launch {
@@ -24,7 +26,7 @@ class HomeViewModel @Inject constructor(
                 val cocktails = getCocktailsByPageUseCase.execute()
                 cocktailsByPageMutable.value = cocktails
             } catch (e: Exception) {
-                Log.d("MyLog", "cocktailsByPage error: $e")
+                Log.d("HomeViewModel", "cocktailsByPage error: $e")
             }
         }
     }
