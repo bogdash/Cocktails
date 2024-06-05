@@ -4,4 +4,5 @@ import com.bogdash.domain.models.Cocktails
 
 interface CocktailRepository {
     suspend fun getCocktailOfTheDay(): Cocktails
+    suspend fun getCocktailDetailsById(): Cocktails
 }
