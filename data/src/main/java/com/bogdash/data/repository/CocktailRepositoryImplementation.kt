@@ -42,4 +42,13 @@ class CocktailRepositoryImplementation(
         }
     }
 
+    override suspend fun getCocktailDetailsById(id: String): Cocktails {
+        return withContext(Dispatchers.IO) {
+            val dataCocktails = cocktailApiService.getCocktailDetailsById(id)
+            val domainCocktails = Cocktails(dataCocktails.drinks.map { it.toDomain() })
+
+            domainCocktails
+        }
+    }
+
 }
