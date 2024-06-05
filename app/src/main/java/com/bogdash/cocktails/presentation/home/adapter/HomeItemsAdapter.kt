@@ -18,7 +18,7 @@ class HomeItemsAdapter(var cocktails: Cocktails) : RecyclerView.Adapter<HomeItem
             val context = this.itemView.context
             with(binding) {
                 tvTitle.text = drink.name
-                tvCountIngredients.text = drink.ingredients.size.toString()
+                tvCountIngredients.text = drink.ingredients?.size.toString()
                 Glide.with(context).load(drink.thumb).into(imageView)
             }
         }

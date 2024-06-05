@@ -2,9 +2,13 @@ package com.bogdash.data.storage.network.retrofit
 
 import com.bogdash.data.storage.network.dto.CocktailsDto
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface CocktailsApiService {
 
-    @GET("search.php?f=a")
+    @GET("filter.php?a=Alcoholic")
     suspend fun getCocktailByPage(): CocktailsDto
+
+    @GET("lookup.php")
+    suspend fun getCocktailDetailsById(@Query("i") id: String): CocktailsDto
 }

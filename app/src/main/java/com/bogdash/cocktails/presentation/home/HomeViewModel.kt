@@ -7,14 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
+import com.bogdash.domain.usecases.GetCocktailDetailsByIdUseCase
 import com.bogdash.domain.usecases.GetCocktailsByPageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCocktailsByPageUseCase: GetCocktailsByPageUseCase
+    private val getCocktailsByPageUseCase: GetCocktailsByPageUseCase,
+    private val getCocktailDetailsUseCase: GetCocktailDetailsByIdUseCase
 ) : ViewModel() {
 
     private val cocktailsByPageMutable = MutableLiveData<Cocktails>()
@@ -24,7 +28,10 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val cocktails = getCocktailsByPageUseCase.execute()
-                cocktailsByPageMutable.value = cocktails
+                val detailedCocktails = cocktails.drinks.map { cocktail ->
+                    getCocktailDetailsUseCase.execute(cocktail.id)
+                }
+                cocktailsByPageMutable.value = Cocktails(detailedCocktails)
             } catch (e: Exception) {
                 Log.d("HomeViewModel", "cocktailsByPage error: $e")
             }
