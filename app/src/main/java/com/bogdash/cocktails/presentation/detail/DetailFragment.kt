@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bogdash.cocktails.R
-import com.bogdash.cocktails.databinding.FragmentDetailedBinding
+import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.google.android.material.tabs.TabLayout
 
-class DetailedFragment : Fragment() {
+class DetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentDetailedBinding
+    private lateinit var binding: FragmentDetailBinding
     private val fragmentList = listOf(
         IngredientsFragment.newInstance(),
         DirectionsFragment.newInstance()
@@ -22,7 +22,7 @@ class DetailedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailedBinding.inflate(inflater, container, false)
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -68,6 +68,6 @@ class DetailedFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = DetailedFragment()
+        fun newInstance() = DetailFragment()
     }
 }

@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".presentation.detail.DetailedFragment">
+    tools:context=".presentation.detail.DetailFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -36,7 +36,7 @@
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/foodImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:scaleType="centerCrop"
         app:siRadius="18dp"
         android:src="@drawable/test_png_for_detail" />

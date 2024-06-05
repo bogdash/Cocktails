@@ -11,7 +11,7 @@ import com.bogdash.cocktails.presentation.detail.model.Ingredient
 class IngredientAdapter(private val ingredientsList: ArrayList<Ingredient>) : RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
 
     class IngredientViewHolder(item: View): RecyclerView.ViewHolder(item) {
-        val binding = IngredientItemBinding.bind(item)
+        private val binding = IngredientItemBinding.bind(item)
         fun bind(ingredient: Ingredient) = with(binding) {
             ingredientName.text = ingredient.name
             ingredientMeasure.text = ingredient.measure
