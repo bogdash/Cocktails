@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
-import com.bogdash.cocktails.presentation.detail.directions.DirectionsFragment
+import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
 import com.bogdash.domain.models.Cocktails
 import com.bumptech.glide.Glide
@@ -22,7 +22,7 @@ class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val fragmentList = listOf(
         IngredientsFragment.newInstance(),
-        DirectionsFragment.newInstance()
+        InstructionsFragment.newInstance("")
     )
     private var isFavorite = false
     private var drinkId: String? = null
@@ -43,22 +43,26 @@ class DetailFragment : Fragment() {
         }
 
         // Start fragment
-        childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragmentList[0]).commit()
+        childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragmentList[0])
+            .commit()
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val fragment = fragmentList[tab.position]
-                childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
+                childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment)
+                    .commit()
 
                 if (tab.position == 1) {
                     view.post {
                         if (fragment.isAdded) {
-                            (fragment as DirectionsFragment).updateInstruction(
-                                "Rub the rim of the glass with the lime slice to make the salt stick to it. " +
-                                        "Take care to moisten only the outer rim and sprinkle the salt on it. " +
-                                        "The salt should present to the lips of the imbiber and never mix into the cocktail. " +
-                                        "Shake the other ingredients with ice, then carefully pour into the glass."
-                            )
+                            val drink = detailViewModel.resultCocktails.value?.drinks?.firstOrNull()
+                            drink?.instructions?.let { instructions ->
+                                val instructionsFragment =
+                                    InstructionsFragment.newInstance(instructions)
+                                childFragmentManager.beginTransaction()
+                                    .replace(R.id.fragmentContainer, instructionsFragment)
+                                    .commit()
+                            }
                         }
                     }
                 }
@@ -108,6 +112,7 @@ class DetailFragment : Fragment() {
 
     companion object {
         private const val ARG_DRINK_ID = "drink_id"
+
         @JvmStatic
         fun newInstance(id: String) = DetailFragment().apply {
             arguments = Bundle().apply {
