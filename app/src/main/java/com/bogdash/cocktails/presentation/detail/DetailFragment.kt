@@ -5,12 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.directions.DirectionsFragment
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
+import com.bogdash.domain.models.Cocktails
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
@@ -20,6 +26,7 @@ class DetailFragment : Fragment() {
     )
     private var isFavorite = false
     private var drinkId: String? = null
+    private val detailViewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,6 +77,33 @@ class DetailFragment : Fragment() {
             binding.btnFavorite.isSelected = isFavorite
             // TODO: Add logic saved actions
         }
+
+        observeCocktailDetails()
+        loadCocktailDetails()
+    }
+
+    private fun observeCocktailDetails() {
+        detailViewModel.resultCocktails.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                updateUI(it)
+            }
+        })
+    }
+
+    private fun loadCocktailDetails() {
+        drinkId?.let {
+            detailViewModel.getCocktailDetailsById(it)
+        }
+    }
+
+    private fun updateUI(cocktails: Cocktails) {
+        val drink = cocktails.drinks.first()
+        with(binding) {
+            cocktailTitleDetails.text = drink.name
+            Glide.with(this@DetailFragment).load(drink.thumb).into(cocktailImageDetails)
+            category.text = getString(R.string.category, drink.category, drink.alcoholic)
+        }
+
     }
 
     companion object {
