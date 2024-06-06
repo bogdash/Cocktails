@@ -16,9 +16,4 @@ class DomainModule {
     fun provideGetCocktailsByPage(repository: CocktailRepository): GetCocktailsByPageUseCase {
         return GetCocktailsByPageUseCase(repository)
     }
-
-    @Provides
-    fun provideGetCocktailDetailsById(repository: CocktailRepository): GetCocktailDetailsByIdUseCase {
-        return GetCocktailDetailsByIdUseCase(repository)
-    }
 }

@@ -17,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCocktailsByPageUseCase: GetCocktailsByPageUseCase,
-    private val getCocktailDetailsUseCase: GetCocktailDetailsByIdUseCase
+    private val getCocktailsByPageUseCase: GetCocktailsByPageUseCase
 ) : ViewModel() {
 
     private val cocktailsByPageMutable = MutableLiveData<Cocktails>()
@@ -28,10 +27,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val cocktails = getCocktailsByPageUseCase.execute()
-                val detailedCocktails = cocktails.drinks.map { cocktail ->
-                    getCocktailDetailsUseCase.execute(cocktail.id)
-                }
-                cocktailsByPageMutable.value = Cocktails(detailedCocktails)
+                cocktailsByPageMutable.value = cocktails
             } catch (e: Exception) {
                 Log.d("HomeViewModel", "cocktailsByPage error: $e")
             }

@@ -8,7 +8,4 @@ interface CocktailsApiService {
 
     @GET("filter.php?a=Alcoholic")
     suspend fun getCocktailByPage(): CocktailsDto
-
-    @GET("lookup.php")
-    suspend fun getCocktailDetailsById(@Query("i") id: String): CocktailsDto
 }

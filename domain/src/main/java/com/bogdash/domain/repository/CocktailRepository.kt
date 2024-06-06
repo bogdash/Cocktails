@@ -5,5 +5,4 @@ import com.bogdash.domain.models.Drink
 
 interface CocktailRepository {
     suspend fun getCocktailsByPage(): Cocktails
-    suspend fun getCocktailDetailsById(id: String): Drink
 }

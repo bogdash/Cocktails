@@ -18,12 +18,4 @@ class CocktailRepositoryImplementation(
             domainCocktails
         }
     }
-
-    override suspend fun getCocktailDetailsById(id: String): Drink {
-        return withContext(Dispatchers.IO) {
-            val dataCocktails = cocktailApiService.getCocktailDetailsById(id)
-            val domainCocktails = dataCocktails.drinks.firstOrNull()?.toDomain()
-            domainCocktails?: throw NoSuchElementException("No drink found with id: $id")
-        }
-    }
 }
