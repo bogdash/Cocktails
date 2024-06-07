@@ -75,7 +75,7 @@ class DetailFragment : Fragment() {
             resultCocktails.observe(viewLifecycleOwner) {
                 it?.let {
                     updateUI(it)
-                    detailViewModel.setSelectedTab(0)
+                    detailViewModel.setSelectedTab(TAB_LAYOUT_LEFT)
                 }
             }
 
@@ -85,13 +85,13 @@ class DetailFragment : Fragment() {
 
             selectedTab.observe(viewLifecycleOwner) { tabIndex ->
                 val fragment = when (tabIndex) {
-                    0 -> IngredientsFragment
+                    TAB_LAYOUT_LEFT -> IngredientsFragment
                         .newInstance(
                             resultCocktails.value?.drinks?.firstOrNull()?.ingredients?.toParcelable()
                                 ?: emptyList()
                         )
 
-                    1 -> InstructionsFragment
+                    TAB_LAYOUT_RIGHT -> InstructionsFragment
                         .newInstance(
                             resultCocktails.value?.drinks?.firstOrNull()?.instructions ?: ""
                         )
@@ -127,12 +127,14 @@ class DetailFragment : Fragment() {
     }
 
     private fun updateFavoriteButtonUI(isFavorite: Boolean) {
-        if (isFavorite) binding.btnFavorite.isSelected = true else binding.btnFavorite.isSelected = false
+        binding.btnFavorite.isSelected = isFavorite
     }
 
     companion object {
         private const val ARG_DRINK_ID = "drink_id"
         private const val INVALID_TAB_INDEX = "Invalid tab index"
+        private const val TAB_LAYOUT_LEFT = 0
+        private const val TAB_LAYOUT_RIGHT = 1
 
         @JvmStatic
         fun newInstance(id: String) = DetailFragment().apply {

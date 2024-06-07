@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+private const val DRINK_NOT_FOUND = "Drink not found"
+
 class CocktailRepositoryImplementation(
     private val cocktailApiService: CocktailsApiService,
     private val cocktailPreferences: CocktailPreferences,
@@ -106,10 +108,11 @@ class CocktailRepositoryImplementation(
                     thumb = drinkEntity.thumb?: "",
                     ingredients = ingredientEntities.map { Ingredient(it.name, it.measure) },
                     creativeCommonsConfirmed = drinkEntity.creativeCommonsConfirmed,
-                    dateModified = drinkEntity.dateModified?: ""
+                    dateModified = drinkEntity.dateModified?: "",
+                    isFavorite = drinkEntity.isFavorite
                 )
             } else {
-                throw Exception("Drink not found")
+                throw Exception(DRINK_NOT_FOUND)
             }
         }
     }
