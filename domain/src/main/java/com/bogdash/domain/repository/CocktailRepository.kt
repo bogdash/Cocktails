@@ -7,4 +7,6 @@ interface CocktailRepository {
     suspend fun getCocktailOfTheDay(): Cocktails
     suspend fun getCocktailDetailsById(id: String): Cocktails
     suspend fun saveCocktail(drink: Drink)
+    suspend fun getCocktailById(id: String): Drink
+    suspend fun deleteCocktailById(id: String)
 }
