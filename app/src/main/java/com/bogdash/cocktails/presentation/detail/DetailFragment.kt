@@ -11,6 +11,8 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
+import com.bogdash.cocktails.presentation.detail.models.ParcelableIngredient
+import com.bogdash.cocktails.presentation.detail.models.mappers.toParcelable
 import com.bogdash.domain.models.Cocktails
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -21,7 +23,7 @@ class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
     private val fragmentList = listOf(
-        IngredientsFragment.newInstance(),
+        IngredientsFragment.newInstance(emptyList()),
         InstructionsFragment.newInstance("")
     )
     private var isFavorite = false
@@ -65,6 +67,17 @@ class DetailFragment : Fragment() {
                             }
                         }
                     }
+                } else {
+                    view.post {
+                        if (fragment.isAdded) {
+                            val drink = detailViewModel.resultCocktails.value?.drinks?.firstOrNull()
+                            drink?.ingredients?.let { ingredients ->
+                                val parcelableIngredients = ingredients.toParcelable()
+                                val ingredientsFragment = IngredientsFragment.newInstance(parcelableIngredients)
+                                childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, ingredientsFragment).commit()
+                            }
+                        }
+                    }
                 }
             }
 
@@ -90,6 +103,14 @@ class DetailFragment : Fragment() {
         detailViewModel.resultCocktails.observe(viewLifecycleOwner, Observer {
             it?.let {
                 updateUI(it)
+                val drink = it.drinks.firstOrNull()
+                drink?.ingredients?.let { ingredients ->
+                    val parcelableIngredients = ingredients.toParcelable()
+                    val ingredientsFragment = IngredientsFragment.newInstance(parcelableIngredients)
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, ingredientsFragment)
+                        .commit()
+                }
             }
         })
     }

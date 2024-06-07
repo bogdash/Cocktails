@@ -6,19 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bogdash.cocktails.presentation.detail.adapter.IngredientAdapter
 import com.bogdash.cocktails.databinding.FragmentIngredientsBinding
-import com.bogdash.cocktails.presentation.detail.model.Ingredient
+import com.bogdash.cocktails.presentation.detail.models.ParcelableIngredient
 
 class IngredientsFragment : Fragment() {
 
     private lateinit var binding: FragmentIngredientsBinding
-
-    private val ingredientsList = arrayListOf(
-        Ingredient("Tequila", "4.5 cl"),
-        Ingredient("Lime Juice", "1.5 cl"),
-        Ingredient( "Agave syrup", "2 spoons")
-    )
+    private lateinit var ingredientAdapter: IngredientAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,13 +23,36 @@ class IngredientsFragment : Fragment() {
         return binding.root
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = IngredientsFragment()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        arguments?.let { it ->
+            val ingredients = it.getParcelableArrayList<ParcelableIngredient>(ARG_INGREDIENTS)
+            ingredients?.let {
+                updateIngredientsList(it)
+            }
+        }
     }
 
     private fun setupRecyclerView() {
         binding.rcIngredients.layoutManager = LinearLayoutManager(context)
-        binding.rcIngredients.adapter = IngredientAdapter(ingredientsList)
+        ingredientAdapter = IngredientAdapter(emptyList())
+        binding.rcIngredients.adapter = ingredientAdapter
+    }
+
+    private fun updateIngredientsList(ingredients: List<ParcelableIngredient>) {
+        ingredientAdapter.updateList(ingredients)
+    }
+
+    companion object {
+        private const val ARG_INGREDIENTS = "ingredients"
+
+        @JvmStatic
+        fun newInstance(ingredients: List<ParcelableIngredient>): IngredientsFragment {
+            val fragment = IngredientsFragment()
+            fragment.arguments = Bundle().apply {
+                putParcelableArrayList(ARG_INGREDIENTS, ArrayList(ingredients))
+            }
+            return fragment
+        }
     }
 }
