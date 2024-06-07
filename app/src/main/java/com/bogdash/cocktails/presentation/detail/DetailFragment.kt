@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
-import com.bogdash.cocktails.presentation.detail.models.ParcelableIngredient
 import com.bogdash.cocktails.presentation.detail.models.mappers.toParcelable
 import com.bogdash.domain.models.Cocktails
 import com.bumptech.glide.Glide
@@ -44,38 +42,47 @@ class DetailFragment : Fragment() {
             drinkId = it.getString(ARG_DRINK_ID)
         }
 
-        // Start fragment
-        childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragmentList[0])
-            .commit()
+        initListeners()
+        observeCocktailDetails()
+        loadCocktailDetails()
+    }
 
+    private fun initListeners() {
+        initTabLayout()
+
+        with(binding) {
+            btnBack.setOnClickListener {
+                parentFragmentManager.popBackStack()
+            }
+
+            btnFavorite.setOnClickListener {
+                isFavorite = !isFavorite
+                btnFavorite.isSelected = isFavorite
+                // TODO: Add logic saved actions
+            }
+        }
+    }
+
+    private fun initTabLayout() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val fragment = fragmentList[tab.position]
-                childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment)
+                childFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
                     .commit()
 
-                if (tab.position == 1) {
-                    view.post {
+                if (tab.position == 0) {
+                    view?.post {
                         if (fragment.isAdded) {
-                            val drink = detailViewModel.resultCocktails.value?.drinks?.firstOrNull()
-                            drink?.instructions?.let { instructions ->
-                                val instructionsFragment =
-                                    InstructionsFragment.newInstance(instructions)
-                                childFragmentManager.beginTransaction()
-                                    .replace(R.id.fragmentContainer, instructionsFragment)
-                                    .commit()
-                            }
+                            addIngredientsFragment()
                         }
                     }
+
                 } else {
-                    view.post {
+                    view?.post {
                         if (fragment.isAdded) {
-                            val drink = detailViewModel.resultCocktails.value?.drinks?.firstOrNull()
-                            drink?.ingredients?.let { ingredients ->
-                                val parcelableIngredients = ingredients.toParcelable()
-                                val ingredientsFragment = IngredientsFragment.newInstance(parcelableIngredients)
-                                childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, ingredientsFragment).commit()
-                            }
+                            addInstructionsFragment()
                         }
                     }
                 }
@@ -84,35 +91,35 @@ class DetailFragment : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
-
-        binding.btnBack.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
-
-        binding.btnFavorite.setOnClickListener {
-            isFavorite = !isFavorite
-            binding.btnFavorite.isSelected = isFavorite
-            // TODO: Add logic saved actions
-        }
-
-        observeCocktailDetails()
-        loadCocktailDetails()
     }
 
     private fun observeCocktailDetails() {
-        detailViewModel.resultCocktails.observe(viewLifecycleOwner, Observer {
+        detailViewModel.resultCocktails.observe(viewLifecycleOwner) {
             it?.let {
                 updateUI(it)
-                val drink = it.drinks.firstOrNull()
-                drink?.ingredients?.let { ingredients ->
-                    val parcelableIngredients = ingredients.toParcelable()
-                    val ingredientsFragment = IngredientsFragment.newInstance(parcelableIngredients)
-                    childFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, ingredientsFragment)
-                        .commit()
-                }
+                addIngredientsFragment()
             }
-        })
+        }
+    }
+
+    private fun addIngredientsFragment() {
+        val drink = detailViewModel.resultCocktails.value?.drinks?.firstOrNull()
+        drink?.ingredients?.let { ingredients ->
+            val parcelableIngredients = ingredients.toParcelable()
+            val ingredientsFragment = IngredientsFragment.newInstance(parcelableIngredients)
+            childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, ingredientsFragment).commit()
+        }
+    }
+
+    private fun addInstructionsFragment() {
+        val drink = detailViewModel.resultCocktails.value?.drinks?.firstOrNull()
+        drink?.instructions?.let { instructions ->
+            val instructionsFragment =
+                InstructionsFragment.newInstance(instructions)
+            childFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, instructionsFragment)
+                .commit()
+        }
     }
 
     private fun loadCocktailDetails() {
@@ -128,7 +135,6 @@ class DetailFragment : Fragment() {
             Glide.with(this@DetailFragment).load(drink.thumb).into(cocktailImageDetails)
             category.text = getString(R.string.category, drink.category, drink.alcoholic)
         }
-
     }
 
     companion object {
