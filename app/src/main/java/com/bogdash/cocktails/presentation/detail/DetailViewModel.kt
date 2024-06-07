@@ -18,6 +18,12 @@ class DetailViewModel @Inject constructor(
     private val detailsMutable = MutableLiveData<Cocktails>()
     val resultCocktails: LiveData<Cocktails> = detailsMutable
 
+    private val favoriteStateMutable = MutableLiveData<Boolean>()
+    val favoriteState: LiveData<Boolean> = favoriteStateMutable
+
+    private val selectedTabMutable = MutableLiveData<Int>()
+    val selectedTab: LiveData<Int> = selectedTabMutable
+
     fun getCocktailDetailsById(id: String) {
         viewModelScope.launch {
             try {
@@ -27,5 +33,15 @@ class DetailViewModel @Inject constructor(
                 Log.d("MyLog", "DetailViewModel $e")
             }
         }
+    }
+
+    fun toggleFavorite() {
+        val currentState = favoriteStateMutable.value ?: false
+        favoriteStateMutable.value = !currentState
+        // TODO: Add logic saved actions
+    }
+
+    fun setSelectedTab(tabIndex: Int) {
+        selectedTabMutable.value = tabIndex
     }
 }

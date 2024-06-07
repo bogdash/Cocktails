@@ -20,11 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private val fragmentList = listOf(
-        IngredientsFragment.newInstance(emptyList()),
-        InstructionsFragment.newInstance("")
-    )
-    private var isFavorite = false
     private var drinkId: String? = null
     private val detailViewModel: DetailViewModel by viewModels()
 
@@ -43,7 +38,7 @@ class DetailFragment : Fragment() {
         }
 
         initListeners()
-        observeCocktailDetails()
+        observeViewModel()
         loadCocktailDetails()
     }
 
@@ -56,9 +51,7 @@ class DetailFragment : Fragment() {
             }
 
             btnFavorite.setOnClickListener {
-                isFavorite = !isFavorite
-                btnFavorite.isSelected = isFavorite
-                // TODO: Add logic saved actions
+                detailViewModel.toggleFavorite()
             }
         }
     }
@@ -66,26 +59,7 @@ class DetailFragment : Fragment() {
     private fun initTabLayout() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                val fragment = fragmentList[tab.position]
-                childFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, fragment)
-                    .commit()
-
-                if (tab.position == 0) {
-                    view?.post {
-                        if (fragment.isAdded) {
-                            addIngredientsFragment()
-                        }
-                    }
-
-                } else {
-                    view?.post {
-                        if (fragment.isAdded) {
-                            addInstructionsFragment()
-                        }
-                    }
-                }
+                detailViewModel.setSelectedTab(tab.position)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -93,32 +67,38 @@ class DetailFragment : Fragment() {
         })
     }
 
-    private fun observeCocktailDetails() {
-        detailViewModel.resultCocktails.observe(viewLifecycleOwner) {
-            it?.let {
-                updateUI(it)
-                addIngredientsFragment()
+    private fun observeViewModel() {
+        with(detailViewModel) {
+            resultCocktails.observe(viewLifecycleOwner) {
+                it?.let {
+                    updateUI(it)
+                    detailViewModel.setSelectedTab(0)
+                }
             }
-        }
-    }
 
-    private fun addIngredientsFragment() {
-        val drink = detailViewModel.resultCocktails.value?.drinks?.firstOrNull()
-        drink?.ingredients?.let { ingredients ->
-            val parcelableIngredients = ingredients.toParcelable()
-            val ingredientsFragment = IngredientsFragment.newInstance(parcelableIngredients)
-            childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, ingredientsFragment).commit()
-        }
-    }
+            favoriteState.observe(viewLifecycleOwner) { isFavorite ->
+                binding.btnFavorite.isSelected = isFavorite
+            }
 
-    private fun addInstructionsFragment() {
-        val drink = detailViewModel.resultCocktails.value?.drinks?.firstOrNull()
-        drink?.instructions?.let { instructions ->
-            val instructionsFragment =
-                InstructionsFragment.newInstance(instructions)
-            childFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, instructionsFragment)
-                .commit()
+            selectedTab.observe(viewLifecycleOwner) { tabIndex ->
+                val fragment = when (tabIndex) {
+                    0 -> IngredientsFragment
+                        .newInstance(
+                            resultCocktails.value?.drinks?.firstOrNull()?.ingredients?.toParcelable()
+                                ?: emptyList()
+                        )
+
+                    1 -> InstructionsFragment
+                        .newInstance(
+                            resultCocktails.value?.drinks?.firstOrNull()?.instructions ?: ""
+                        )
+
+                    else -> throw IllegalArgumentException(INVALID_TAB_INDEX)
+                }
+
+                childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment)
+                    .commit()
+            }
         }
     }
 
@@ -139,6 +119,7 @@ class DetailFragment : Fragment() {
 
     companion object {
         private const val ARG_DRINK_ID = "drink_id"
+        private const val INVALID_TAB_INDEX = "Invalid tab index"
 
         @JvmStatic
         fun newInstance(id: String) = DetailFragment().apply {
