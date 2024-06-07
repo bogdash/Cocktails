@@ -17,7 +17,7 @@ data class DrinkEntity (
     val thumb: String?,
     val creativeCommonsConfirmed: String?,
     val dateModified: String?,
-    val isFavorite: Boolean? = false
+    val isFavorite: Boolean = false
 )
 
 @Entity(

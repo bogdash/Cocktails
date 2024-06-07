@@ -73,7 +73,7 @@ class CocktailRepositoryImplementation(
                 thumb = drink.thumb,
                 creativeCommonsConfirmed = drink.creativeCommonsConfirmed,
                 dateModified = drink.dateModified,
-                isFavorite = false
+                isFavorite = drink.isFavorite
             )
             drinkDao.insertDrink(drinkEntity)
 
@@ -111,6 +111,15 @@ class CocktailRepositoryImplementation(
             } else {
                 throw Exception("Drink not found")
             }
+        }
+    }
+
+    override suspend fun isCocktailByIdSaved(id: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            val drinkEntity = drinkDao.getDrinkById(id)
+            val ingredientEntities = ingredientDao.getIngredientsByDrinkId(id)
+
+            drinkEntity != null && ingredientEntities.isNotEmpty()
         }
     }
 

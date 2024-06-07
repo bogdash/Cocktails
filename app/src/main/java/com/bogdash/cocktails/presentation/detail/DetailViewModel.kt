@@ -9,6 +9,7 @@ import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
 import com.bogdash.domain.usecases.DeleteCocktailByIdUseCase
 import com.bogdash.domain.usecases.GetCocktailDetailsByIdUseCase
+import com.bogdash.domain.usecases.IsCocktailSavedUseCase
 import com.bogdash.domain.usecases.SaveCocktailByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,13 +21,14 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val getCocktailDetailsByIdUseCase: GetCocktailDetailsByIdUseCase,
     private val saveCocktailByIdUseCase: SaveCocktailByIdUseCase,
-    private val deleteCocktailByIdUseCase: DeleteCocktailByIdUseCase
+    private val deleteCocktailByIdUseCase: DeleteCocktailByIdUseCase,
+    private val isCocktailSavedUseCase: IsCocktailSavedUseCase
 ) : ViewModel() {
 
     private val detailsMutable = MutableLiveData<Cocktails>()
     val resultCocktails: LiveData<Cocktails> = detailsMutable
 
-    private val favoriteStateMutable = MutableLiveData<Boolean>()
+    private val favoriteStateMutable = MutableLiveData(false)
     val favoriteState: LiveData<Boolean> = favoriteStateMutable
 
     private val selectedTabMutable = MutableLiveData<Int>()
@@ -35,15 +37,15 @@ class DetailViewModel @Inject constructor(
     private val _uiMessageChannel: MutableSharedFlow<Int> = MutableSharedFlow()
     val uiMessageChannel = _uiMessageChannel.asSharedFlow()
 
-    private var currentDrink: Drink? = null
+    private lateinit var currentDrink: Drink
 
     fun getCocktailDetailsById(id: String) {
         viewModelScope.launch {
             try {
                 val details = getCocktailDetailsByIdUseCase.execute(id)
                 detailsMutable.value = details
-                currentDrink = details.drinks.firstOrNull()
-                favoriteStateMutable.value = currentDrink?.isFavorite
+                currentDrink = details.drinks.first()
+                favoriteStateMutable.value = isCocktailSavedUseCase.execute(currentDrink.id)
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.no_internet_connection)
             }
@@ -62,6 +64,7 @@ class DetailViewModel @Inject constructor(
                     } else {
                         saveCocktailByIdUseCase.execute(drink)
                     }
+                    favoriteStateMutable.value = drink.isFavorite
                 } catch (e: Exception) {
                     _uiMessageChannel.emit(R.string.error_database)
                 }

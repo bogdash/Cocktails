@@ -8,5 +8,6 @@ interface CocktailRepository {
     suspend fun getCocktailDetailsById(id: String): Cocktails
     suspend fun saveCocktail(drink: Drink)
     suspend fun getCocktailById(id: String): Drink
+    suspend fun isCocktailByIdSaved(id: String): Boolean
     suspend fun deleteCocktailById(id: String)
 }
