@@ -1,16 +1,18 @@
 package com.bogdash.cocktails.presentation.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bogdash.cocktails.R
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
 import com.bogdash.domain.usecases.DeleteCocktailByIdUseCase
 import com.bogdash.domain.usecases.GetCocktailDetailsByIdUseCase
 import com.bogdash.domain.usecases.SaveCocktailByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +22,7 @@ class DetailViewModel @Inject constructor(
     private val saveCocktailByIdUseCase: SaveCocktailByIdUseCase,
     private val deleteCocktailByIdUseCase: DeleteCocktailByIdUseCase
 ) : ViewModel() {
+
     private val detailsMutable = MutableLiveData<Cocktails>()
     val resultCocktails: LiveData<Cocktails> = detailsMutable
 
@@ -28,6 +31,9 @@ class DetailViewModel @Inject constructor(
 
     private val selectedTabMutable = MutableLiveData<Int>()
     val selectedTab: LiveData<Int> = selectedTabMutable
+
+    private val _uiMessageChannel: MutableSharedFlow<Int> = MutableSharedFlow()
+    val uiMessageChannel = _uiMessageChannel.asSharedFlow()
 
     private var currentDrink: Drink? = null
 
@@ -39,7 +45,7 @@ class DetailViewModel @Inject constructor(
                 currentDrink = details.drinks.firstOrNull()
                 favoriteStateMutable.value = currentDrink?.isFavorite
             } catch (e: Exception) {
-                Log.d("MyLog", "DetailViewModel $e")
+                _uiMessageChannel.emit(R.string.no_internet_connection)
             }
         }
     }
@@ -57,7 +63,7 @@ class DetailViewModel @Inject constructor(
                         saveCocktailByIdUseCase.execute(drink)
                     }
                 } catch (e: Exception) {
-                    Log.d("MyLog", "DetailViewModel toggleFavorite $e")
+                    _uiMessageChannel.emit(R.string.error_database)
                 }
             }
         }
@@ -66,4 +72,5 @@ class DetailViewModel @Inject constructor(
     fun setSelectedTab(tabIndex: Int) {
         selectedTabMutable.value = tabIndex
     }
+
 }

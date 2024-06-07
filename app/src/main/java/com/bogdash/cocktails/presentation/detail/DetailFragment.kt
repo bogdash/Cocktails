@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
@@ -15,6 +17,7 @@ import com.bogdash.domain.models.Cocktails
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -77,7 +80,7 @@ class DetailFragment : Fragment() {
             }
 
             favoriteState.observe(viewLifecycleOwner) { isFavorite ->
-                binding.btnFavorite.isSelected = isFavorite
+                updateFavoriteButtonUI(isFavorite)
             }
 
             selectedTab.observe(viewLifecycleOwner) { tabIndex ->
@@ -99,6 +102,12 @@ class DetailFragment : Fragment() {
                 childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment)
                     .commit()
             }
+
+            lifecycleScope.launch {
+                uiMessageChannel.collect {
+                    Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
@@ -117,6 +126,10 @@ class DetailFragment : Fragment() {
         }
     }
 
+    private fun updateFavoriteButtonUI(isFavorite: Boolean) {
+        if (isFavorite) binding.btnFavorite.isSelected = true else binding.btnFavorite.isSelected = false
+    }
+
     companion object {
         private const val ARG_DRINK_ID = "drink_id"
         private const val INVALID_TAB_INDEX = "Invalid tab index"
@@ -128,4 +141,5 @@ class DetailFragment : Fragment() {
             }
         }
     }
+
 }

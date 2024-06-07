@@ -14,7 +14,7 @@
         <item quantity="one">%d ingredient</item>
         <item quantity="other">%d ingredients</item>
     </plurals>
-    
+
     <!--Home screen-->
     <string name="homescreen">Home</string>
     <string name="title_text">Title Text</string>
