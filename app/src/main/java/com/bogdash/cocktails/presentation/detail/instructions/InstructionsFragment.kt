@@ -37,4 +37,5 @@ class InstructionsFragment : Fragment() {
             }
         }
     }
+
 }

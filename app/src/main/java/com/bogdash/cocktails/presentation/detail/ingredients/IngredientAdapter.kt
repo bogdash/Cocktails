@@ -1,13 +1,11 @@
 package com.bogdash.cocktails.presentation.detail.ingredients
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.IngredientItemBinding
 import com.bogdash.cocktails.presentation.detail.models.ParcelableIngredient
-import com.bogdash.domain.models.Ingredient
 
 class IngredientAdapter(private var ingredientsList: List<ParcelableIngredient>) : RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
 
@@ -32,7 +30,11 @@ class IngredientAdapter(private var ingredientsList: List<ParcelableIngredient>)
     }
 
     fun updateList(newList: List<ParcelableIngredient>) {
+        val diffCallback = IngredientDiffCallback(ingredientsList, newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         ingredientsList = newList
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
+
 }
