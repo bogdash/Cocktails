@@ -7,11 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
-import com.bogdash.domain.usecases.GetCocktailDetailsByIdUseCase
 import com.bogdash.domain.usecases.GetCocktailsByPageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,13 +20,36 @@ class HomeViewModel @Inject constructor(
     private val cocktailsByPageMutable = MutableLiveData<Cocktails>()
     val resultCocktailsByPage: LiveData<Cocktails> = cocktailsByPageMutable
 
-    fun GetCocktailsByPage() {
+    private val loadingMutable = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = loadingMutable
+
+    private val allCocktails = mutableListOf<Drink>()
+    private var currentPage = 0
+    private val pageSize = 10
+
+    init {
         viewModelScope.launch {
             try {
+                loadingMutable.value = true
                 val cocktails = getCocktailsByPageUseCase.execute()
-                cocktailsByPageMutable.value = cocktails
+                allCocktails.addAll(cocktails.drinks)
+                GetNextPageCocktails()
             } catch (e: Exception) {
-                Log.d("HomeViewModel", "cocktailsByPage error: $e")
+                Log.e("HomeViewModel", "Error loading cocktails: $e")
+            } finally {
+                loadingMutable.value = false
+            }
+        }
+    }
+
+    fun GetNextPageCocktails() {
+        viewModelScope.launch {
+            try {
+                val nextPageCocktails = allCocktails.take((currentPage + 1) * pageSize)
+                cocktailsByPageMutable.value = Cocktails(nextPageCocktails)
+                currentPage++
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "cocktailsByPage error: $e")
             }
         }
     }
