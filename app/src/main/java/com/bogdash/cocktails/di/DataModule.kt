@@ -29,9 +29,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideCocktailRepository(
-        apiService: CocktailsApiService,
-    ): CocktailRepository {
+    fun provideCocktailRepository(apiService: CocktailsApiService): CocktailRepository {
         return CocktailRepositoryImplementation(apiService)
     }
 }
