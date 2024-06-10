@@ -1,8 +1,7 @@
 package com.bogdash.cocktails.di
 
 import com.bogdash.domain.repository.CocktailRepository
-import com.bogdash.domain.usecases.GetCocktailDetailsByIdUseCase
-import com.bogdash.domain.usecases.GetCocktailsByPageUseCase
+import com.bogdash.domain.usecases.GetFilteredCocktailsByAlcoholTypeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +12,7 @@ import dagger.hilt.android.components.ViewModelComponent
 class DomainModule {
 
     @Provides
-    fun provideGetCocktailsByPage(repository: CocktailRepository): GetCocktailsByPageUseCase {
-        return GetCocktailsByPageUseCase(repository)
+    fun provideGetFilteredCocktailsByAlcoholType(repository: CocktailRepository): GetFilteredCocktailsByAlcoholTypeUseCase {
+        return GetFilteredCocktailsByAlcoholTypeUseCase(repository)
     }
 }

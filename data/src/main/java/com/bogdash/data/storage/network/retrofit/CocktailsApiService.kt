@@ -6,6 +6,7 @@ import retrofit2.http.Query
 
 interface CocktailsApiService {
 
-    @GET("filter.php?a=Alcoholic")
-    suspend fun getCocktailByPage(): CocktailsDto
+    @GET("filter.php")
+    suspend fun getFilteredCocktailsByAlcoholType(@Query("a") type: String): CocktailsDto
 }
+

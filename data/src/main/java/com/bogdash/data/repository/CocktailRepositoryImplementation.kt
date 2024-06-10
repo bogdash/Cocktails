@@ -11,9 +11,9 @@ class CocktailRepositoryImplementation(
     private val cocktailApiService: CocktailsApiService
 ) : CocktailRepository {
 
-    override suspend fun getCocktailsByPage(): Cocktails {
+    override suspend fun getFilteredCocktailsByAlcoholType(type: String): Cocktails {
         return withContext(Dispatchers.IO) {
-            val dataCocktails = cocktailApiService.getCocktailByPage()
+            val dataCocktails = cocktailApiService.getFilteredCocktailsByAlcoholType(type)
             val domainCocktails = Cocktails(dataCocktails.drinks.map { it.toDomain() })
             domainCocktails
         }

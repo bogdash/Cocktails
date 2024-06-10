@@ -7,18 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
-import com.bogdash.domain.usecases.GetCocktailsByPageUseCase
+import com.bogdash.domain.usecases.GetFilteredCocktailsByAlcoholTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCocktailsByPageUseCase: GetCocktailsByPageUseCase
+    private val getFilteredCocktailsByAlcoholTypeUseCase: GetFilteredCocktailsByAlcoholTypeUseCase
 ) : ViewModel() {
 
-    private val cocktailsByPageMutable = MutableLiveData<Cocktails>()
-    val resultCocktailsByPage: LiveData<Cocktails> = cocktailsByPageMutable
+    private val cocktailsMutable = MutableLiveData<Cocktails>()
+    val resultCocktails: LiveData<Cocktails> = cocktailsMutable
 
     private val loadingMutable = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = loadingMutable
@@ -27,11 +27,11 @@ class HomeViewModel @Inject constructor(
     private var currentPage = 0
     private val pageSize = 10
 
-    init {
+    fun GetFilteredCocktailsByAlcoholType(type: String) {
         viewModelScope.launch {
             try {
                 loadingMutable.value = true
-                val cocktails = getCocktailsByPageUseCase.execute()
+                val cocktails = getFilteredCocktailsByAlcoholTypeUseCase.execute(type)
                 allCocktails.addAll(cocktails.drinks)
                 GetNextPageCocktails()
             } catch (e: Exception) {
@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val nextPageCocktails = allCocktails.take((currentPage + 1) * pageSize)
-                cocktailsByPageMutable.value = Cocktails(nextPageCocktails)
+                cocktailsMutable.value = Cocktails(nextPageCocktails)
                 currentPage++
             } catch (e: Exception) {
                 Log.e("HomeViewModel", "cocktailsByPage error: $e")

@@ -37,7 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         initObservers()
         initListeners()
         setupRecyclerView()
-        homeViewModel.GetNextPageCocktails()
+        homeViewModel.GetFilteredCocktailsByAlcoholType("Alcoholic")
     }
 
     private fun setupRecyclerView() {
@@ -50,7 +50,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
     private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            homeViewModel.resultCocktailsByPage.observe(viewLifecycleOwner) { cocktails ->
+            homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
                 homeItemsAdapter.updateCocktails(cocktails.drinks)
                 binding.progressBar.visibility =
                     if (cocktails.drinks.isEmpty()) View.VISIBLE else View.GONE
