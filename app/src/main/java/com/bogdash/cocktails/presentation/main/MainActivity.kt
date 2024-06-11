@@ -17,6 +17,7 @@ import com.bogdash.cocktails.presentation.home.HomeFragment
 import com.bogdash.cocktails.presentation.saved.SavedFragment
 import com.bogdash.cocktails.presentation.search.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -92,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                 dialog.dialog()
             }
         }
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             mainViewModel.uiMessageChannel.collect {
                 Toast.makeText(this@MainActivity, getString(it), Toast.LENGTH_SHORT).show()
             }

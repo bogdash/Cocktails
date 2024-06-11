@@ -12,7 +12,8 @@ data class Drink(
     val thumb: String?,
     val ingredients: List<Ingredient>?,
     val creativeCommonsConfirmed: String?,
-    val dateModified: String?
+    val dateModified: String?,
+    var isFavorite: Boolean = false
 )
 
 data class Ingredient(
