@@ -11,6 +11,10 @@ import com.bogdash.data.storage.network.retrofit.CocktailsRetrofitClient
 import com.bogdash.data.storage.preferences.CocktailPreferences
 import com.bogdash.data.storage.preferences.CocktailPreferencesImplementation
 import com.bogdash.domain.repository.CocktailRepository
+import android.content.SharedPreferences
+import com.bogdash.cocktails.Constants.Data.APP_PREFS
+import com.bogdash.data.repository.OnboardingRepositoryImplementation
+import com.bogdash.domain.repository.OnboardingRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +31,12 @@ class DataModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return CocktailsRetrofitClient.client
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE)
     }
 
     @Provides
@@ -73,4 +83,11 @@ class DataModule {
     ): CocktailRepository {
         return CocktailRepositoryImplementation(apiService, cocktailPreferences, drinkDao, ingredientDao)
     }
+
+    @Provides
+    @Singleton
+    fun provideOnboardingRepository(sharedPreferences: SharedPreferences): OnboardingRepository {
+        return OnboardingRepositoryImplementation(sharedPreferences)
+    }
+
 }

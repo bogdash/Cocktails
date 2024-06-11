@@ -35,7 +35,6 @@
     <string name="filter_btn_reset">Reset</string>
     <string name="filter_btn_apply">Apply</string>
 
-    <!--Bottom nav menu-->
     <string name="home_title_menu">Home</string>
     <string name="saved_title_menu">Saved</string>
     <string name="search_title_menu">Search</string>
@@ -48,6 +47,9 @@
     <string name="ingredients">Ingredients</string>
     <string name="directions">Directions</string>
     <string name="category">%s, %s</string>
+    <!--Onboarding-->
+    <string name="onboarding_title">Shake your phone to get the cocktail of the day</string>
+    <string name="onboarding_title_close">Close</string>
 
     <!--Errors-->
     <string name="no_internet_connection">No internet connection</string>
