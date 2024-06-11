@@ -60,14 +60,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun initTabLayout() {
-        binding.contentLayout.tabLayout.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                detailViewModel.setSelectedTab(tab.position)
+        binding.contentLayout.tabLayout.setOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(index: Int) {
+                detailViewModel.setSelectedTab(index)
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
 
