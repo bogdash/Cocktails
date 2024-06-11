@@ -6,9 +6,9 @@ import com.bogdash.domain.models.Ingredient
 class DrinkDto(
     private val idDrink: String,
     private val strDrink: String,
-    private val strTags: String,
+    private val strTags: String?,
     private val strCategory: String,
-    private val strIBA: String,
+    private val strIBA: String?,
     private val strAlcoholic: String,
     private val strGlass: String,
     private val strInstructions: String,
@@ -44,7 +44,7 @@ class DrinkDto(
     private val strMeasure14: String?,
     private val strMeasure15: String?,
     private val strCreativeCommonsConfirmed: String?,
-    private val dateModified: String
+    private val dateModified: String?
 ) {
 
     fun toDomain(): Drink {
@@ -82,5 +82,7 @@ class DrinkDto(
             strIngredient14?.let { Ingredient(it, strMeasure14) },
             strIngredient15?.let { Ingredient(it, strMeasure15) }
         ).filter { it.name.isNotEmpty() }
+
+
 
 }
