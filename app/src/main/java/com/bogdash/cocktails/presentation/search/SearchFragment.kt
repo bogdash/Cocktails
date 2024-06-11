@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentSearchBinding
+import com.bogdash.cocktails.presentation.detail.DetailFragment
 import com.bogdash.cocktails.presentation.search.adapter.SearchAdapter
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +41,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
         setupSearchView()
         searchAdapter = SearchAdapter {
-            // TODO open detailed screen
+            openDetailedScreen(it)
         }
         initObservers()
         initListeners()
@@ -57,6 +60,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 setAdapter(it.drinks)
             }
         }
+        lifecycleScope.launch{
+            searchViewModel.uiMessageChannel.collect {
+                //Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
+                binding.searchRv.visibility = View.GONE
+                binding.tvNoQueries.visibility = View.VISIBLE
+                binding.tvNoQueries.text = getString(it)
+
+            }
+        }
     }
     private fun initListeners() {
         binding.searchSv.setOnQueryTextListener(object : OnQueryTextListener {
@@ -64,8 +76,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 searchViewModel.searchCocktailsByName(query)
                 return true
             }
-
             override fun onQueryTextChange(newText: String): Boolean {
+                if(newText.isEmpty())
+                    binding.searchRv.visibility = View.GONE
+                else{
+                    searchViewModel.searchCocktailsByName(newText)
+                    binding.searchRv.visibility = View.VISIBLE
+                }
                 return true
             }
         })
@@ -77,9 +94,21 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
     private fun setAdapter(list: List<Drink>) {
+        binding.searchRv.visibility = View.VISIBLE
+        binding.tvNoQueries.visibility = View.GONE
         searchAdapter.submitList(list.toMutableList())
     }
+    private fun openDetailedScreen(id: String){
+        val arguments = bundleOf(ARG_DRINK_ID to id)
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container,DetailFragment::class.java,arguments)
+            .addToBackStack(ADD_DETAILED_TO_BS)
+            .commit()
+    }
     companion object {
+        private const val ARG_DRINK_ID = "drink_id"
+        private const val ADD_DETAILED_TO_BS = "add_to_back_stack"
         @JvmStatic
         fun newInstance() = SearchFragment()
     }

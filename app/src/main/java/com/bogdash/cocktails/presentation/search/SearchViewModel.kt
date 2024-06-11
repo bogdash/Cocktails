@@ -1,13 +1,15 @@
 package com.bogdash.cocktails.presentation.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bogdash.cocktails.R
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.usecases.SearchCocktailsByNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,13 +20,16 @@ class SearchViewModel @Inject constructor(
     private val cocktailsMutable = MutableLiveData<Cocktails>()
     val resultCocktails: LiveData<Cocktails> = cocktailsMutable
 
+    private val _uiMessageChannel: MutableSharedFlow<Int> = MutableSharedFlow()
+    val uiMessageChannel = _uiMessageChannel.asSharedFlow()
+
     fun searchCocktailsByName(name: String) {
         viewModelScope.launch {
             try {
                 val cocktails = searchCocktailsByNameUseCase.execute(name)
                 cocktailsMutable.value = cocktails
             } catch (e: Exception) {
-                Log.d("MyLog", "searchByName error: $e")
+                _uiMessageChannel.emit(R.string.no_queries_search)
             }
         }
     }
