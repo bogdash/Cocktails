@@ -13,13 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_filters"
-        app:layout_constraintBottom_toBottomOf="@id/imgClose"
+        app:layout_constraintBottom_toBottomOf="@id/btnClose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imgClose" />
+        app:layout_constraintTop_toTopOf="@id/btnClose" />
 
     <ImageButton
-        android:id="@+id/imgClose"
+        android:id="@+id/btnClose"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:backgroundTint="#00FFFFFF"
