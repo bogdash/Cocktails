@@ -1,13 +1,12 @@
 package com.bogdash.cocktails.presentation.search.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bogdash.domain.models.Drink
 
 class SearchAdapter (
     private val action: (String) -> Unit
-) : ListAdapter<Drink, SearchViewHolder>(WordDiffUtilsCallback()) {
+) : ListAdapter<Drink, SearchViewHolder>(SearchDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         SearchViewHolder.create(parent, action)
@@ -21,17 +20,4 @@ class SearchAdapter (
             else ArrayList(list)
         )
     }
-}
-
-class WordDiffUtilsCallback : DiffUtil.ItemCallback<Drink>() {
-
-    override fun areItemsTheSame(
-        oldItem: Drink,
-        newItem: Drink
-    ): Boolean = oldItem.id == newItem.id
-
-    override fun areContentsTheSame(
-        oldItem: Drink,
-        newItem: Drink
-    ): Boolean = oldItem == newItem
 }

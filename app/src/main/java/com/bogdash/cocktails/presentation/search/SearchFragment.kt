@@ -62,11 +62,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
         lifecycleScope.launch{
             searchViewModel.uiMessageChannel.collect {
-                //Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
-                binding.searchRv.visibility = View.GONE
-                binding.tvNoQueries.visibility = View.VISIBLE
-                binding.tvNoQueries.text = getString(it)
-
+                with(binding){
+                    searchRv.visibility = View.GONE
+                    tvNoQueries.visibility = View.VISIBLE
+                    tvNoQueries.text = getString(it)
+                }
             }
         }
     }
@@ -90,12 +90,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private fun initRecycler() {
         binding.searchRv.apply{
             adapter = searchAdapter
-            layoutManager = GridLayoutManager(context, 2)
+            layoutManager = GridLayoutManager(context, SPAN_COUNT)
         }
     }
     private fun setAdapter(list: List<Drink>) {
-        binding.searchRv.visibility = View.VISIBLE
-        binding.tvNoQueries.visibility = View.GONE
+        with(binding){
+            searchRv.visibility = View.VISIBLE
+            tvNoQueries.visibility = View.GONE
+        }
         searchAdapter.submitList(list.toMutableList())
     }
     private fun openDetailedScreen(id: String){
@@ -109,6 +111,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     companion object {
         private const val ARG_DRINK_ID = "drink_id"
         private const val ADD_DETAILED_TO_BS = "add_to_back_stack"
+        private const val SPAN_COUNT = 2
         @JvmStatic
         fun newInstance() = SearchFragment()
     }
