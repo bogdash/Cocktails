@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdash.cocktails.Constants.HomeScreen.ALCOHOLIC
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
+import com.bogdash.cocktails.presentation.detail.DetailFragment
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
@@ -85,7 +86,15 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     }
 
     override fun onClick(drink: Drink) {
-        TODO("Not yet implemented")
+        openDetailedFragment(drink.id)
+    }
+
+    private fun openDetailedFragment(drinkId: String) {
+        val fragment = DetailFragment.newInstance(drinkId)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {
