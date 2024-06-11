@@ -60,7 +60,8 @@ class DetailFragment : Fragment() {
     }
 
     private fun initTabLayout() {
-        binding.contentLayout.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        binding.contentLayout.tabLayout.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 detailViewModel.setSelectedTab(tab.position)
             }
@@ -71,42 +72,54 @@ class DetailFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        with(detailViewModel) {
-            resultCocktails.observe(viewLifecycleOwner) {
-                it?.let {
-                    updateUI(it)
-                    detailViewModel.setSelectedTab(TAB_LAYOUT_LEFT)
-                }
+            observeResultCocktails()
+            observeFavoriteState()
+            observeSelectedTab()
+            observeUiMessageChannel()
+    }
+
+    private fun observeResultCocktails() {
+        detailViewModel.resultCocktails.observe(viewLifecycleOwner) {
+            it?.let {
+                updateUI(it)
+                detailViewModel.setSelectedTab(TAB_LAYOUT_LEFT)
+            }
+        }
+    }
+
+    private fun observeFavoriteState() {
+        detailViewModel.favoriteState.observe(viewLifecycleOwner) { isFavorite ->
+            updateFavoriteButtonUI(isFavorite)
+        }
+    }
+
+    private fun observeSelectedTab() {
+        detailViewModel.selectedTab.observe(viewLifecycleOwner) { tabIndex ->
+            val fragment = when (tabIndex) {
+                TAB_LAYOUT_LEFT -> IngredientsFragment
+                    .newInstance(
+                        detailViewModel.resultCocktails.value?.drinks?.firstOrNull()?.ingredients?.toParcelable()
+                            ?: emptyList()
+                    )
+
+                TAB_LAYOUT_RIGHT -> InstructionsFragment
+                    .newInstance(
+                        detailViewModel.resultCocktails.value?.drinks?.firstOrNull()?.instructions ?: ""
+                    )
+
+                else -> throw IllegalArgumentException(INVALID_TAB_INDEX)
             }
 
-            favoriteState.observe(viewLifecycleOwner) { isFavorite ->
-                updateFavoriteButtonUI(isFavorite)
-            }
+            childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment)
+                .commit()
+        }
 
-            selectedTab.observe(viewLifecycleOwner) { tabIndex ->
-                val fragment = when (tabIndex) {
-                    TAB_LAYOUT_LEFT -> IngredientsFragment
-                        .newInstance(
-                            resultCocktails.value?.drinks?.firstOrNull()?.ingredients?.toParcelable()
-                                ?: emptyList()
-                        )
+    }
 
-                    TAB_LAYOUT_RIGHT -> InstructionsFragment
-                        .newInstance(
-                            resultCocktails.value?.drinks?.firstOrNull()?.instructions ?: ""
-                        )
-
-                    else -> throw IllegalArgumentException(INVALID_TAB_INDEX)
-                }
-
-                childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment)
-                    .commit()
-            }
-
-            lifecycleScope.launch {
-                uiMessageChannel.collect {
-                    Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
-                }
+    private fun observeUiMessageChannel() {
+        lifecycleScope.launch {
+            detailViewModel.uiMessageChannel.collect {
+                Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -114,6 +127,27 @@ class DetailFragment : Fragment() {
     private fun loadCocktailDetails() {
         drinkId?.let {
             detailViewModel.getCocktailDetailsById(it)
+            detailViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
+                if (isLoading) {
+                    showLoadingState()
+                } else {
+                    hideLoadingState()
+                }
+            }
+        }
+    }
+
+    private fun showLoadingState() {
+        with(binding) {
+            detailProgressBar.visibility = View.VISIBLE
+            contentLayout.detailScrollView.visibility = View.GONE
+        }
+    }
+
+    private fun hideLoadingState() {
+        with(binding) {
+            detailProgressBar.visibility = View.GONE
+            contentLayout.detailScrollView.visibility = View.VISIBLE
         }
     }
 

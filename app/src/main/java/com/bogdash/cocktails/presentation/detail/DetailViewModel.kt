@@ -25,6 +25,9 @@ class DetailViewModel @Inject constructor(
     private val isCocktailSavedUseCase: IsCocktailSavedUseCase
 ) : ViewModel() {
 
+    private val loadingStateMutable = MutableLiveData<Boolean>()
+    val loadingState: LiveData<Boolean> = loadingStateMutable
+
     private val detailsMutable = MutableLiveData<Cocktails>()
     val resultCocktails: LiveData<Cocktails> = detailsMutable
 
@@ -41,6 +44,7 @@ class DetailViewModel @Inject constructor(
 
     fun getCocktailDetailsById(id: String) {
         viewModelScope.launch {
+            loadingStateMutable.value = true
             try {
                 val details = getCocktailDetailsByIdUseCase.execute(id)
                 detailsMutable.value = details
@@ -48,6 +52,8 @@ class DetailViewModel @Inject constructor(
                 favoriteStateMutable.value = isCocktailSavedUseCase.execute(currentDrink.id)
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.no_internet_connection)
+            } finally {
+                loadingStateMutable.value = false
             }
         }
     }
