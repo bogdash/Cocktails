@@ -8,6 +8,7 @@ import com.bogdash.domain.usecases.IsCocktailSavedUseCase
 import com.bogdash.domain.usecases.SaveCocktailByIdUseCase
 import com.bogdash.domain.repository.OnboardingRepository
 import com.bogdash.domain.usecases.GetOnboardingUseCase
+import com.bogdash.domain.usecases.GetFilteredCocktailsByAlcoholTypeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,18 +34,22 @@ class DomainModule {
     }
 
     @Provides
-    fun provideSaveCocktailById(repository: CocktailRepository): SaveCocktailByIdUseCase {
+    fun provideSaveCocktailByIdUseCase(repository: CocktailRepository): SaveCocktailByIdUseCase {
         return SaveCocktailByIdUseCase(repository)
     }
 
     @Provides
-    fun provideDeleteCocktailById(repository: CocktailRepository): DeleteCocktailByIdUseCase {
+    fun provideDeleteCocktailByIdUseCase(repository: CocktailRepository): DeleteCocktailByIdUseCase {
         return DeleteCocktailByIdUseCase(repository)
     }
 
     @Provides
-    fun provideIsCocktailSaved(repository: CocktailRepository): IsCocktailSavedUseCase {
+    fun provideIsCocktailSavedUseCase(repository: CocktailRepository): IsCocktailSavedUseCase {
         return IsCocktailSavedUseCase(repository)
     }
 
+    @Provides
+    fun provideGetFilteredCocktailsByAlcoholTypeUseCase(repository: CocktailRepository): GetFilteredCocktailsByAlcoholTypeUseCase {
+        return GetFilteredCocktailsByAlcoholTypeUseCase(repository)
+    }
 }

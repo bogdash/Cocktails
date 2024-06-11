@@ -20,7 +20,15 @@
         <item name="fontFamily">@font/google_sans_regular</item>
         <item name="android:textSize">18sp</item>
     </style>
-    
+
+    <!--    homeScreen-->
+    <style name="FooterText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="fontFamily">@font/google_sans_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!--    filterScreen-->
     <style name="ChipFilterButton" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="android:textColor">@color/chip_background_text</item>
@@ -29,13 +37,6 @@
         <item name="android:gravity">center</item>
         <item name="chipCornerRadius">10dp</item>
         <item name="chipMinHeight">40dp</item>
-    </style>
-
-    <style name="ExpandedTitleText" parent="Widget.Material3.CollapsingToolbar">
-        <item name="expandedTitleTextColor">@color/white</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
-        <item name="android:background">@drawable/bg_button_on_title</item>
     </style>
 
     <!--    detailedScreen-->

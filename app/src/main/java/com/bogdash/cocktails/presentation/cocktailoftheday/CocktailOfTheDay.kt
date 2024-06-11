@@ -36,12 +36,14 @@ class CocktailOfTheDay(
         val numberOfIngredientsTextView = view.findViewById<TextView>(R.id.tv_numbers_of_ingredients)
         val alcoholicCocktail = view.findViewById<TextView>(R.id.tv_alcohol)
 
-        val numberOfIngredients = drink.ingredients.size
-        val numberOfIngredientsText = activity.resources.getQuantityString(
-            R.plurals.number_of_ingredients,
-            numberOfIngredients,
-            numberOfIngredients
-        )
+        val numberOfIngredients = drink.ingredients?.size
+        val numberOfIngredientsText = numberOfIngredients?.let {
+            activity.resources.getQuantityString(
+                R.plurals.number_of_ingredients,
+                it,
+                numberOfIngredients
+            )
+        }
 
         cocktailName.text = drink.name
         numberOfIngredientsTextView.text = numberOfIngredientsText

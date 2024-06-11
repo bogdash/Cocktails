@@ -65,8 +65,8 @@ class CocktailRepositoryImplementation(
             val drinkEntity = DrinkMapper.toEntity(drink)
             drinkDao.insertDrink(drinkEntity)
 
-            val ingredientEntities = drink.ingredients.map { IngredientMapper.toEntity(it, drink.id) }
-            ingredientDao.insertIngredients(ingredientEntities)
+            val ingredientEntities = drink.ingredients?.map { IngredientMapper.toEntity(it, drink.id) }
+            ingredientEntities?.let { ingredientDao.insertIngredients(it) }
         }
     }
 
@@ -99,4 +99,11 @@ class CocktailRepositoryImplementation(
         }
     }
 
+    override suspend fun getFilteredCocktailsByAlcoholType(type: String): Cocktails {
+        return withContext(Dispatchers.IO) {
+            val dataCocktails = cocktailApiService.getFilteredCocktailsByAlcoholType(type)
+            val domainCocktails = Cocktails(dataCocktails.drinks.map { it.toDomain() })
+            domainCocktails
+        }
+    }
 }

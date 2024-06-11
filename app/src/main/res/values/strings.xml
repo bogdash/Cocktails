@@ -18,7 +18,6 @@
     <!--Home screen-->
     <string name="homescreen">Home</string>
     <string name="title_text">Title Text</string>
-    <string name="count_ingredients">4 ingredients</string>
     <string name="title_filters">Filtration</string>
     <string name="title_alcohol">Alcohol</string>
     <string name="title_ingredients">Ingredients</string>
@@ -34,7 +33,9 @@
     <string name="filter_champagne">Champagne</string>
     <string name="filter_btn_reset">Reset</string>
     <string name="filter_btn_apply">Apply</string>
-
+    <string name="error_loading_cocktails">Error loading cocktails</string>
+    
+    <!--bottom nav menu-->
     <string name="home_title_menu">Home</string>
     <string name="saved_title_menu">Saved</string>
     <string name="search_title_menu">Search</string>
