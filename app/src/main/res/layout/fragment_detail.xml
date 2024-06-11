@@ -45,8 +45,8 @@
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/cocktailImageDetails"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
         app:siRadius="18dp"
         android:src="@drawable/test_png_for_detail" />
 
