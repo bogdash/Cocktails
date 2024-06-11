@@ -1,7 +1,11 @@
 package com.bogdash.cocktails.di
 
 import android.content.Context
+import androidx.room.Room
 import com.bogdash.data.repository.CocktailRepositoryImplementation
+import com.bogdash.data.storage.database.AppDatabase
+import com.bogdash.data.storage.database.dao.DrinkDao
+import com.bogdash.data.storage.database.dao.IngredientDao
 import com.bogdash.data.storage.network.retrofit.CocktailsApiService
 import com.bogdash.data.storage.network.retrofit.CocktailsRetrofitClient
 import com.bogdash.data.storage.preferences.CocktailPreferences
@@ -49,11 +53,35 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "cocktails_database"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDrinkDao(database: AppDatabase): DrinkDao {
+        return database.drinkDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideIngredientDao(database: AppDatabase): IngredientDao {
+        return database.ingredientDao()
+    }
+
+    @Provides
+    @Singleton
     fun provideCocktailRepository(
         apiService: CocktailsApiService,
-        cocktailPreferences: CocktailPreferences
+        cocktailPreferences: CocktailPreferences,
+        drinkDao: DrinkDao,
+        ingredientDao: IngredientDao
     ): CocktailRepository {
-        return CocktailRepositoryImplementation(apiService, cocktailPreferences)
+        return CocktailRepositoryImplementation(apiService, cocktailPreferences, drinkDao, ingredientDao)
     }
 
     @Provides

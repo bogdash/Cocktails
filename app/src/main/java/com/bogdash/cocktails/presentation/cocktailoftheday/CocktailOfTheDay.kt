@@ -1,10 +1,14 @@
 package com.bogdash.cocktails.presentation.cocktailoftheday
 
 import android.app.Activity
+import android.app.Dialog
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import com.bogdash.cocktails.R
+import com.bogdash.cocktails.presentation.detail.DetailFragment
 import com.bogdash.cocktails.presentation.main.MainActivity
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
@@ -46,20 +50,32 @@ class CocktailOfTheDay(
 
         with(builder) {
             setView(view)
-            buttonCancel.setOnClickListener {
-                dismiss()
-                (activity as? MainActivity)?.onDialogDismiss()
-            }
-            buttonReadMore.setOnClickListener {
-                // TODO: go to detailed screen
-                dismiss()
-                (activity as? MainActivity)?.onDialogDismiss()
-            }
+            setupCancelClickListener(buttonCancel, this)
+            setupReadMoreClickListener(buttonReadMore, this)
             setCanceledOnTouchOutside(true)
             setOnDismissListener {
                 (activity as? MainActivity)?.onDialogDismiss()
             }
             show()
+        }
+    }
+
+    private fun setupCancelClickListener(button: TextView, dialog: AlertDialog) {
+        button.setOnClickListener {
+            dialog.dismiss()
+            (activity as? MainActivity)?.onDialogDismiss()
+        }
+    }
+
+    private fun setupReadMoreClickListener(button: TextView, dialog: AlertDialog) {
+        button.setOnClickListener {
+            dialog.dismiss()
+            (activity as? FragmentActivity)?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, DetailFragment.newInstance(drink.id))
+                addToBackStack(null)
+                commit()
+            }
+            (activity as? MainActivity)?.onDialogDismiss()
         }
     }
 
