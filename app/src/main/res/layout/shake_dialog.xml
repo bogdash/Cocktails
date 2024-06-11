@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shake_dialog_rounded_corner"
@@ -29,25 +30,15 @@
         app:layout_constraintStart_toStartOf="@+id/img_cocktail"
         app:layout_constraintTop_toBottomOf="@+id/img_cocktail" />
 
-    <ImageView
-        android:id="@+id/img_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="@+id/tv_name_cocktail"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_cocktail"
-        app:srcCompat="@drawable/ic_time" />
-
     <TextView
-        android:id="@+id/tv_time"
+        android:id="@+id/tv_alcohol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:fontFamily="@font/google_sans_regular"
-        android:text="@string/mock_time"
+        android:text="@string/mock_alcohol"
         android:textColor="@color/dark_gray"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/img_time"
+        app:layout_constraintStart_toStartOf="@+id/tv_name_cocktail"
         app:layout_constraintTop_toBottomOf="@+id/tv_name_cocktail" />
 
     <ImageView
@@ -55,13 +46,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
-        app:layout_constraintStart_toEndOf="@+id/tv_time"
-        app:layout_constraintTop_toTopOf="@+id/tv_time"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_alcohol"
+        app:layout_constraintStart_toEndOf="@+id/tv_alcohol"
+        app:layout_constraintTop_toTopOf="@+id/tv_alcohol"
         app:srcCompat="@drawable/ic_ingredients" />
 
     <TextView
-        android:id="@+id/tv_ingredients"
+        android:id="@+id/tv_numbers_of_ingredients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -82,8 +73,8 @@
         android:textColor="@color/tiber"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/img_time"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+        app:layout_constraintStart_toStartOf="@+id/tv_alcohol"
+        app:layout_constraintTop_toBottomOf="@+id/tv_alcohol" />
 
     <TextView
         android:id="@+id/tv_read_more"
@@ -96,5 +87,5 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ingredients" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_numbers_of_ingredients" />
 </androidx.constraintlayout.widget.ConstraintLayout>
