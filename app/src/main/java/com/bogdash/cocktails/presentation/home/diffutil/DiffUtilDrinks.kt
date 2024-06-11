@@ -1,6 +1,5 @@
 package com.bogdash.cocktails.presentation.home.diffutil
 
-import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.bogdash.domain.models.Drink
 

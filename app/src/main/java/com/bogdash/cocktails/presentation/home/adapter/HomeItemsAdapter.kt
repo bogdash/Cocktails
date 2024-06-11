@@ -5,10 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.CocktailCardHomescreenItemBinding
 import com.bogdash.cocktails.presentation.home.diffutil.DiffUtilDrinks
-import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 
