@@ -9,5 +9,10 @@ object Constants {
     object Data {
         const val APP_PREFS = "app_prefs"
     }
+        
+    object HomeScreen {
+        const val ALCOHOLIC = "Alcoholic"
+        const val NON_ALCOHOLIC = "Non_Alcoholic"
+    }
 
 }

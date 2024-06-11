@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:paddingHorizontal="20dp"
     tools:context=".presentation.home.HomeFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -26,9 +27,16 @@
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_ic_filter"
-            android:padding="8dp"
             android:src="@drawable/ic_btn_filter" />
     </com.google.android.material.appbar.MaterialToolbar>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -36,6 +44,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_cocktail_at_home">
+        tools:listitem="@layout/cocktail_card_homescreen_item">
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

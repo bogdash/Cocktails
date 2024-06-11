@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        tools:layout="@layout/fragment_saved" />
+        tools:layout="@layout/fragment_home_screen" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
