@@ -48,7 +48,7 @@ class DetailFragment : Fragment() {
     private fun initListeners() {
         initTabLayout()
 
-        with(binding) {
+        with(binding.contentLayout) {
             btnBack.setOnClickListener {
                 parentFragmentManager.popBackStack()
             }
@@ -60,7 +60,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun initTabLayout() {
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        binding.contentLayout.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 detailViewModel.setSelectedTab(tab.position)
             }
@@ -119,7 +119,7 @@ class DetailFragment : Fragment() {
 
     private fun updateUI(cocktails: Cocktails) {
         val drink = cocktails.drinks.first()
-        with(binding) {
+        with(binding.contentLayout) {
             cocktailTitleDetails.text = drink.name
             Glide.with(this@DetailFragment).load(drink.thumb).into(cocktailImageDetails)
             category.text = getString(R.string.category, drink.category, drink.alcoholic)
@@ -127,7 +127,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun updateFavoriteButtonUI(isFavorite: Boolean) {
-        binding.btnFavorite.isSelected = isFavorite
+        binding.contentLayout.btnFavorite.isSelected = isFavorite
     }
 
     companion object {
