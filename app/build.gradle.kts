@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -64,10 +65,8 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    //kapt(libs.hilt.compiler)
-    kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.fragment.ktx)
-    //implementation(libs.androidx.fragment.ktx.v170)
+    kapt(libs.hilt.compiler)
+    implementation(libs.androidx.fragment.ktx.v170)
 
     // Glide
     implementation (libs.glide)
@@ -75,4 +74,9 @@ dependencies {
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
+
+
+    // Room
+    implementation (libs.androidx.room.runtime)
+    kapt (libs.androidx.room.compiler)
 }

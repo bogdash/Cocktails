@@ -1,7 +1,7 @@
 package com.bogdash.data.storage.network.dto
 
-import com.bogdash.data.storage.network.models.Drink
-import com.bogdash.data.storage.network.models.Ingredient
+import com.bogdash.domain.models.Drink
+import com.bogdash.domain.models.Ingredient
 
 class DrinkDto(
     private val idDrink: String,
@@ -47,7 +47,7 @@ class DrinkDto(
     private val dateModified: String?
 ) {
 
-    fun toData(): Drink {
+    fun toDomain(): Drink {
         return Drink(
             id = idDrink,
             name = strDrink,

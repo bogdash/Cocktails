@@ -1,14 +1,21 @@
 <resources>
     <string name="app_name">Cocktails</string>
+
     <!--saved screen-->
     <string name="saved_title_toolbar">Saved</string>
+
     <!-- ShakeDialog -->
     <string name="mock_mojito">Mojito</string>
-    <string name="mock_time">15 mins</string>
+    <string name="mock_alcohol">Alcoholic</string>
     <string name="mock_ingredients">4 ingredients</string>
     <string name="cancel">Cancel</string>
     <string name="read_more">Read more</string>
-    <!--home screen-->
+    <plurals name="number_of_ingredients">
+        <item quantity="one">%d ingredient</item>
+        <item quantity="other">%d ingredients</item>
+    </plurals>
+
+    <!--Home screen-->
     <string name="homescreen">Home</string>
     <string name="title_text">Title Text</string>
     <string name="count_ingredients">4 ingredients</string>
@@ -27,8 +34,24 @@
     <string name="filter_champagne">Champagne</string>
     <string name="filter_btn_reset">Reset</string>
     <string name="filter_btn_apply">Apply</string>
-    <!--bottom nav menu-->
+
     <string name="home_title_menu">Home</string>
     <string name="saved_title_menu">Saved</string>
     <string name="search_title_menu">Search</string>
+
+    <!--Detailed Fragment-->
+    <string name="test_title_detail">Fish Dabu-Dabu</string>
+    <string name="tequila">Tequila</string>
+    <string name="testMeasure">4.5 cl</string>
+    <string name="fish_dabu_dabu">Fish Dabu-Dabu</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="directions">Directions</string>
+    <string name="category">%s, %s</string>
+    <!--Onboarding-->
+    <string name="onboarding_title">Shake your phone to get the cocktail of the day</string>
+    <string name="onboarding_title_close">Close</string>
+
+    <!--Errors-->
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="error_database">An error occurred while saving. Try again later</string>
 </resources>
