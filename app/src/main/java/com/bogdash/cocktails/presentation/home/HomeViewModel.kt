@@ -8,6 +8,7 @@ import com.bogdash.cocktails.R
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
 import com.bogdash.domain.usecases.GetFilteredCocktailsByAlcoholTypeUseCase
+import com.bogdash.domain.usecases.GetFilteredCocktailsByIngredientUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getFilteredCocktailsByAlcoholTypeUseCase: GetFilteredCocktailsByAlcoholTypeUseCase
+    private val getFilteredCocktailsByAlcoholTypeUseCase: GetFilteredCocktailsByAlcoholTypeUseCase,
+    private val getFilteredCocktailsByIngredientUseCase: GetFilteredCocktailsByIngredientUseCase
 ) : ViewModel() {
 
     private val cocktailsMutable = MutableLiveData<Cocktails>()
@@ -37,6 +39,21 @@ class HomeViewModel @Inject constructor(
             try {
                 loadingMutable.value = true
                 val cocktails = getFilteredCocktailsByAlcoholTypeUseCase.execute(type)
+                allCocktails.addAll(cocktails.drinks)
+                getNextPageCocktails()
+            } catch (e: Exception) {
+                _uiMessageChannel.emit(R.string.error_loading_cocktails)
+            } finally {
+                loadingMutable.value = false
+            }
+        }
+    }
+
+    fun getFilteredCocktailsByIngredients(ingredients: List<String>) {
+        viewModelScope.launch {
+            try {
+                loadingMutable.value = true
+                val cocktails = getFilteredCocktailsByIngredientUseCase.execute(ingredients)
                 allCocktails.addAll(cocktails.drinks)
                 getNextPageCocktails()
             } catch (e: Exception) {

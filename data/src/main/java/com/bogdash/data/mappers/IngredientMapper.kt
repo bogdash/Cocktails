@@ -19,4 +19,8 @@ object IngredientMapper {
         }
     }
 
+    fun toQueryString(ingredients: List<String>, parameterName: String) : String {
+        return ingredients.joinToString("&") {"$parameterName=$it"}
+    }
+
 }

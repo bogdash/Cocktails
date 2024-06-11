@@ -12,9 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdash.cocktails.Constants.HomeScreen.ALCOHOLIC
 import com.bogdash.cocktails.R
+import com.bogdash.cocktails.databinding.FragmentFiltersBinding
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
+import com.bogdash.cocktails.presentation.detail.DetailFragment
+import com.bogdash.cocktails.presentation.filters.FiltersViewModel
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
 import com.bogdash.domain.models.Drink
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -24,6 +28,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private lateinit var binding: FragmentHomeScreenBinding
     private lateinit var homeItemsAdapter: HomeItemsAdapter
     private val homeViewModel: HomeViewModel by viewModels()
+    private val filtersViewModel: FiltersViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +70,14 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
                 }
             }
 
+            filtersViewModel.alcoholicFilterType.observe(viewLifecycleOwner) { filterType ->
+                homeViewModel.getFilteredCocktailsByAlcoholType(filterType)
+            }
+
+            filtersViewModel.ingredientsFilterType.observe(viewLifecycleOwner) { ingredients ->
+                homeViewModel.getFilteredCocktailsByIngredients(ingredients)
+            }
+
             lifecycleScope.launch {
                 homeViewModel.uiMessageChannel.collect {
                     Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
@@ -82,10 +95,29 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
                 }
             }
         })
+
+        binding.btnFilter.setOnClickListener {
+            showBottomSheetDialog()
+        }
+    }
+
+    private fun showBottomSheetDialog() {
+        val binding = FragmentFiltersBinding.inflate(layoutInflater)
+        val dialog = BottomSheetDialog(requireContext())
+        dialog.setContentView(binding.root)
+        dialog.show()
     }
 
     override fun onClick(drink: Drink) {
-        TODO("Not yet implemented")
+        openDetailedFragment(drink.id)
+    }
+
+    private fun openDetailedFragment(drinkId: String) {
+        val fragment = DetailFragment.newInstance(drinkId)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {

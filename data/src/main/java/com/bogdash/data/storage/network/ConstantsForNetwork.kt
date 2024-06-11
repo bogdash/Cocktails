@@ -8,4 +8,5 @@ internal object ConstantsForNetwork {
     const val ID = "i"
     const val FILTER = "filter.php"
     const val ALCOHOLIC_PARAMETER = "a"
+    const val INGREDIENT_PARAMETER = "i"
 }

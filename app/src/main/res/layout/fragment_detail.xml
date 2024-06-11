@@ -30,8 +30,7 @@
             style="@style/DetailedTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/fish_dabu_dabu" />
+            android:layout_gravity="center" />
 
         <ImageButton
             android:id="@+id/btnFavorite"
@@ -47,16 +46,14 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
-        app:siRadius="18dp"
-        android:src="@drawable/test_png_for_detail" />
+        app:siRadius="18dp"/>
 
     <TextView
         android:id="@+id/category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/DirectionsTextStyle"
-        android:layout_marginTop="20dp"
-        android:text="@string/category"/>
+        android:layout_marginTop="20dp" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

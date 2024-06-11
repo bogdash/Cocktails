@@ -1,5 +1,7 @@
 package com.bogdash.cocktails
 
+import com.bogdash.cocktails.Constants.HomeScreen.ALCOHOLIC
+
 object Constants {
 
     object Splash {
@@ -13,6 +15,10 @@ object Constants {
     object HomeScreen {
         const val ALCOHOLIC = "Alcoholic"
         const val NON_ALCOHOLIC = "Non_Alcoholic"
+    }
+
+    object Filters {
+        const val DEFAULT_FILTER = ALCOHOLIC
     }
 
 }
