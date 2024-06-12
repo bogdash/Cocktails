@@ -106,4 +106,13 @@ class CocktailRepositoryImplementation(
             domainCocktails
         }
     }
+    override suspend fun searchCocktailsByName(name: String): Cocktails {
+        return withContext(Dispatchers.IO) {
+                val cocktails = cocktailApiService.searchCocktailsByName(name)
+                val domainCocktails = Cocktails(cocktails.drinks.map { it.toDomain() })
+                domainCocktails
+            }
+        }
+
 }
+

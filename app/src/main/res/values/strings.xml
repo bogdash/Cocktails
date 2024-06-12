@@ -55,4 +55,6 @@
     <!--Errors-->
     <string name="no_internet_connection">No internet connection</string>
     <string name="error_database">An error occurred while saving. Try again later</string>
+    <!--search screen-->
+    <string name="no_queries_search">No queries match the search</string>
 </resources>

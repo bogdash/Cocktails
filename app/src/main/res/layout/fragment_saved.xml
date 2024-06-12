@@ -28,5 +28,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        tools:listitem="@layout/parent_saved_rv_item" />
+        tools:listitem="@layout/item_parent_saved_rv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
