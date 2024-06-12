@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +27,7 @@ class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private var drinkId: String? = null
     private val detailViewModel: DetailViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,13 +50,14 @@ class DetailFragment : Fragment() {
 
     private fun initListeners() {
         initTabLayout()
-
+        val animAlpha = AnimationUtils.loadAnimation(requireContext(), R.anim.alpha)
         with(binding.contentLayout) {
             btnBack.setOnClickListener {
                 parentFragmentManager.popBackStack()
             }
 
             btnFavorite.setOnClickListener {
+                it.startAnimation(animAlpha)
                 detailViewModel.toggleFavorite()
             }
         }
