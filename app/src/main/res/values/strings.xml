@@ -45,9 +45,8 @@
     <string name="tequila">Tequila</string>
     <string name="testMeasure">4.5 cl</string>
     <string name="fish_dabu_dabu">Fish Dabu-Dabu</string>
-    <string name="ingredients">Ingredients</string>
-    <string name="directions">Directions</string>
     <string name="category">%s, %s</string>
+
     <!--Onboarding-->
     <string name="onboarding_title">Shake your phone to get the cocktail of the day</string>
     <string name="onboarding_title_close">Close</string>
@@ -55,6 +54,7 @@
     <!--Errors-->
     <string name="no_internet_connection">No internet connection</string>
     <string name="error_database">An error occurred while saving. Try again later</string>
+
     <!--search screen-->
     <string name="no_queries_search">No queries match the search</string>
 </resources>
