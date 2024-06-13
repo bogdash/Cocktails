@@ -9,6 +9,10 @@
         <item name="android:paddingHorizontal">40dp</item>
     </style>
 
+    <style name="ShakeAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/shake_dialog_rounded_corner</item>
+    </style>
+
     <style name="TitleText" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/tiber</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
