@@ -26,6 +26,7 @@ class HomeItemsAdapter(private var drinks: List<Drink>, private val listener: Li
         }
 
         private fun initListeners(itemView: View, drink: Drink, listener: Listener) {
+            itemView.animate()
             itemView.setOnClickListener {
                 listener.onClick(drink)
             }
