@@ -24,7 +24,8 @@ import kotlinx.coroutines.launch
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private var drinkId: String? = null
+    private var drinkString: String? = null
+    private lateinit var inputType: Input.Type
     private val detailViewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
@@ -37,9 +38,6 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            drinkId = it.getString(ARG_DRINK_ID)
-        }
 
         initListeners()
         observeViewModel()
@@ -126,8 +124,17 @@ class DetailFragment : Fragment() {
     }
 
     private fun loadCocktailDetails() {
-        drinkId?.let {
-            detailViewModel.getCocktailDetailsById(it)
+        drinkString?.let {
+
+            when(inputType) {
+                Input.Type.ID -> {
+                    detailViewModel.getCocktailDetailsById(it)
+                }
+                Input.Type.JSON -> {
+                    detailViewModel.getCocktailDetailsByJson(it)
+                }
+            }
+
             detailViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
                 if (isLoading) {
                     showLoadingState()
@@ -172,10 +179,26 @@ class DetailFragment : Fragment() {
         private const val TAB_LAYOUT_RIGHT = 1
 
         @JvmStatic
-        fun newInstance(id: String) = DetailFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_DRINK_ID, id)
+        fun newInstance(input: Input) = DetailFragment().apply {
+            when(input) {
+                is Input.Id -> {
+                    drinkString = input.id
+                    inputType = Input.Type.ID
+                }
+                is Input.Json -> {
+                    drinkString = input.json
+                    inputType = Input.Type.JSON
+                }
             }
+        }
+    }
+
+    sealed class Input {
+        class Id(val id: String): Input()
+        class Json(val json: String): Input()
+
+        enum class Type {
+            ID, JSON
         }
     }
 

@@ -13,6 +13,8 @@ import com.bogdash.cocktails.presentation.detail.DetailFragment
 import com.bogdash.cocktails.presentation.main.MainActivity
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
+import com.bogdash.cocktails.presentation.detail.DetailFragment.Input.Id
+
 
 /**
  * Cocktail of the day dialog wrapper.
@@ -75,7 +77,7 @@ class CocktailOfTheDay(
             dialog.dismiss()
             (activity as? FragmentActivity)?.supportFragmentManager?.beginTransaction()?.apply {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                replace(R.id.fragment_container, DetailFragment.newInstance(drink.id))
+                replace(R.id.fragment_container, DetailFragment.newInstance(Id(drink.id)))
                 addToBackStack(null)
                 commit()
             }

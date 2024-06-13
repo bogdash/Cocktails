@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,6 +43,17 @@ class DetailViewModel @Inject constructor(
 
     private lateinit var currentDrink: Drink
 
+    fun getCocktailDetailsByJson(json: String) {
+        viewModelScope.launch {
+            loadingStateMutable.value = true
+
+            val drink = Json.decodeFromString<Drink>(json)
+            currentDrink = drink
+            favoriteStateMutable.value = isCocktailSavedUseCase.execute(currentDrink.id)
+            loadingStateMutable.value = false
+        }
+    }
+
     fun getCocktailDetailsById(id: String) {
         viewModelScope.launch {
             loadingStateMutable.value = true
@@ -61,7 +73,7 @@ class DetailViewModel @Inject constructor(
     fun toggleFavorite() {
         val currentState = favoriteStateMutable.value ?: false
         favoriteStateMutable.value = !currentState
-        currentDrink?.let {  drink ->
+        currentDrink.let { drink ->
             drink.isFavorite = !currentState
             viewModelScope.launch {
                 try {

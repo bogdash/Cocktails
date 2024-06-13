@@ -15,6 +15,7 @@ import com.bogdash.cocktails.Constants.HomeScreen.ALCOHOLIC
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
+import com.bogdash.cocktails.presentation.detail.DetailFragment.Input.Id
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
@@ -91,7 +92,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     }
 
     private fun openDetailedFragment(drinkId: String) {
-        val fragment = DetailFragment.newInstance(drinkId)
+        val fragment = DetailFragment.newInstance(Id(drinkId))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(R.id.fragment_container, fragment)
