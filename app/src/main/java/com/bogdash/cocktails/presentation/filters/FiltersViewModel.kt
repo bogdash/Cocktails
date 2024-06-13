@@ -16,6 +16,10 @@ class FiltersViewModel @Inject constructor() : ViewModel() {
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
 
+    init {
+        setDefaultFilterType()
+    }
+
     fun setAlcoholicFilterType(type: String) {
         _alcoholicFilterType.value = type
     }

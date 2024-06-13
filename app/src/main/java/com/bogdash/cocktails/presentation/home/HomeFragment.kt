@@ -1,6 +1,7 @@
 package com.bogdash.cocktails.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bogdash.cocktails.Constants.HomeScreen.ALCOHOLIC
 import com.bogdash.cocktails.R
-import com.bogdash.cocktails.databinding.FragmentFiltersBinding
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
+import com.bogdash.cocktails.presentation.filters.FilterHandler
 import com.bogdash.cocktails.presentation.filters.FiltersViewModel
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
 import com.bogdash.domain.models.Drink
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,6 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
     private lateinit var binding: FragmentHomeScreenBinding
     private lateinit var homeItemsAdapter: HomeItemsAdapter
+    private lateinit var filterHandler: FilterHandler
     private val homeViewModel: HomeViewModel by viewModels()
     private val filtersViewModel: FiltersViewModel by viewModels()
 
@@ -35,6 +35,8 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
+        filterHandler =
+            FilterHandler(requireContext(), filtersViewModel, layoutInflater)
         return binding.root
     }
 
@@ -43,7 +45,13 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         initObservers()
         initListeners()
         setupRecyclerView()
-        homeViewModel.getFilteredCocktailsByAlcoholType(ALCOHOLIC)
+        loadInitialCocktails()
+    }
+
+    private fun loadInitialCocktails() {
+        filtersViewModel.alcoholicFilterType.value?.let {  filterType ->
+            homeViewModel.getFilteredCocktailsByAlcoholType(filterType)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -97,15 +105,8 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         })
 
         binding.btnFilter.setOnClickListener {
-            showBottomSheetDialog()
+            filterHandler.showBottomSheetDialog()
         }
-    }
-
-    private fun showBottomSheetDialog() {
-        val binding = FragmentFiltersBinding.inflate(layoutInflater)
-        val dialog = BottomSheetDialog(requireContext())
-        dialog.setContentView(binding.root)
-        dialog.show()
     }
 
     override fun onClick(drink: Drink) {

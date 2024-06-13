@@ -35,6 +35,7 @@ class HomeViewModel @Inject constructor(
     private val pageSize = 10
 
     fun getFilteredCocktailsByAlcoholType(type: String) {
+        resetCocktails()
         viewModelScope.launch {
             try {
                 loadingMutable.value = true
@@ -50,6 +51,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFilteredCocktailsByIngredients(ingredients: List<String>) {
+        resetCocktails()
         viewModelScope.launch {
             try {
                 loadingMutable.value = true
@@ -74,5 +76,9 @@ class HomeViewModel @Inject constructor(
                 _uiMessageChannel.emit(R.string.error_loading_cocktails)
             }
         }
+    }
+
+    private fun resetCocktails() {
+        allCocktails.clear()
     }
 }
