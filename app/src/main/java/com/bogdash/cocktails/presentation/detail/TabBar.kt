@@ -14,8 +14,8 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.LayoutTabBarBinding
 
 class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, attrs) {
-    private var binding: LayoutTabBarBinding
     private lateinit var listTabName: List<String>
+    private var binding: LayoutTabBarBinding
     private var listTabTv: List<TextView> = emptyList()
     private var tabSelectedListener: OnTabSelectedListener? = null
 
