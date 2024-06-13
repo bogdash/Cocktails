@@ -15,6 +15,7 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.presentation.cocktailoftheday.ShakeDeviceService
 import com.bogdash.cocktails.databinding.ActivityMainBinding
 import com.bogdash.cocktails.presentation.home.HomeFragment
+import com.bogdash.cocktails.presentation.qrScanner.QrScannerFragment
 import com.bogdash.cocktails.presentation.saved.SavedFragment
 import com.bogdash.cocktails.presentation.search.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.home -> replaceFragment(HomeFragment())
                     R.id.saved -> replaceFragment(SavedFragment())
                     R.id.search -> replaceFragment(SearchFragment())
+                    R.id.qr -> replaceFragment(QrScannerFragment())
                 }
                 true
             }

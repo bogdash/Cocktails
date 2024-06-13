@@ -12,4 +12,5 @@
     <color name="golden_dream">#EFC635</color>
     <color name="harley_davidson_orange">#DE380B</color>
     <color name="submarine">#8F9698</color>
+    <color name="transparent">#000000FF</color>
 </resources>

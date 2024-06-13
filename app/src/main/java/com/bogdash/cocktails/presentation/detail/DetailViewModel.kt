@@ -1,5 +1,6 @@
 package com.bogdash.cocktails.presentation.detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,8 +30,8 @@ class DetailViewModel @Inject constructor(
     private val loadingStateMutable = MutableLiveData<Boolean>()
     val loadingState: LiveData<Boolean> = loadingStateMutable
 
-    private val detailsMutable = MutableLiveData<Cocktails>()
-    val resultCocktails: LiveData<Cocktails> = detailsMutable
+    private val detailsMutable = MutableLiveData<Drink>()
+    val resultCocktails: LiveData<Drink> = detailsMutable
 
     private val favoriteStateMutable = MutableLiveData(false)
     val favoriteState: LiveData<Boolean> = favoriteStateMutable
@@ -43,11 +44,15 @@ class DetailViewModel @Inject constructor(
 
     private lateinit var currentDrink: Drink
 
+    fun getCurrentDrink(): Drink {
+        return currentDrink
+    }
+
     fun getCocktailDetailsByJson(json: String) {
         viewModelScope.launch {
             loadingStateMutable.value = true
-
             val drink = Json.decodeFromString<Drink>(json)
+            detailsMutable.value = drink
             currentDrink = drink
             favoriteStateMutable.value = isCocktailSavedUseCase.execute(currentDrink.id)
             loadingStateMutable.value = false
@@ -58,9 +63,9 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             loadingStateMutable.value = true
             try {
-                val details = getCocktailDetailsByIdUseCase.execute(id)
-                detailsMutable.value = details
-                currentDrink = details.drinks.first()
+                val drink = getCocktailDetailsByIdUseCase.execute(id).drinks.first()
+                detailsMutable.value = drink
+                currentDrink = drink
                 favoriteStateMutable.value = isCocktailSavedUseCase.execute(currentDrink.id)
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.no_internet_connection)

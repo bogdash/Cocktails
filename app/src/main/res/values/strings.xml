@@ -34,7 +34,7 @@
     <string name="filter_btn_reset">Reset</string>
     <string name="filter_btn_apply">Apply</string>
     <string name="error_loading_cocktails">Error loading cocktails</string>
-    
+
     <!--bottom nav menu-->
     <string name="home_title_menu">Home</string>
     <string name="saved_title_menu">Saved</string>
@@ -57,4 +57,9 @@
 
     <!--search screen-->
     <string name="no_queries_search">No queries match the search</string>
+
+    <!--QR-->
+    <string name="qr">QR</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

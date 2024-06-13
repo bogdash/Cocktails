@@ -82,4 +82,6 @@ dependencies {
     kapt (libs.androidx.room.compiler)
 
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.zxing.android.embedded)
 }

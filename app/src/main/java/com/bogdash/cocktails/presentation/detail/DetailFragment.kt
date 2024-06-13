@@ -1,12 +1,17 @@
 package com.bogdash.cocktails.presentation.detail
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,10 +20,17 @@ import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
 import com.bogdash.cocktails.presentation.detail.models.mappers.toParcelable
+import com.bogdash.cocktails.presentation.detail.qrCodeDecoder.QRCodeEncoder
 import com.bogdash.domain.models.Cocktails
+import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
+import java.util.zip.Inflater
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -57,6 +69,25 @@ class DetailFragment : Fragment() {
                 detailViewModel.toggleFavorite()
             }
         }
+        initFab()
+    }
+
+    private fun getBitmapFromString(s: String): Bitmap {
+        return QRCodeEncoder(requireContext()).encodeAsBitmap(s, 700)!!
+    }
+
+    private fun initFab() {
+        binding.contentLayout.floatActionButton.setOnClickListener {
+            val serializedDrink = Json.encodeToString(detailViewModel.getCurrentDrink())
+            val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+            val cv = requireActivity().layoutInflater.inflate(R.layout.qr_dialog, null)
+            val iv = cv.findViewById<ImageView>(R.id.iv_qr)
+            iv.setImageBitmap(getBitmapFromString(serializedDrink))
+            builder.setView(cv)
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+        }
     }
 
     private fun initTabLayout() {
@@ -94,13 +125,13 @@ class DetailFragment : Fragment() {
             val fragment = when (tabIndex) {
                 TAB_LAYOUT_LEFT -> IngredientsFragment
                     .newInstance(
-                        detailViewModel.resultCocktails.value?.drinks?.firstOrNull()?.ingredients?.toParcelable()
+                        detailViewModel.resultCocktails.value?.ingredients?.toParcelable()
                             ?: emptyList()
                     )
 
                 TAB_LAYOUT_RIGHT -> InstructionsFragment
                     .newInstance(
-                        detailViewModel.resultCocktails.value?.drinks?.firstOrNull()?.instructions ?: ""
+                        detailViewModel.resultCocktails.value?.instructions ?: ""
                     )
 
                 else -> throw IllegalArgumentException(INVALID_TAB_INDEX)
@@ -159,8 +190,7 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun updateUI(cocktails: Cocktails) {
-        val drink = cocktails.drinks.first()
+    private fun updateUI(drink: Drink) {
         with(binding.contentLayout) {
             cocktailTitleDetails.text = drink.name
             Glide.with(this@DetailFragment).load(drink.thumb).into(cocktailImageDetails)

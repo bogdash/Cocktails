@@ -1,5 +1,8 @@
 package com.bogdash.domain.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Drink(
     val id: String,
     val name: String,
@@ -16,6 +19,7 @@ data class Drink(
     var isFavorite: Boolean = false
 )
 
+@Serializable
 data class Ingredient(
     val name: String,
     val measure: String?
