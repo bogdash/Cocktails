@@ -7,6 +7,7 @@ import com.bogdash.domain.usecases.GetCocktailOfTheDayUseCase
 import com.bogdash.domain.usecases.IsCocktailSavedUseCase
 import com.bogdash.domain.usecases.SaveCocktailByIdUseCase
 import com.bogdash.domain.repository.OnboardingRepository
+import com.bogdash.domain.usecases.GetSavedCocktailsUseCase
 import com.bogdash.domain.usecases.GetOnboardingUseCase
 import com.bogdash.domain.usecases.GetFilteredCocktailsByAlcoholTypeUseCase
 import com.bogdash.domain.usecases.SearchCocktailsByNameUseCase
@@ -56,5 +57,9 @@ class DomainModule {
     @Provides
     fun provideSearchCocktailByNameUseCase(repository: CocktailRepository): SearchCocktailsByNameUseCase {
         return SearchCocktailsByNameUseCase(repository)
+    }
+    @Provides
+    fun provideGetSavedCocktailsUseCase(repository: CocktailRepository): GetSavedCocktailsUseCase {
+        return GetSavedCocktailsUseCase(repository)
     }
 }

@@ -1,16 +1,14 @@
 package com.bogdash.cocktails.presentation.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -41,7 +39,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
         setupSearchView()
         searchAdapter = SearchAdapter {
-            openDetailedScreen(it)
+            openDetailedFragment(it)
         }
         initObservers()
         initListeners()
@@ -56,7 +54,21 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
     private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
+            searchViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
+                if (isLoading) {
+                    showLoadingState()
+                } else {
+                    hideLoadingState()
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
             searchViewModel.resultCocktails.observe(viewLifecycleOwner) {
+                with(binding){
+                    searchRv.visibility = View.VISIBLE
+                    tvNoQueries.visibility = View.GONE
+                    ivErrorPic.visibility = View.GONE
+                }
                 setAdapter(it.drinks)
             }
         }
@@ -66,6 +78,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     searchRv.visibility = View.GONE
                     tvNoQueries.visibility = View.VISIBLE
                     tvNoQueries.text = getString(it)
+                    ivErrorPic.visibility = View.VISIBLE
                 }
             }
         }
@@ -77,11 +90,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 return true
             }
             override fun onQueryTextChange(newText: String): Boolean {
-                if(newText.isEmpty())
-                    binding.searchRv.visibility = View.GONE
+                if(newText.isEmpty()){
+                    with(binding){
+                        searchRv.visibility = View.GONE
+                        ivErrorPic.visibility = View.VISIBLE
+                        tvNoQueries.visibility = View.GONE
+                    }
+                }
                 else{
                     searchViewModel.searchCocktailsByName(newText)
-                    binding.searchRv.visibility = View.VISIBLE
                 }
                 return true
             }
@@ -94,23 +111,30 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
     private fun setAdapter(list: List<Drink>) {
-        with(binding){
-            searchRv.visibility = View.VISIBLE
-            tvNoQueries.visibility = View.GONE
-        }
         searchAdapter.submitList(list.toMutableList())
     }
-    private fun openDetailedScreen(id: String){
+    private fun showLoadingState() {
+        with(binding) {
+            progressBar.visibility = View.VISIBLE
+            searchRv.visibility = View.GONE
+        }
+    }
+    private fun hideLoadingState() {
+        with(binding) {
+            progressBar.visibility = View.GONE
+        }
+    }
+    private fun openDetailedFragment(id: String){
         val arguments = bundleOf(ARG_DRINK_ID to id)
         parentFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container,DetailFragment::class.java,arguments)
-            .addToBackStack(ADD_DETAILED_TO_BS)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .add(R.id.fragment_container,DetailFragment::class.java,arguments)
+            .addToBackStack(null)
             .commit()
     }
     companion object {
         private const val ARG_DRINK_ID = "drink_id"
-        private const val ADD_DETAILED_TO_BS = "add_to_back_stack"
         private const val SPAN_COUNT = 2
         @JvmStatic
         fun newInstance() = SearchFragment()
