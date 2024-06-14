@@ -15,6 +15,7 @@ object Constants {
     object HomeScreen {
         const val ALCOHOLIC = "Alcoholic"
         const val NON_ALCOHOLIC = "Non_Alcoholic"
+        const val PAGE_SIZE = 10
     }
 
     object Filters {

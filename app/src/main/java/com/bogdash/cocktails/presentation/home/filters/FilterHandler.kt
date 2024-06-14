@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.presentation.filters
+package com.bogdash.cocktails.presentation.home.filters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -22,8 +22,7 @@ class FilterHandler(
     fun showBottomSheetDialog() {
         binding = FragmentFiltersBinding.inflate(layoutInflater)
         val dialog = BottomSheetDialog(context)
-        setupIngredientChips()
-        setupAlcoholChips()
+        setupChips()
         initListeners(dialog)
 
         restoreFilters()
@@ -49,6 +48,11 @@ class FilterHandler(
             applyFilters()
             dialog.dismiss()
         }
+    }
+
+    private fun setupChips() {
+        setupIngredientChips()
+        setupAlcoholChips()
     }
 
     private fun setupIngredientChips() {
@@ -87,7 +91,7 @@ class FilterHandler(
         homeViewModel.setIngredientsFilter(selectedIngredients)
     }
 
-    fun applyFilters() {
+    private fun applyFilters() {
         if (binding.chipGroupAlcohol.checkedChipIds.isNotEmpty())
             applyAlcoholFilter()
 

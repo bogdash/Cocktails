@@ -1,11 +1,11 @@
 package com.bogdash.cocktails.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogdash.cocktails.Constants
+import com.bogdash.cocktails.Constants.HomeScreen.PAGE_SIZE
 import com.bogdash.cocktails.R
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
@@ -40,11 +40,9 @@ class HomeViewModel @Inject constructor(
 
     private val allCocktails = mutableListOf<Drink>()
     private var currentPage = 0
-    private val pageSize = 10
 
     init {
         setDefaultFilterType()
-        Log.d("FiltersViewModel", "Вью модель создалась")
     }
 
     fun setAlcoholicFilterType(type: String) {
@@ -98,7 +96,7 @@ class HomeViewModel @Inject constructor(
     fun getNextPageCocktails() {
         viewModelScope.launch {
             try {
-                val nextPageCocktails = allCocktails.take((currentPage + 1) * pageSize)
+                val nextPageCocktails = allCocktails.take((currentPage + 1) * PAGE_SIZE)
                 cocktailsMutable.value = Cocktails(nextPageCocktails)
                 currentPage++
             } catch (e: Exception) {

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
-import com.bogdash.cocktails.presentation.filters.FilterHandler
+import com.bogdash.cocktails.presentation.home.filters.FilterHandler
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint

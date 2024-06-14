@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.presentation.filters
+package com.bogdash.cocktails.presentation.home.filters
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
