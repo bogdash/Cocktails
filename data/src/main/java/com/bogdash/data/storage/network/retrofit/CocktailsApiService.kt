@@ -21,5 +21,5 @@ interface CocktailsApiService {
     suspend fun getFilteredCocktailsByAlcoholType(@Query(ALCOHOLIC_PARAMETER) type: String): CocktailsDto
 
     @GET(FILTER)
-    suspend fun getFilteredCocktailsByIngredient(@Query(value = "") query: String) : CocktailsDto
+    suspend fun getFilteredCocktailsByIngredient(@Query(INGREDIENT_PARAMETER) ingredients: List<String>) : CocktailsDto
 }

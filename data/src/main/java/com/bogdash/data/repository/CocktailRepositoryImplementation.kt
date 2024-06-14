@@ -111,8 +111,7 @@ class CocktailRepositoryImplementation(
 
     override suspend fun getFilteredCocktailsByIngredient(ingredients: List<String>): Cocktails {
         return withContext(Dispatchers.IO) {
-            val queryString = IngredientMapper.toQueryString(ingredients, INGREDIENT_PARAMETER)
-            val dataCocktails = cocktailApiService.getFilteredCocktailsByIngredient(queryString)
+            val dataCocktails = cocktailApiService.getFilteredCocktailsByIngredient(ingredients)
             val domainCocktails = Cocktails(dataCocktails.drinks.map { it.toDomain() })
             domainCocktails
         }

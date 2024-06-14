@@ -1,9 +1,11 @@
 package com.bogdash.cocktails.presentation.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bogdash.cocktails.Constants
 import com.bogdash.cocktails.R
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
@@ -30,9 +32,36 @@ class HomeViewModel @Inject constructor(
     private val _uiMessageChannel: MutableSharedFlow<Int> = MutableSharedFlow()
     val uiMessageChannel = _uiMessageChannel.asSharedFlow()
 
+    private val _alcoholicFilterType = MutableLiveData<String?>()
+    val alcoholicFilterType: MutableLiveData<String?> = _alcoholicFilterType
+
+    private val _ingredientsFilterType = MutableLiveData<List<String>>()
+    val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
+
     private val allCocktails = mutableListOf<Drink>()
     private var currentPage = 0
     private val pageSize = 10
+
+    init {
+        setDefaultFilterType()
+        Log.d("FiltersViewModel", "Вью модель создалась")
+    }
+
+    fun setAlcoholicFilterType(type: String?) {
+        _alcoholicFilterType.value = type
+    }
+
+    fun setIngredientsFilter(ingredients: List<String>) {
+        _ingredientsFilterType.value = ingredients
+    }
+
+    fun resetIngredientsFilter() {
+        _ingredientsFilterType.value = emptyList()
+    }
+
+    fun setDefaultFilterType() {
+        _alcoholicFilterType.value = Constants.Filters.DEFAULT_FILTER
+    }
 
     fun getFilteredCocktailsByAlcoholType(type: String) {
         resetCocktails()
@@ -75,6 +104,16 @@ class HomeViewModel @Inject constructor(
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.error_loading_cocktails)
             }
+        }
+    }
+
+    fun loadInitialCocktails() {
+        _ingredientsFilterType.value?.let { filterType ->
+            getFilteredCocktailsByIngredients(filterType)
+            return
+        }
+        _alcoholicFilterType.value?.let {  filterType ->
+            getFilteredCocktailsByAlcoholType(filterType)
         }
     }
 

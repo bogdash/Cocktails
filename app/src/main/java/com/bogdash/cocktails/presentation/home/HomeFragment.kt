@@ -15,7 +15,6 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
 import com.bogdash.cocktails.presentation.filters.FilterHandler
-import com.bogdash.cocktails.presentation.filters.FiltersViewModel
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +27,6 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private lateinit var homeItemsAdapter: HomeItemsAdapter
     private lateinit var filterHandler: FilterHandler
     private val homeViewModel: HomeViewModel by viewModels()
-    private val filtersViewModel: FiltersViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +34,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     ): View? {
         binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
         filterHandler =
-            FilterHandler(requireContext(), filtersViewModel, layoutInflater)
+            FilterHandler(requireContext(), homeViewModel, layoutInflater)
         return binding.root
     }
 
@@ -45,13 +43,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         initObservers()
         initListeners()
         setupRecyclerView()
-        loadInitialCocktails()
-    }
-
-    private fun loadInitialCocktails() {
-        filtersViewModel.alcoholicFilterType.value?.let {  filterType ->
-            homeViewModel.getFilteredCocktailsByAlcoholType(filterType)
-        }
+        homeViewModel.loadInitialCocktails()
     }
 
     private fun setupRecyclerView() {
@@ -78,11 +70,11 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
                 }
             }
 
-            filtersViewModel.alcoholicFilterType.observe(viewLifecycleOwner) { filterType ->
-                homeViewModel.getFilteredCocktailsByAlcoholType(filterType)
+            homeViewModel.alcoholicFilterType.observe(viewLifecycleOwner) { filterType ->
+                filterType?.let { homeViewModel.getFilteredCocktailsByAlcoholType(it) }
             }
 
-            filtersViewModel.ingredientsFilterType.observe(viewLifecycleOwner) { ingredients ->
+            homeViewModel.ingredientsFilterType.observe(viewLifecycleOwner) { ingredients ->
                 homeViewModel.getFilteredCocktailsByIngredients(ingredients)
             }
 
