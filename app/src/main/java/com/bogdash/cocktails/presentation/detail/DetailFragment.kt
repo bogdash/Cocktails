@@ -58,9 +58,12 @@ class DetailFragment : Fragment() {
 
     private fun initListeners() {
         initTabLayout()
+
         val animAlpha = AnimationUtils.loadAnimation(requireContext(), R.anim.alpha)
+
         with(binding.contentLayout) {
             btnBack.setOnClickListener {
+                it.startAnimation(animAlpha)
                 parentFragmentManager.popBackStack()
             }
 
@@ -68,8 +71,12 @@ class DetailFragment : Fragment() {
                 it.startAnimation(animAlpha)
                 detailViewModel.toggleFavorite()
             }
+
+            btnShare.setOnClickListener {
+                it.startAnimation(animAlpha)
+                initFab()
+            }
         }
-        initFab()
     }
 
     private fun getBitmapFromString(s: String): Bitmap {
@@ -77,7 +84,6 @@ class DetailFragment : Fragment() {
     }
 
     private fun initFab() {
-        binding.contentLayout.floatActionButton.setOnClickListener {
             val serializedDrink = Json.encodeToString(detailViewModel.getCurrentDrink())
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
             val cv = requireActivity().layoutInflater.inflate(R.layout.qr_dialog, null)
@@ -87,7 +93,6 @@ class DetailFragment : Fragment() {
 
             val dialog: AlertDialog = builder.create()
             dialog.show()
-        }
     }
 
     private fun initTabLayout() {
@@ -203,7 +208,6 @@ class DetailFragment : Fragment() {
     }
 
     companion object {
-        private const val ARG_DRINK_ID = "drink_id"
         private const val INVALID_TAB_INDEX = "Invalid tab index"
         private const val TAB_LAYOUT_LEFT = 0
         private const val TAB_LAYOUT_RIGHT = 1
