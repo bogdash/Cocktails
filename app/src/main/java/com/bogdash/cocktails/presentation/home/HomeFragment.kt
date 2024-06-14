@@ -71,7 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
             }
 
             homeViewModel.alcoholicFilterType.observe(viewLifecycleOwner) { filterType ->
-                filterType?.let { homeViewModel.getFilteredCocktailsByAlcoholType(it) }
+                homeViewModel.getFilteredCocktailsByAlcoholType(filterType)
             }
 
             homeViewModel.ingredientsFilterType.observe(viewLifecycleOwner) { ingredients ->
@@ -108,7 +108,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun openDetailedFragment(drinkId: String) {
         val fragment = DetailFragment.newInstance(drinkId)
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .add(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }

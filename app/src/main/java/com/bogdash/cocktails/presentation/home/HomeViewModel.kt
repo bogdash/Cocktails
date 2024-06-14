@@ -32,8 +32,8 @@ class HomeViewModel @Inject constructor(
     private val _uiMessageChannel: MutableSharedFlow<Int> = MutableSharedFlow()
     val uiMessageChannel = _uiMessageChannel.asSharedFlow()
 
-    private val _alcoholicFilterType = MutableLiveData<String?>()
-    val alcoholicFilterType: MutableLiveData<String?> = _alcoholicFilterType
+    private val _alcoholicFilterType = MutableLiveData<String>()
+    val alcoholicFilterType: MutableLiveData<String> = _alcoholicFilterType
 
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
         Log.d("FiltersViewModel", "Вью модель создалась")
     }
 
-    fun setAlcoholicFilterType(type: String?) {
+    fun setAlcoholicFilterType(type: String) {
         _alcoholicFilterType.value = type
     }
 
@@ -119,5 +119,6 @@ class HomeViewModel @Inject constructor(
 
     private fun resetCocktails() {
         allCocktails.clear()
+        currentPage = 0
     }
 }

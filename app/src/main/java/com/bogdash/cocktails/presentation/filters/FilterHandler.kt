@@ -85,7 +85,6 @@ class FilterHandler(
 
     private fun applyIngredientsFilter() {
         homeViewModel.setIngredientsFilter(selectedIngredients)
-        homeViewModel.setAlcoholicFilterType(null)
     }
 
     fun applyFilters() {
