@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bogdash.cocktails.R
@@ -58,21 +59,33 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         viewLifecycleOwner.lifecycleScope.launch {
             savedViewModel.resultCocktailsWithCategories.observe(viewLifecycleOwner) {
                 if (it.isEmpty()){
-                    binding.tvNoSaved.visibility = View.VISIBLE
+                    with(binding) {
+                        tvNoSaved.visibility = View.VISIBLE
+                        tvNoSaved.text = getString(R.string.no_saved_cocktails)
+                        ivPicError.visibility = View.VISIBLE
+                    }
                 } else {
-                    binding.tvNoSaved.visibility = View.GONE
-                    setAdapter(it)
+                    with(binding) {
+                        tvNoSaved.visibility = View.GONE
+                        ivPicError.visibility = View.GONE
+                    }
                 }
+                setAdapter(it)
             }
         }
         lifecycleScope.launch{
             savedViewModel.uiMessageChannel.collect {
-                Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
+                with(binding) {
+                    parentSavedRv.visibility = View.GONE
+                    tvNoSaved.visibility = View.VISIBLE
+                    tvNoSaved.text = getString(it)
+                    ivPicError.visibility = View.VISIBLE
+                }
             }
         }
     }
     private fun initRecycler() {
-        binding.parentSavedRv.apply{
+        binding.parentSavedRv.apply {
             adapter = cocktailsWithCategoryAdapter
             addItemDecoration(
                 ListDividerItemDecoration(
@@ -103,11 +116,12 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(R.id.fragment_container, DetailFragment::class.java,arguments)
-            .addToBackStack(null)
+            .addToBackStack(FROM_SAVED)
             .commit()
     }
     companion object {
         private const val ARG_DRINK_ID = "drink_id"
+        private const val FROM_SAVED = "from_saved"
         @JvmStatic
         fun newInstance() = SavedFragment()
     }

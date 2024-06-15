@@ -72,13 +72,14 @@ class CocktailRepositoryImplementation(
         }
     }
 
-    override suspend fun getCocktailById(id: String): Drink {
+    override suspend fun getCocktailById(id: String): Cocktails {
         return withContext(Dispatchers.IO) {
             val drinkEntity = drinkDao.getDrinkById(id)
             val ingredientEntities = ingredientDao.getIngredientsByDrinkId(id)
 
             if (drinkEntity != null && ingredientEntities.isNotEmpty()) {
-                DrinkMapper.fromEntity(drinkEntity, ingredientEntities)
+                val drink = DrinkMapper.fromEntity(drinkEntity, ingredientEntities)
+                Cocktails(listOf(drink))
             } else {
                 throw Exception(DRINK_NOT_FOUND)
             }
@@ -119,9 +120,9 @@ class CocktailRepositoryImplementation(
     override suspend fun getSavedCocktails(): Cocktails {
         return withContext(Dispatchers.IO) {
             val dataCocktails = drinkDao.getAllDrinks()
-            val domainCocktails = Cocktails(dataCocktails.map {drinkEntity->
+            val domainCocktails = Cocktails(dataCocktails.map { drinkEntity->
                 val ingredientEntities = ingredientDao.getIngredientsByDrinkId(drinkEntity.id)
-                DrinkMapper.fromEntity(drinkEntity,ingredientEntities )
+                DrinkMapper.fromEntity(drinkEntity, ingredientEntities )
             })
 
             domainCocktails
@@ -137,7 +138,7 @@ class CocktailRepositoryImplementation(
     override suspend fun getSavedCocktailsByCategory(category: String): Cocktails {
         return withContext(Dispatchers.IO) {
             val dataCocktails = drinkDao.getDrinksByCategory(category)
-            val domainCocktails = Cocktails(dataCocktails.map {drinkEntity->
+            val domainCocktails = Cocktails(dataCocktails.map { drinkEntity->
                 val ingredientEntities = ingredientDao.getIngredientsByDrinkId(drinkEntity.id)
                 DrinkMapper.fromEntity(drinkEntity,ingredientEntities )
             })
@@ -151,9 +152,9 @@ class CocktailRepositoryImplementation(
             val listCocktailsWithCategories = mutableListOf<CocktailsWithCategory>()
             for (category in categories){
                 val dataCocktails = drinkDao.getDrinksByCategory(category)
-                val domainCocktails = Cocktails(dataCocktails.map {drinkEntity->
+                val domainCocktails = Cocktails(dataCocktails.map { drinkEntity->
                     val ingredientEntities = ingredientDao.getIngredientsByDrinkId(drinkEntity.id)
-                    DrinkMapper.fromEntity(drinkEntity,ingredientEntities )
+                    DrinkMapper.fromEntity(drinkEntity, ingredientEntities )
                 })
                 listCocktailsWithCategories.add(toCocktailsWithCategory(category,domainCocktails))
             }

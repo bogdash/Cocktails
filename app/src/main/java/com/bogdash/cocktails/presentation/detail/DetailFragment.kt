@@ -112,8 +112,14 @@ class DetailFragment : Fragment() {
     }
 
     private fun loadCocktailDetails() {
-        drinkId?.let {
-            detailViewModel.getCocktailDetailsById(it)
+        if(parentFragmentManager.getBackStackEntryAt(0).name == FROM_SAVED){
+            drinkId?.let {
+                detailViewModel.getSavedCocktailDetailsById(it)
+            }
+        } else {
+            drinkId?.let {
+                detailViewModel.getCocktailDetailsById(it)
+            }
         }
     }
 
@@ -135,6 +141,7 @@ class DetailFragment : Fragment() {
         private const val INVALID_TAB_INDEX = "Invalid tab index"
         private const val TAB_LAYOUT_LEFT = 0
         private const val TAB_LAYOUT_RIGHT = 1
+        private const val FROM_SAVED = "from_saved"
 
         @JvmStatic
         fun newInstance(id: String) = DetailFragment().apply {

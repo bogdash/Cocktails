@@ -34,7 +34,7 @@ class SearchViewModel @Inject constructor(
                 cocktailsMutable.value = cocktails
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.no_queries_search)
-            }finally {
+            } finally {
                 loadingStateMutable.value = false
             }
         }

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ListDividerItemDecoration(
     @ColorInt private val color: Int,
     @Px private val heightPx: Int,
-    private val isLast: (RecyclerView.ViewHolder, Int) -> Boolean = {viewHolder: RecyclerView.ViewHolder,
+    private val isLast: (RecyclerView.ViewHolder, Int) -> Boolean = { viewHolder: RecyclerView.ViewHolder,
         size: Int ->
         viewHolder.adapterPosition == size - 1
     }
