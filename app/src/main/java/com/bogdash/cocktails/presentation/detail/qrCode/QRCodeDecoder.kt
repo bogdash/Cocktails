@@ -1,4 +1,4 @@
-package com.bogdash.cocktails.presentation.detail.qrCodeDecoder
+package com.bogdash.cocktails.presentation.detail.qrCode
 
 import android.content.Context
 import android.graphics.Bitmap

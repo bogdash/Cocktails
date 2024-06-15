@@ -1,8 +1,6 @@
 package com.bogdash.cocktails.presentation.detail
 
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,17 +18,13 @@ import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
 import com.bogdash.cocktails.presentation.detail.models.mappers.toParcelable
-import com.bogdash.cocktails.presentation.detail.qrCodeDecoder.QRCodeEncoder
-import com.bogdash.domain.models.Cocktails
+import com.bogdash.cocktails.presentation.detail.qrCode.QRCodeEncoder
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.io.ByteArrayOutputStream
-import java.io.OutputStream
-import java.util.zip.Inflater
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -74,7 +68,7 @@ class DetailFragment : Fragment() {
 
             btnShare.setOnClickListener {
                 it.startAnimation(animAlpha)
-                initFab()
+                initQR()
             }
         }
     }
@@ -83,7 +77,7 @@ class DetailFragment : Fragment() {
         return QRCodeEncoder(requireContext()).encodeAsBitmap(s, 700)!!
     }
 
-    private fun initFab() {
+    private fun initQR() {
             val serializedDrink = Json.encodeToString(detailViewModel.getCurrentDrink())
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
             val cv = requireActivity().layoutInflater.inflate(R.layout.qr_dialog, null)
@@ -92,6 +86,7 @@ class DetailFragment : Fragment() {
             builder.setView(cv)
 
             val dialog: AlertDialog = builder.create()
+            dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
             dialog.show()
     }
 
