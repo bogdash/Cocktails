@@ -2,6 +2,7 @@ package com.bogdash.cocktails.presentation.detail
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bogdash.cocktails.Constants.DetailFragment.FROM_SCANNER
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
 import com.bogdash.cocktails.presentation.detail.models.mappers.toParcelable
-import com.bogdash.cocktails.presentation.detail.qrCode.QRCodeEncoder
+import com.bogdash.cocktails.presentation.qrScanner.QRCodeEncoder
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +50,12 @@ class DetailFragment : Fragment() {
         initListeners()
         observeViewModel()
         loadCocktailDetails()
+
+        val fromScanner = arguments?.getBoolean(FROM_SCANNER, false) ?: false
+        if (fromScanner) {
+            binding.contentLayout.btnBack.visibility = View.GONE
+            binding.contentLayout.cocktailTitleDetails.gravity = Gravity.START
+        }
     }
 
     private fun initListeners() {
@@ -78,16 +86,16 @@ class DetailFragment : Fragment() {
     }
 
     private fun initQR() {
-            val serializedDrink = Json.encodeToString(detailViewModel.getCurrentDrink())
-            val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-            val cv = requireActivity().layoutInflater.inflate(R.layout.qr_dialog, null)
-            val iv = cv.findViewById<ImageView>(R.id.iv_qr)
-            iv.setImageBitmap(getBitmapFromString(serializedDrink))
-            builder.setView(cv)
+        val serializedDrink = Json.encodeToString(detailViewModel.getCurrentDrink())
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        val cv = requireActivity().layoutInflater.inflate(R.layout.qr_dialog, null)
+        val iv = cv.findViewById<ImageView>(R.id.iv_qr)
+        iv.setImageBitmap(getBitmapFromString(serializedDrink))
+        builder.setView(cv)
 
-            val dialog: AlertDialog = builder.create()
-            dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-            dialog.show()
+        val dialog: AlertDialog = builder.create()
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.show()
     }
 
     private fun initTabLayout() {
@@ -99,10 +107,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-            observeResultCocktails()
-            observeFavoriteState()
-            observeSelectedTab()
-            observeUiMessageChannel()
+        observeResultCocktails()
+        observeFavoriteState()
+        observeSelectedTab()
+        observeUiMessageChannel()
     }
 
     private fun observeResultCocktails() {
@@ -157,10 +165,11 @@ class DetailFragment : Fragment() {
     private fun loadCocktailDetails() {
         drinkString?.let {
 
-            when(inputType) {
+            when (inputType) {
                 Input.Type.ID -> {
                     detailViewModel.getCocktailDetailsById(it)
                 }
+
                 Input.Type.JSON -> {
                     detailViewModel.getCocktailDetailsByJson(it)
                 }
@@ -209,22 +218,25 @@ class DetailFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(input: Input) = DetailFragment().apply {
-            when(input) {
-                is Input.Id -> {
-                    drinkString = input.id
-                    inputType = Input.Type.ID
-                }
-                is Input.Json -> {
-                    drinkString = input.json
-                    inputType = Input.Type.JSON
+            arguments = Bundle().apply {
+                when (input) {
+                    is Input.Id -> {
+                        drinkString = input.id
+                        inputType = Input.Type.ID
+                    }
+
+                    is Input.Json -> {
+                        drinkString = input.json
+                        inputType = Input.Type.JSON
+                    }
                 }
             }
         }
     }
 
     sealed class Input {
-        class Id(val id: String): Input()
-        class Json(val json: String): Input()
+        class Id(val id: String) : Input()
+        class Json(val json: String) : Input()
 
         enum class Type {
             ID, JSON
