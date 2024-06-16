@@ -1,5 +1,6 @@
 package com.bogdash.cocktails.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.bogdash.data.repository.CocktailRepositoryImplementation
@@ -14,12 +15,14 @@ import com.bogdash.domain.repository.CocktailRepository
 import android.content.SharedPreferences
 import com.bogdash.cocktails.Constants.Data.APP_PREFS
 import com.bogdash.data.repository.OnboardingRepositoryImplementation
+import com.bogdash.data.storage.network.okhttp.CocktailsOkHttpClient
 import com.bogdash.domain.repository.OnboardingRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -29,8 +32,15 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(application: Application): Retrofit {
+        CocktailsRetrofitClient.initialize(application)
         return CocktailsRetrofitClient.client
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(application: Application): OkHttpClient {
+        return CocktailsOkHttpClient(application).client
     }
 
     @Provides

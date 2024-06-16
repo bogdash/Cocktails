@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bogdash.cocktails.Constants
+import com.bogdash.cocktails.Constants.Filters.DEFAULT_FILTER
 import com.bogdash.cocktails.Constants.HomeScreen.PAGE_SIZE
 import com.bogdash.cocktails.R
 import com.bogdash.domain.models.Cocktails
@@ -38,59 +38,68 @@ class HomeViewModel @Inject constructor(
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
 
+    var isAlcoholFilterApplied = true
+        private set
+
     private val allCocktails = mutableListOf<Drink>()
     private var currentPage = 0
 
     init {
-        setDefaultFilterType()
+        loadInitialCocktails()
     }
 
     fun setAlcoholicFilterType(type: String) {
+        isAlcoholFilterApplied = true
         _alcoholicFilterType.value = type
+
     }
 
     fun setIngredientsFilter(ingredients: List<String>) {
+        isAlcoholFilterApplied = false
         _ingredientsFilterType.value = ingredients
     }
 
-    fun resetIngredientsFilter() {
-        _ingredientsFilterType.value = emptyList()
-    }
-
     fun setDefaultFilterType() {
-        _alcoholicFilterType.value = Constants.Filters.DEFAULT_FILTER
+        isAlcoholFilterApplied = true
+        _alcoholicFilterType.value = DEFAULT_FILTER
     }
 
     fun getFilteredCocktailsByAlcoholType(type: String) {
         resetCocktails()
-        viewModelScope.launch {
-            try {
-                loadingMutable.value = true
-                val cocktails = getFilteredCocktailsByAlcoholTypeUseCase.execute(type)
-                allCocktails.addAll(cocktails.drinks)
-                getNextPageCocktails()
-            } catch (e: Exception) {
-                _uiMessageChannel.emit(R.string.error_loading_cocktails)
-            } finally {
-                loadingMutable.value = false
+        if (isAlcoholFilterApplied) {
+            viewModelScope.launch {
+                try {
+                    loadingMutable.value = true
+                    val cocktails = getFilteredCocktailsByAlcoholTypeUseCase.execute(type)
+                    allCocktails.addAll(cocktails.drinks)
+                    getNextPageCocktails()
+                } catch (e: Exception) {
+                    _uiMessageChannel.emit(R.string.error_loading_cocktails)
+                } finally {
+                    loadingMutable.value = false
+                }
             }
         }
+
     }
 
     fun getFilteredCocktailsByIngredients(ingredients: List<String>) {
         resetCocktails()
-        viewModelScope.launch {
-            try {
-                loadingMutable.value = true
-                val cocktails = getFilteredCocktailsByIngredientUseCase.execute(ingredients)
-                allCocktails.addAll(cocktails.drinks)
-                getNextPageCocktails()
-            } catch (e: Exception) {
-                _uiMessageChannel.emit(R.string.error_loading_cocktails)
-            } finally {
-                loadingMutable.value = false
+        if (!isAlcoholFilterApplied) {
+            viewModelScope.launch {
+                try {
+                    loadingMutable.value = true
+                    val cocktails = getFilteredCocktailsByIngredientUseCase.execute(ingredients)
+                    allCocktails.addAll(cocktails.drinks)
+                    getNextPageCocktails()
+                } catch (e: Exception) {
+                    _uiMessageChannel.emit(R.string.error_loading_cocktails)
+                } finally {
+                    loadingMutable.value = false
+                }
             }
         }
+
     }
 
     fun getNextPageCocktails() {
@@ -105,14 +114,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun loadInitialCocktails() {
-        _ingredientsFilterType.value?.let { filterType ->
-            getFilteredCocktailsByIngredients(filterType)
-            return
-        }
-        _alcoholicFilterType.value?.let {  filterType ->
-            getFilteredCocktailsByAlcoholType(filterType)
-        }
+    private fun loadInitialCocktails() {
+        getFilteredCocktailsByAlcoholType(DEFAULT_FILTER)
     }
 
     private fun resetCocktails() {

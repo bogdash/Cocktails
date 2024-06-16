@@ -36,7 +36,7 @@ class FilterHandler(
             dialog.dismiss()
         }
 
-        binding.btnReset.setOnClickListener  {
+        binding.btnReset.setOnClickListener {
             with(binding) {
                 chipAlcoholic.isChecked = true
                 chipGroupIngredients.clearCheck()
@@ -57,7 +57,7 @@ class FilterHandler(
 
     private fun setupIngredientChips() {
         binding.chipGroupIngredients.setOnCheckedStateChangeListener { group, checkedIds ->
-            if(checkedIds.isNotEmpty()) {
+            if (checkedIds.isNotEmpty()) {
                 binding.chipGroupAlcohol.clearCheck()
             }
 
@@ -100,17 +100,20 @@ class FilterHandler(
     }
 
     private fun restoreFilters() {
-        homeViewModel.alcoholicFilterType.value?.let { filterType ->
-            when (filterType) {
-                ALCOHOLIC -> binding.chipAlcoholic.isChecked = true
-                NON_ALCOHOLIC -> binding.chipNonAlcoholic.isChecked = true
+        if (homeViewModel.isAlcoholFilterApplied)
+            homeViewModel.alcoholicFilterType.value?.let { filterType ->
+                when (filterType) {
+                    ALCOHOLIC -> binding.chipAlcoholic.isChecked = true
+                    NON_ALCOHOLIC -> binding.chipNonAlcoholic.isChecked = true
+                }
             }
-        }
-        homeViewModel.ingredientsFilterType.value?.let { ingredients ->
-            val ingredientsCopy = ingredients.toList()
-            ingredientsCopy.forEach { ingredient ->
-                val chip = binding.chipGroupIngredients.findViewWithTag<Chip>(ingredient)
-                chip?.isChecked = true
+        else {
+            homeViewModel.ingredientsFilterType.value?.let { ingredients ->
+                val ingredientsCopy = ingredients.toList()
+                ingredientsCopy.forEach { ingredient ->
+                    val chip = binding.chipGroupIngredients.findViewWithTag<Chip>(ingredient)
+                    chip?.isChecked = true
+                }
             }
         }
     }
