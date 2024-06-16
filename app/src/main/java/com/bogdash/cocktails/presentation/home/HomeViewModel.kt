@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogdash.cocktails.Constants.Filters.DEFAULT_FILTER
-import com.bogdash.cocktails.Constants.HomeScreen.PAGE_SIZE
 import com.bogdash.cocktails.R
 import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
@@ -121,5 +120,9 @@ class HomeViewModel @Inject constructor(
     private fun resetCocktails() {
         allCocktails.clear()
         currentPage = 0
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 10
     }
 }

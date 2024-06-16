@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
+import com.bogdash.cocktails.presentation.exceptions.ExceptionFragment
 import com.bogdash.cocktails.presentation.home.filters.FilterHandler
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
 import com.bogdash.domain.models.Drink
@@ -78,7 +78,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
             lifecycleScope.launch {
                 homeViewModel.uiMessageChannel.collect {
-                    Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
+                    openExceptionFragment(getString(it))
                 }
             }
         }
@@ -107,6 +107,14 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         val fragment = DetailFragment.newInstance(drinkId)
         parentFragmentManager.beginTransaction()
             .add(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun openExceptionFragment(exText: String) {
+        val fragment = ExceptionFragment.newInstance(exText)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }

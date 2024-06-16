@@ -5,13 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.forEach
-import androidx.fragment.app.viewModels
-import com.bogdash.cocktails.Constants.Filters.DEFAULT_FILTER
-import com.bogdash.cocktails.Constants.HomeScreen.ALCOHOLIC
-import com.bogdash.cocktails.Constants.HomeScreen.NON_ALCOHOLIC
 import com.bogdash.cocktails.databinding.FragmentFiltersBinding
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
