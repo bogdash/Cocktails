@@ -1,6 +1,7 @@
 package com.bogdash.data.storage.network.okhttp
 
 import android.app.Application
+import com.bogdash.data.storage.network.ConstantsForNetwork.DEFAULT_TIMEOUT_SECONDS
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
@@ -37,9 +38,5 @@ class CocktailsOkHttpClient(application: Application) {
                 .header("Cache-Control", cacheControl.toString())
                 .build()
         }
-    }
-
-    companion object {
-        private const val DEFAULT_TIMEOUT_SECONDS = 30L
     }
 }

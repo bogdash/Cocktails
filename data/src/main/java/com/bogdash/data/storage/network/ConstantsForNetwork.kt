@@ -9,4 +9,5 @@ internal object ConstantsForNetwork {
     const val FILTER = "filter.php"
     const val ALCOHOLIC_PARAMETER = "a"
     const val INGREDIENT_PARAMETER = "i"
+    const val DEFAULT_TIMEOUT_SECONDS = 30L
 }
