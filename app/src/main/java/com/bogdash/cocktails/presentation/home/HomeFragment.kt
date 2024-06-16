@@ -39,7 +39,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initObservers()
+        observeViewModel()
         initListeners()
         setupRecyclerView()
     }
@@ -52,34 +52,48 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         }
     }
 
-    private fun initObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
-                homeItemsAdapter.updateCocktails(cocktails.drinks)
-                binding.progressBar.visibility =
-                    if (cocktails.drinks.isEmpty()) View.VISIBLE else View.GONE
-            }
+    private fun observeViewModel() {
+        observeResultCocktails()
+        observeAlcoholicFilter()
+        observeIngredientsFilter()
+        observeUiMessageChannel()
+        observeLoadingCocktails()
+    }
 
-            homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-                if (isLoading && homeItemsAdapter.itemCount == 0) {
-                    binding.progressBar.visibility = View.VISIBLE
-                } else {
-                    binding.progressBar.visibility = View.GONE
-                }
-            }
+    private fun observeResultCocktails() {
+        homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
+            homeItemsAdapter.updateCocktails(cocktails.drinks)
+            binding.progressBar.visibility =
+                if (cocktails.drinks.isEmpty()) View.VISIBLE else View.GONE
+        }
+    }
 
-            homeViewModel.alcoholicFilterType.observe(viewLifecycleOwner) { filterType ->
-                homeViewModel.getFilteredCocktailsByAlcoholType(filterType)
-            }
+    private fun observeAlcoholicFilter() {
+        homeViewModel.alcoholicFilterType.observe(viewLifecycleOwner) { filterType ->
+            homeViewModel.getFilteredCocktailsByAlcoholType(filterType)
+        }
+    }
 
-            homeViewModel.ingredientsFilterType.observe(viewLifecycleOwner) { ingredients ->
-                homeViewModel.getFilteredCocktailsByIngredients(ingredients)
-            }
+    private fun observeIngredientsFilter() {
+        homeViewModel.ingredientsFilterType.observe(viewLifecycleOwner) { ingredients ->
+            homeViewModel.getFilteredCocktailsByIngredients(ingredients)
+        }
+    }
 
-            lifecycleScope.launch {
-                homeViewModel.uiMessageChannel.collect {
-                    openExceptionFragment(getString(it))
-                }
+    private fun observeUiMessageChannel() {
+        lifecycleScope.launch {
+            homeViewModel.uiMessageChannel.collect {
+                openExceptionFragment(getString(it))
+            }
+        }
+    }
+
+    private fun observeLoadingCocktails() {
+        homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading && homeItemsAdapter.itemCount == 0) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
             }
         }
     }
