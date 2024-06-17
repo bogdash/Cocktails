@@ -47,31 +47,27 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
     }
 
     private fun initObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            savedViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
-                if (isLoading) {
-                    showLoadingState()
-                } else {
-                    hideLoadingState()
-                }
+        savedViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                showLoadingState()
+            } else {
+                hideLoadingState()
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            savedViewModel.resultCocktailsWithCategories.observe(viewLifecycleOwner) {
-                if (it.isEmpty()){
-                    with(binding) {
-                        tvNoSaved.visibility = View.VISIBLE
-                        tvNoSaved.text = getString(R.string.no_saved_cocktails)
-                        ivPicError.visibility = View.VISIBLE
-                    }
-                } else {
-                    with(binding) {
-                        tvNoSaved.visibility = View.GONE
-                        ivPicError.visibility = View.GONE
-                    }
+        savedViewModel.resultCocktailsWithCategories.observe(viewLifecycleOwner) {
+            if (it.isEmpty()){
+                with(binding) {
+                    tvNoSaved.visibility = View.VISIBLE
+                    tvNoSaved.text = getString(R.string.no_saved_cocktails)
+                    ivPicError.visibility = View.VISIBLE
                 }
-                setAdapter(it)
+            } else {
+                with(binding) {
+                    tvNoSaved.visibility = View.GONE
+                    ivPicError.visibility = View.GONE
+                }
             }
+            setAdapter(it)
         }
         lifecycleScope.launch{
             savedViewModel.uiMessageChannel.collect {

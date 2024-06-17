@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.presentation.detail.DetailFragment
 import com.bogdash.cocktails.presentation.main.MainActivity
@@ -73,6 +74,7 @@ class CocktailOfTheDay(
         button.setOnClickListener {
             dialog.dismiss()
             (activity as? FragmentActivity)?.supportFragmentManager?.beginTransaction()?.apply {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 replace(R.id.fragment_container, DetailFragment.newInstance(drink.id))
                 addToBackStack(null)
                 commit()

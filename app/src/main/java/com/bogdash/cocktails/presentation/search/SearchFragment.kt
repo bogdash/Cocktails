@@ -53,24 +53,20 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         txtSearch.setTextColor(resources.getColor(R.color.black,null))
     }
     private fun initObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            searchViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
-                if (isLoading) {
-                    showLoadingState()
-                } else {
-                    hideLoadingState()
-                }
+        searchViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                showLoadingState()
+            } else {
+                hideLoadingState()
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            searchViewModel.resultCocktails.observe(viewLifecycleOwner) {
-                with(binding){
-                    searchRv.visibility = View.VISIBLE
-                    tvNoQueries.visibility = View.GONE
-                    ivErrorPic.visibility = View.GONE
-                }
-                setAdapter(it.drinks)
+        searchViewModel.resultCocktails.observe(viewLifecycleOwner) {
+            with(binding){
+                searchRv.visibility = View.VISIBLE
+                tvNoQueries.visibility = View.GONE
+                ivErrorPic.visibility = View.GONE
             }
+            setAdapter(it.drinks)
         }
         lifecycleScope.launch{
             searchViewModel.uiMessageChannel.collect {

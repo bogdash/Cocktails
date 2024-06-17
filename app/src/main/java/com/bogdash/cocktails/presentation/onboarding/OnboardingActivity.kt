@@ -1,11 +1,13 @@
 package com.bogdash.cocktails.presentation.onboarding
 
 import android.os.Bundle
+import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.ActivityOnboardingBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,12 +30,18 @@ class OnboardingActivity : AppCompatActivity() {
         }
 
         initListeners()
+        animate()
     }
 
     private fun initListeners() {
         binding.btnCloseOnboarding.setOnClickListener {
             viewModel.showNext(this)
         }
+    }
+
+    private fun animate() {
+        val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
+        binding.ivOnboarding.animation = shake
     }
 
 }
