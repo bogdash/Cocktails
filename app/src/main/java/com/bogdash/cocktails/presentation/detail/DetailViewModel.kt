@@ -9,6 +9,7 @@ import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
 import com.bogdash.domain.usecases.DeleteCocktailByIdUseCase
 import com.bogdash.domain.usecases.GetCocktailDetailsByIdUseCase
+import com.bogdash.domain.usecases.GetSavedCocktailDetailsByIdUseCase
 import com.bogdash.domain.usecases.IsCocktailSavedUseCase
 import com.bogdash.domain.usecases.SaveCocktailByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getCocktailDetailsByIdUseCase: GetCocktailDetailsByIdUseCase,
+    private val getSavedCocktailDetailsByIdUseCase: GetSavedCocktailDetailsByIdUseCase,
     private val saveCocktailByIdUseCase: SaveCocktailByIdUseCase,
     private val deleteCocktailByIdUseCase: DeleteCocktailByIdUseCase,
     private val isCocktailSavedUseCase: IsCocktailSavedUseCase
@@ -52,6 +54,22 @@ class DetailViewModel @Inject constructor(
                 favoriteStateMutable.value = isCocktailSavedUseCase.execute(currentDrink.id)
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.no_internet_connection)
+            } finally {
+                loadingStateMutable.value = false
+            }
+        }
+    }
+
+    fun getSavedCocktailDetailsById(id: String) {
+        viewModelScope.launch {
+            loadingStateMutable.value = true
+            try {
+                val details = getSavedCocktailDetailsByIdUseCase.execute(id)
+                detailsMutable.value = details
+                currentDrink = details.drinks.first()
+                favoriteStateMutable.value = isCocktailSavedUseCase.execute(currentDrink.id)
+            } catch (e: Exception) {
+                _uiMessageChannel.emit(R.string.error_select_saved)
             } finally {
                 loadingStateMutable.value = false
             }

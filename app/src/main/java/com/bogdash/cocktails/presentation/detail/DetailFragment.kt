@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bogdash.cocktails.Constants.Saved.FROM_SAVED
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
@@ -130,13 +131,26 @@ class DetailFragment : Fragment() {
     }
 
     private fun loadCocktailDetails() {
-        drinkId?.let {
-            detailViewModel.getCocktailDetailsById(it)
-            detailViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
-                if (isLoading) {
-                    showLoadingState()
-                } else {
-                    hideLoadingState()
+        if(parentFragmentManager.getBackStackEntryAt(0).name == FROM_SAVED){
+            drinkId?.let {
+                detailViewModel.getSavedCocktailDetailsById(it)
+                detailViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
+                    if (isLoading) {
+                        showLoadingState()
+                    } else {
+                        hideLoadingState()
+                    }
+                }
+            }
+        } else{
+            drinkId?.let {
+                detailViewModel.getCocktailDetailsById(it)
+                detailViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
+                    if (isLoading) {
+                        showLoadingState()
+                    } else {
+                        hideLoadingState()
+                    }
                 }
             }
         }

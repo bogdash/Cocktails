@@ -8,6 +8,14 @@ import com.bogdash.data.storage.database.entities.DrinkEntity
 
 @Dao
 interface DrinkDao {
+    @Query("SELECT DISTINCT category FROM drink")
+    suspend fun getCocktailCategories(): List<String>
+
+    @Query("SELECT * FROM drink")
+    suspend fun getAllDrinks() : List<DrinkEntity>
+
+    @Query("SELECT * FROM drink WHERE category = :category")
+    suspend fun getDrinksByCategory(category: String) : List<DrinkEntity>
 
     @Query("SELECT * FROM drink WHERE id = :id")
     suspend fun getDrinkById(id: String) : DrinkEntity?
@@ -17,5 +25,4 @@ interface DrinkDao {
 
     @Query("DELETE FROM drink WHERE id = :id")
     suspend fun deleteDrinkById(id: String)
-
 }

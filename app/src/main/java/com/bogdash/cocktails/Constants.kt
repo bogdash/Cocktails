@@ -18,4 +18,8 @@ object Constants {
     object Filters {
         const val DEFAULT_FILTER = HomeScreen.ALCOHOLIC
     }
+
+    object Saved{
+        const val FROM_SAVED = "from_saved"
+    }
 }
