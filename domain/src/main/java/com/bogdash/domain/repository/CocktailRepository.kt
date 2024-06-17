@@ -11,5 +11,6 @@ interface CocktailRepository {
     suspend fun isCocktailByIdSaved(id: String): Boolean
     suspend fun deleteCocktailById(id: String)
     suspend fun getFilteredCocktailsByAlcoholType(type: String): Cocktails
+    suspend fun getFilteredCocktailsByIngredient(ingredients: List<String>) : Cocktails
     suspend fun searchCocktailsByName(name: String): Cocktails
 }
