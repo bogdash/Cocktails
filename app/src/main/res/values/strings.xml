@@ -35,7 +35,7 @@
     <string name="filter_btn_reset">Reset</string>
     <string name="filter_btn_apply">Apply</string>
     <string name="error_loading_cocktails">Error loading cocktails</string>
-    
+
     <!--bottom nav menu-->
     <string name="home_title_menu">Home</string>
     <string name="saved_title_menu">Saved</string>

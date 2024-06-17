@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentSearchBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
+import com.bogdash.cocktails.presentation.exceptions.ExceptionFragment
 import com.bogdash.cocktails.presentation.search.adapter.SearchAdapter
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,6 +45,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         initObservers()
         initListeners()
         initRecycler()
+        openExceptionFragment("")
     }
 
     private fun setupSearchView(){
@@ -61,21 +63,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         }
         searchViewModel.resultCocktails.observe(viewLifecycleOwner) {
-            with(binding){
-                searchRv.visibility = View.VISIBLE
-                tvNoQueries.visibility = View.GONE
-                ivErrorPic.visibility = View.GONE
-            }
+            parentFragmentManager.popBackStack()
             setAdapter(it.drinks)
         }
         lifecycleScope.launch{
             searchViewModel.uiMessageChannel.collect {
-                with(binding){
-                    searchRv.visibility = View.GONE
-                    tvNoQueries.visibility = View.VISIBLE
-                    tvNoQueries.text = getString(it)
-                    ivErrorPic.visibility = View.VISIBLE
-                }
+                binding.searchRv.visibility = View.GONE
+                openExceptionFragment(getString(it))
             }
         }
     }
@@ -87,11 +81,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
             override fun onQueryTextChange(newText: String): Boolean {
                 if(newText.isEmpty()){
-                    with(binding){
-                        searchRv.visibility = View.GONE
-                        ivErrorPic.visibility = View.VISIBLE
-                        tvNoQueries.visibility = View.GONE
-                    }
+                    parentFragmentManager.popBackStack()
+                    openExceptionFragment("")
                 }
                 else{
                     searchViewModel.searchCocktailsByName(newText)
@@ -108,6 +99,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
     private fun setAdapter(list: List<Drink>) {
         searchAdapter.submitList(list.toMutableList())
+        binding.searchRv.visibility = View.VISIBLE
     }
     private fun showLoadingState() {
         with(binding) {
@@ -121,16 +113,21 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
     private fun openDetailedFragment(id: String){
-        val arguments = bundleOf(ARG_DRINK_ID to id)
-        parentFragmentManager
-            .beginTransaction()
+        val fragment = DetailFragment.newInstance(id)
+        parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .add(R.id.fragment_container,DetailFragment::class.java,arguments)
+            .add(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+    private fun openExceptionFragment(exText: String) {
+        val fragment = ExceptionFragment.newInstance(exText)
+        parentFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
     companion object {
-        private const val ARG_DRINK_ID = "drink_id"
         private const val SPAN_COUNT = 2
         @JvmStatic
         fun newInstance() = SearchFragment()

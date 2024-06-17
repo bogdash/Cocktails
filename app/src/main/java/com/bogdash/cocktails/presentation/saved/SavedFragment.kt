@@ -11,9 +11,11 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bogdash.cocktails.Constants.Saved.FROM_SAVED
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentSavedBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
+import com.bogdash.cocktails.presentation.exceptions.ExceptionFragment
 import com.bogdash.cocktails.presentation.saved.adapter.parent.CocktailsWithCategoryAdapter
 import com.bogdash.cocktails.presentation.saved.adapter.parent.ListDividerItemDecoration
 import com.bogdash.domain.models.CocktailsWithCategory
@@ -56,27 +58,15 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         }
         savedViewModel.resultCocktailsWithCategories.observe(viewLifecycleOwner) {
             if (it.isEmpty()){
-                with(binding) {
-                    tvNoSaved.visibility = View.VISIBLE
-                    tvNoSaved.text = getString(R.string.no_saved_cocktails)
-                    ivPicError.visibility = View.VISIBLE
-                }
+                openExceptionFragment(getString(R.string.no_saved_cocktails))
             } else {
-                with(binding) {
-                    tvNoSaved.visibility = View.GONE
-                    ivPicError.visibility = View.GONE
-                }
+                setAdapter(it)
             }
-            setAdapter(it)
+
         }
         lifecycleScope.launch{
             savedViewModel.uiMessageChannel.collect {
-                with(binding) {
-                    parentSavedRv.visibility = View.GONE
-                    tvNoSaved.visibility = View.VISIBLE
-                    tvNoSaved.text = getString(it)
-                    ivPicError.visibility = View.VISIBLE
-                }
+                openExceptionFragment(getString(it))
             }
         }
     }
@@ -107,17 +97,22 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         }
     }
     private fun openDetailedFragment(id: String){
-        val arguments = bundleOf(ARG_DRINK_ID to id)
-        parentFragmentManager
-            .beginTransaction()
+        val fragment = DetailFragment.newInstance(id)
+        parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.fragment_container, DetailFragment::class.java,arguments)
+            .add(R.id.fragment_container, fragment)
             .addToBackStack(FROM_SAVED)
             .commit()
     }
+
+    private fun openExceptionFragment(exText: String) {
+        val fragment = ExceptionFragment.newInstance(exText)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
     companion object {
-        private const val ARG_DRINK_ID = "drink_id"
-        private const val FROM_SAVED = "from_saved"
         @JvmStatic
         fun newInstance() = SavedFragment()
     }

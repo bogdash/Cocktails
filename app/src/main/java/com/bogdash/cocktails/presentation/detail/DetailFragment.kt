@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bogdash.cocktails.Constants.Saved.FROM_SAVED
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
@@ -187,7 +188,6 @@ class DetailFragment : Fragment() {
         private const val INVALID_TAB_INDEX = "Invalid tab index"
         private const val TAB_LAYOUT_LEFT = 0
         private const val TAB_LAYOUT_RIGHT = 1
-        private const val FROM_SAVED = "from_saved"
 
         @JvmStatic
         fun newInstance(id: String) = DetailFragment().apply {
