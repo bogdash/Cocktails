@@ -6,7 +6,4 @@
 
     <style name="Theme.Cocktails" parent="Base.Theme.Cocktails" />
 
-    <style name="ShakeAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowBackground">@drawable/shake_dialog_rounded_corner</item>
-    </style>
 </resources>

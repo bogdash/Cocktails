@@ -108,6 +108,14 @@ class CocktailRepositoryImplementation(
             domainCocktails
         }
     }
+    override suspend fun searchCocktailsByName(name: String): Cocktails {
+        return withContext(Dispatchers.IO) {
+                val cocktails = cocktailApiService.searchCocktailsByName(name)
+                val domainCocktails = Cocktails(cocktails.drinks.map { it.toDomain() })
+                domainCocktails
+            }
+        }
+
 
     override suspend fun getFilteredCocktailsByIngredient(ingredients: List<String>): Cocktails {
         return withContext(Dispatchers.IO) {
@@ -117,3 +125,4 @@ class CocktailRepositoryImplementation(
         }
     }
 }
+

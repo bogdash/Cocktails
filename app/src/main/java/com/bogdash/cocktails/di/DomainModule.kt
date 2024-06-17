@@ -9,6 +9,7 @@ import com.bogdash.domain.usecases.SaveCocktailByIdUseCase
 import com.bogdash.domain.repository.OnboardingRepository
 import com.bogdash.domain.usecases.GetOnboardingUseCase
 import com.bogdash.domain.usecases.GetFilteredCocktailsByAlcoholTypeUseCase
+import com.bogdash.domain.usecases.SearchCocktailsByNameUseCase
 import com.bogdash.domain.usecases.GetFilteredCocktailsByIngredientUseCase
 import dagger.Module
 import dagger.Provides
@@ -52,6 +53,10 @@ class DomainModule {
     @Provides
     fun provideGetFilteredCocktailsByAlcoholTypeUseCase(repository: CocktailRepository): GetFilteredCocktailsByAlcoholTypeUseCase {
         return GetFilteredCocktailsByAlcoholTypeUseCase(repository)
+    }
+    @Provides
+    fun provideSearchCocktailByNameUseCase(repository: CocktailRepository): SearchCocktailsByNameUseCase {
+        return SearchCocktailsByNameUseCase(repository)
     }
 
     @Provides

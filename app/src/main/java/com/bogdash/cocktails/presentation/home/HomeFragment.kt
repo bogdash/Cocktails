@@ -120,6 +120,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun openDetailedFragment(drinkId: String) {
         val fragment = DetailFragment.newInstance(drinkId)
         parentFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .add(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()

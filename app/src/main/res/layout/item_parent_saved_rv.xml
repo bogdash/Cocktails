@@ -26,7 +26,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="@+id/title_saved_category"
         app:layout_constraintTop_toBottomOf="@+id/title_saved_category"
-        tools:listitem="@layout/child_saved_rv_item" />
+        tools:listitem="@layout/item_child_saved_rv" />
 
     <View
         android:layout_width="0dp"

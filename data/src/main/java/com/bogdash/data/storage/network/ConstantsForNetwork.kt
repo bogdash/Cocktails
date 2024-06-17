@@ -6,6 +6,8 @@ internal object ConstantsForNetwork {
     const val RANDOM = "random.php"
     const val LOOKUP = "lookup.php"
     const val ID = "i"
+    const val SEARCH = "search.php"
+    const val SEARCH_QUERY = "s"
     const val FILTER = "filter.php"
     const val ALCOHOLIC_PARAMETER = "a"
     const val INGREDIENT_PARAMETER = "i"

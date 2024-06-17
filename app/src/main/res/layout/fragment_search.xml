@@ -21,9 +21,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@android:color/transparent"
-        app:queryHint="Search for a recipe / an ingredient"
+        app:queryHint="Search for a name"
         app:searchHintIcon="@null"
         app:searchIcon="@drawable/ic_search" />
+
+    <TextView
+        android:id="@+id/tv_no_queries"
+        style="@style/TitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_sv" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_rv"
@@ -36,5 +47,5 @@
         app:layout_constraintEnd_toEndOf="@+id/search_sv"
         app:layout_constraintStart_toStartOf="@+id/search_sv"
         app:layout_constraintTop_toBottomOf="@+id/search_sv"
-        tools:listitem="@layout/search_rv_item" />
+        tools:listitem="@layout/item_search_rv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
