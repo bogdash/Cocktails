@@ -16,7 +16,7 @@ import com.google.zxing.common.BitMatrix
  */
 class QRCodeEncoder(context: Context) {
     private val qrColor = ContextCompat.getColor(context, R.color.black)
-    private val transparent = ContextCompat.getColor(context, R.color.transparent)
+    private val transparent = ContextCompat.getColor(context, R.color.white)
 
     /**
      * Encodes the specified content into a QR code bitmap.
