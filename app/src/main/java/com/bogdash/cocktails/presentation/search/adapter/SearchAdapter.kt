@@ -11,8 +11,10 @@ class SearchAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         SearchViewHolder.create(parent, action)
 
-    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.animate()
+    }
 
     override fun submitList(list: MutableList<Drink>?) {
         super.submitList(
