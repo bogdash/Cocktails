@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,8 +33,8 @@ import kotlinx.serialization.json.Json
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private var drinkString: String? = null
     private lateinit var inputType: Input.Type
+    private var drinkString: String? = null
     private val detailViewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
@@ -53,7 +54,7 @@ class DetailFragment : Fragment() {
 
         val fromScanner = arguments?.getBoolean(FROM_SCANNER, false) ?: false
         if (fromScanner) {
-            binding.contentLayout.btnBack.visibility = View.GONE
+            binding.contentLayout.btnBack.isVisible = false
             binding.contentLayout.cocktailTitleDetails.gravity = Gravity.START
         }
     }
@@ -187,15 +188,15 @@ class DetailFragment : Fragment() {
 
     private fun showLoadingState() {
         with(binding) {
-            detailProgressBar.visibility = View.VISIBLE
-            contentLayout.detailScrollView.visibility = View.GONE
+            detailProgressBar.isVisible = true
+            contentLayout.detailScrollView.isVisible = false
         }
     }
 
     private fun hideLoadingState() {
         with(binding) {
-            detailProgressBar.visibility = View.GONE
-            contentLayout.detailScrollView.visibility = View.VISIBLE
+            detailProgressBar.isVisible = false
+            contentLayout.detailScrollView.isVisible = true
         }
     }
 
