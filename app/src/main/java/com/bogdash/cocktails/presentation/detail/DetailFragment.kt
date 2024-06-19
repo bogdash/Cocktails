@@ -26,8 +26,6 @@ import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -36,6 +34,7 @@ class DetailFragment : Fragment() {
     private lateinit var inputType: Input.Type
     private var drinkString: String? = null
     private val detailViewModel: DetailViewModel by viewModels()
+    private var qrDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +56,12 @@ class DetailFragment : Fragment() {
             binding.contentLayout.btnBack.isVisible = false
             binding.contentLayout.cocktailTitleDetails.gravity = Gravity.START
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        qrDialog?.dismiss()
+        qrDialog = null
     }
 
     private fun initListeners() {
@@ -87,16 +92,16 @@ class DetailFragment : Fragment() {
     }
 
     private fun initQR() {
-        val serializedDrink = Json.encodeToString(detailViewModel.getCurrentDrink())
+        val serializedDrink = detailViewModel.getSerializedDrink()
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         val cv = requireActivity().layoutInflater.inflate(R.layout.qr_dialog, null)
         val iv = cv.findViewById<ImageView>(R.id.iv_qr)
         iv.setImageBitmap(getBitmapFromString(serializedDrink))
         builder.setView(cv)
 
-        val dialog: AlertDialog = builder.create()
-        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-        dialog.show()
+        qrDialog = builder.create()
+        qrDialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        qrDialog?.show()
     }
 
     private fun initTabLayout() {

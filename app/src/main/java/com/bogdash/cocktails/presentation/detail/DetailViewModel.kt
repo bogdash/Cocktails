@@ -1,12 +1,10 @@
 package com.bogdash.cocktails.presentation.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogdash.cocktails.R
-import com.bogdash.domain.models.Cocktails
 import com.bogdash.domain.models.Drink
 import com.bogdash.domain.usecases.DeleteCocktailByIdUseCase
 import com.bogdash.domain.usecases.GetCocktailDetailsByIdUseCase
@@ -43,10 +41,6 @@ class DetailViewModel @Inject constructor(
     val uiMessageChannel = _uiMessageChannel.asSharedFlow()
 
     private lateinit var currentDrink: Drink
-
-    fun getCurrentDrink(): Drink {
-        return currentDrink
-    }
 
     fun getCocktailDetailsByJson(json: String) {
         viewModelScope.launch {
@@ -97,6 +91,10 @@ class DetailViewModel @Inject constructor(
 
     fun setSelectedTab(tabIndex: Int) {
         selectedTabMutable.value = tabIndex
+    }
+
+    fun getSerializedDrink(): String {
+        return Json.encodeToString(Drink.serializer(), currentDrink)
     }
 
 }
