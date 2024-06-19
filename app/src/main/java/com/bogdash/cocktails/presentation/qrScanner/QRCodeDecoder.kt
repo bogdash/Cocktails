@@ -27,20 +27,14 @@ class QRCodeEncoder(context: Context) {
      * @throws WriterException if an error occurs during encoding
      */
     @Throws(WriterException::class)
-    fun encodeAsBitmap(contentsToEncode: String?, size: Int): Bitmap? {
-        contentsToEncode ?: return null
-
-        val result: BitMatrix = try {
-            MultiFormatWriter().encode(
-                contentsToEncode,
-                BarcodeFormat.QR_CODE,
-                size,
-                size,
-                null
-            )
-        } catch (e: IllegalArgumentException) {
-            return null
-        }
+    fun encodeAsBitmap(contentsToEncode: String, size: Int): Bitmap {
+        val result: BitMatrix = MultiFormatWriter().encode(
+            contentsToEncode,
+            BarcodeFormat.QR_CODE,
+            size,
+            size,
+            null
+        )
 
         val pixels = IntArray(size * size) { index ->
             val x = index % size

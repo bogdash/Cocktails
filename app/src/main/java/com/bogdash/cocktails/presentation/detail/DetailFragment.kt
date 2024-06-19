@@ -1,6 +1,5 @@
 package com.bogdash.cocktails.presentation.detail
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
@@ -18,23 +17,40 @@ import androidx.lifecycle.lifecycleScope
 import com.bogdash.cocktails.Constants.DetailFragment.FROM_SCANNER
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
-import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
-import com.bogdash.cocktails.presentation.detail.models.mappers.toParcelable
-import com.bogdash.cocktails.presentation.qrScanner.QRCodeEncoder
+import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
+class DetailFragment(input: Input) : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private lateinit var inputType: Input.Type
-    private var drinkString: String? = null
-    private val detailViewModel: DetailViewModel by viewModels()
+    private val viewModel: DetailViewModel by viewModels()
     private var qrDialog: AlertDialog? = null
+    private var initCocktailInViewModel: (() -> Unit)? = null
+
+    init {
+        initCocktailInViewModel = {
+            when (input) {
+                is Input.Id -> {
+                    viewModel.getCocktailDetailsById(input.id)
+                }
+
+                is Input.Json -> {
+                    viewModel.getCocktailDetailsByJson(input.json)
+                }
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initCocktailInViewModel?.let { it() }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +65,6 @@ class DetailFragment : Fragment() {
 
         initListeners()
         observeViewModel()
-        loadCocktailDetails()
 
         val fromScanner = arguments?.getBoolean(FROM_SCANNER, false) ?: false
         if (fromScanner) {
@@ -77,7 +92,7 @@ class DetailFragment : Fragment() {
 
             btnFavorite.setOnClickListener {
                 it.startAnimation(animAlpha)
-                detailViewModel.toggleFavorite()
+                viewModel.toggleFavorite()
             }
 
             btnShare.setOnClickListener {
@@ -87,17 +102,12 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun getBitmapFromString(s: String): Bitmap {
-        return QRCodeEncoder(requireContext()).encodeAsBitmap(s, 700)!!
-    }
-
     private fun initQR() {
-        val serializedDrink = detailViewModel.getSerializedDrink()
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        val cv = requireActivity().layoutInflater.inflate(R.layout.qr_dialog, null)
-        val iv = cv.findViewById<ImageView>(R.id.iv_qr)
-        iv.setImageBitmap(getBitmapFromString(serializedDrink))
-        builder.setView(cv)
+        val view = requireActivity().layoutInflater.inflate(R.layout.qr_dialog, null)
+        val imageView = view.findViewById<ImageView>(R.id.iv_qr)
+        imageView.setImageBitmap(viewModel.qr)
+        builder.setView(view)
 
         qrDialog = builder.create()
         qrDialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
@@ -105,11 +115,9 @@ class DetailFragment : Fragment() {
     }
 
     private fun initTabLayout() {
-        binding.contentLayout.tabLayout.setOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(index: Int) {
-                detailViewModel.setSelectedTab(index)
-            }
-        })
+        binding.contentLayout.tabLayout.setOnTabSelectedListener { index ->
+            viewModel.setSelectedTab(index)
+        }
     }
 
     private fun observeViewModel() {
@@ -117,71 +125,56 @@ class DetailFragment : Fragment() {
         observeFavoriteState()
         observeSelectedTab()
         observeUiMessageChannel()
+        observeLoadingState()
     }
 
     private fun observeResultCocktails() {
-        detailViewModel.resultCocktails.observe(viewLifecycleOwner) {
-            it?.let {
-                updateUI(it)
-                detailViewModel.setSelectedTab(TAB_LAYOUT_LEFT)
+        lifecycleScope.launch {
+            viewModel.cocktail.collectLatest { cocktail ->
+                updateUI(cocktail)
+                viewModel.setSelectedTab(DetailViewModel.TAB_LEFT)
             }
         }
     }
 
     private fun observeFavoriteState() {
-        detailViewModel.favoriteState.observe(viewLifecycleOwner) { isFavorite ->
-            updateFavoriteButtonUI(isFavorite)
+        lifecycleScope.launch {
+            viewModel.isFavorite.collectLatest { isFavorite ->
+                updateFavoriteButtonUI(isFavorite)
+            }
         }
     }
 
     private fun observeSelectedTab() {
-        detailViewModel.selectedTab.observe(viewLifecycleOwner) { tabIndex ->
-            val fragment = when (tabIndex) {
-                TAB_LAYOUT_LEFT -> IngredientsFragment
-                    .newInstance(
-                        detailViewModel.resultCocktails.value?.ingredients?.toParcelable()
-                            ?: emptyList()
-                    )
+        lifecycleScope.launch {
+            viewModel.selectedTab.collectLatest { tab ->
+                viewModel.cocktail.collectLatest { cocktail ->
+                    val fragment = when (tab) {
+                        DetailViewModel.Tab.INGREDIENTS -> IngredientsFragment.newInstance(cocktail)
+                        DetailViewModel.Tab.INSTRUCTIONS -> InstructionsFragment.newInstance(cocktail)
+                    }
 
-                TAB_LAYOUT_RIGHT -> InstructionsFragment
-                    .newInstance(
-                        detailViewModel.resultCocktails.value?.instructions ?: ""
-                    )
-
-                else -> throw IllegalArgumentException(INVALID_TAB_INDEX)
+                    childFragmentManager
+                        .beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.fragmentContainer, fragment)
+                        .commit()
+                }
             }
-
-            childFragmentManager
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.fragmentContainer, fragment)
-                .commit()
         }
-
     }
 
     private fun observeUiMessageChannel() {
         lifecycleScope.launch {
-            detailViewModel.uiMessageChannel.collect {
+            viewModel.uiMessageChannel.collectLatest {
                 Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun loadCocktailDetails() {
-        drinkString?.let {
-
-            when (inputType) {
-                Input.Type.ID -> {
-                    detailViewModel.getCocktailDetailsById(it)
-                }
-
-                Input.Type.JSON -> {
-                    detailViewModel.getCocktailDetailsByJson(it)
-                }
-            }
-
-            detailViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
+    private fun observeLoadingState() {
+        lifecycleScope.launch {
+            viewModel.isLoading.collectLatest { isLoading ->
                 if (isLoading) {
                     showLoadingState()
                 } else {
@@ -217,36 +210,9 @@ class DetailFragment : Fragment() {
         binding.contentLayout.btnFavorite.isSelected = isFavorite
     }
 
-    companion object {
-        private const val INVALID_TAB_INDEX = "Invalid tab index"
-        private const val TAB_LAYOUT_LEFT = 0
-        private const val TAB_LAYOUT_RIGHT = 1
-
-        @JvmStatic
-        fun newInstance(input: Input) = DetailFragment().apply {
-            arguments = Bundle().apply {
-                when (input) {
-                    is Input.Id -> {
-                        drinkString = input.id
-                        inputType = Input.Type.ID
-                    }
-
-                    is Input.Json -> {
-                        drinkString = input.json
-                        inputType = Input.Type.JSON
-                    }
-                }
-            }
-        }
-    }
-
     sealed class Input {
         class Id(val id: String) : Input()
         class Json(val json: String) : Input()
-
-        enum class Type {
-            ID, JSON
-        }
     }
 
 }

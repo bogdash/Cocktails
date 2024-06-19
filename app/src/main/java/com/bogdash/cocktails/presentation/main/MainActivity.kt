@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToDetailFragment(result: ScanIntentResult) {
-        val fragment = DetailFragment.newInstance(
+        val fragment = DetailFragment(
             DetailFragment.Input.Json(result.contents)
         ).apply {
             arguments = Bundle().apply {

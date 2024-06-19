@@ -77,7 +77,7 @@ class CocktailOfTheDay(
             dialog.dismiss()
             (activity as? FragmentActivity)?.supportFragmentManager?.beginTransaction()?.apply {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                replace(R.id.fragment_container, DetailFragment.newInstance(Id(drink.id)))
+                replace(R.id.fragment_container, DetailFragment(Id(drink.id)))
                 addToBackStack(null)
                 commit()
             }

@@ -92,7 +92,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     }
 
     private fun openDetailedFragment(drinkId: String) {
-        val fragment = DetailFragment.newInstance(Id(drinkId))
+        val fragment = DetailFragment(Id(drinkId))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(R.id.fragment_container, fragment)

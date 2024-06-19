@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bogdash.cocktails.databinding.FragmentInstructionsBinding
+import com.bogdash.domain.models.Drink
 
 class InstructionsFragment : Fragment() {
 
@@ -32,6 +33,14 @@ class InstructionsFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(instruction: String) = InstructionsFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_INSTRUCTION, instruction)
+            }
+        }
+
+        @JvmStatic
+        fun newInstance(cocktail: Drink) = InstructionsFragment().apply {
+            val instruction = cocktail.instructions ?: ""
             arguments = Bundle().apply {
                 putString(ARG_INSTRUCTION, instruction)
             }

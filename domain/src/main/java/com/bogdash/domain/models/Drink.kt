@@ -13,7 +13,7 @@ data class Drink(
     val glass: String?,
     val instructions: String?,
     val thumb: String?,
-    val ingredients: List<Ingredient>?,
+    val ingredients: List<Ingredient>,
     val creativeCommonsConfirmed: String?,
     val dateModified: String?,
     var isFavorite: Boolean = false

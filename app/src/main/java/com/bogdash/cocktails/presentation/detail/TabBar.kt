@@ -13,11 +13,13 @@ import androidx.core.content.ContextCompat
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.LayoutTabBarBinding
 
+typealias OnTabSelectedListener = ((Int) -> Unit)?
+
 class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, attrs) {
     private lateinit var listTabName: List<String>
     private var binding: LayoutTabBarBinding
     private var listTabTv: List<TextView> = emptyList()
-    private var tabSelectedListener: OnTabSelectedListener? = null
+    private var onTabSelectedListener: OnTabSelectedListener = null
 
     init {
         binding = LayoutTabBarBinding.inflate(LayoutInflater.from(context), this, true)
@@ -26,7 +28,7 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
     }
 
     fun setOnTabSelectedListener(listener: OnTabSelectedListener) {
-        tabSelectedListener = listener
+        onTabSelectedListener = listener
     }
 
     private fun setupAttrs(attrs: AttributeSet?) {
@@ -88,7 +90,7 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
     }
 
     private fun onTabSelected(index: Int) {
-        tabSelectedListener?.onTabSelected(index)
+        onTabSelectedListener?.let { it(index) }
         ObjectAnimator.ofFloat(
             binding.viewIndicator,
             View.TRANSLATION_X,
@@ -109,6 +111,3 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
     }
 }
 
-interface OnTabSelectedListener {
-    fun onTabSelected(index: Int)
-}
