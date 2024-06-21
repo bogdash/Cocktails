@@ -34,7 +34,6 @@
     <string name="filter_champagne">Champagne</string>
     <string name="filter_btn_reset">Reset</string>
     <string name="filter_btn_apply">Apply</string>
-    <string name="error_loading_cocktails">Error loading cocktails</string>
 
     <!--bottom nav menu-->
     <string name="home_title_menu">Home</string>
@@ -57,6 +56,7 @@
     <string name="error_database">An error occurred while saving. Try again later</string>
     <string name="no_queries_search">No queries match the search</string>
     <string name="error_select_saved">An error occurred. Try again later</string>
+    <string name="error_search">Start typing the name of the cocktail</string>
 
     <!--QR-->
     <string name="qr">QR</string>

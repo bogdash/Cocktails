@@ -73,7 +73,7 @@ class HomeViewModel @Inject constructor(
                     allCocktails.addAll(cocktails.drinks)
                     getNextPageCocktails()
                 } catch (e: Exception) {
-                    _uiMessageChannel.emit(R.string.error_loading_cocktails)
+                    _uiMessageChannel.emit(R.string.no_internet_connection)
                 } finally {
                     loadingMutable.value = false
                 }
@@ -92,7 +92,7 @@ class HomeViewModel @Inject constructor(
                     allCocktails.addAll(cocktails.drinks)
                     getNextPageCocktails()
                 } catch (e: Exception) {
-                    _uiMessageChannel.emit(R.string.error_loading_cocktails)
+                    _uiMessageChannel.emit(R.string.no_internet_connection)
                 } finally {
                     loadingMutable.value = false
                 }
@@ -108,7 +108,7 @@ class HomeViewModel @Inject constructor(
                 cocktailsMutable.value = Cocktails(nextPageCocktails)
                 currentPage++
             } catch (e: Exception) {
-                _uiMessageChannel.emit(R.string.error_loading_cocktails)
+                _uiMessageChannel.emit(R.string.no_internet_connection)
             }
         }
     }

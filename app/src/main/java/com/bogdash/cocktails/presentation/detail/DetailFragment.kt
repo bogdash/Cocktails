@@ -19,6 +19,7 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentDetailBinding
 import com.bogdash.cocktails.presentation.detail.ingredients.IngredientsFragment
 import com.bogdash.cocktails.presentation.detail.instructions.InstructionsFragment
+import com.bogdash.cocktails.presentation.exceptions.ExceptionFragment
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -171,9 +172,17 @@ class DetailFragment(input: Input) : Fragment() {
     private fun observeUiMessageChannel() {
         lifecycleScope.launch {
             viewModel.uiMessageChannel.collectLatest {
-                Toast.makeText(requireContext(), getString(it), Toast.LENGTH_SHORT).show()
+                openExceptionFragment(getString(it))
             }
         }
+    }
+
+    private fun openExceptionFragment(exText: String) {
+        val fragment = ExceptionFragment.newInstance(exText)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun observeLoadingState() {

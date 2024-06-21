@@ -128,6 +128,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        observeCocktailOfTheDay()
+        observeException()
+    }
+
+    private fun observeCocktailOfTheDay() {
         mainViewModel.resultCocktailOfTheDay.observe(this) { drink ->
             if (drink != null) {
                 val dialog = CocktailOfTheDay(this, drink)
@@ -135,6 +140,9 @@ class MainActivity : AppCompatActivity() {
                 dialog.dialog()
             }
         }
+    }
+
+    private fun observeException() {
         lifecycleScope.launch {
             mainViewModel.uiMessageChannel.collect {
                 Toast.makeText(this@MainActivity, getString(it), Toast.LENGTH_SHORT).show()
