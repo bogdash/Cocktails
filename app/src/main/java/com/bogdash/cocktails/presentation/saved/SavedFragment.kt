@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bogdash.cocktails.Constants.Saved.FROM_SAVED
@@ -21,6 +18,7 @@ import com.bogdash.cocktails.presentation.saved.adapter.parent.ListDividerItemDe
 import com.bogdash.domain.models.CocktailsWithCategory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.bogdash.cocktails.presentation.detail.DetailFragment.Input.Id
 
 @AndroidEntryPoint
 class SavedFragment : Fragment(R.layout.fragment_saved) {
@@ -32,8 +30,7 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentSavedBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -97,7 +94,7 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         }
     }
     private fun openDetailedFragment(id: String){
-        val fragment = DetailFragment.newInstance(id)
+        val fragment = DetailFragment(Id(id))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .add(R.id.fragment_container, fragment)

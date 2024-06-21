@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentSearchBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
+import com.bogdash.cocktails.presentation.detail.DetailFragment.Input.Id
 import com.bogdash.cocktails.presentation.exceptions.ExceptionFragment
 import com.bogdash.cocktails.presentation.search.adapter.SearchAdapter
 import com.bogdash.domain.models.Drink
@@ -30,8 +30,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentSearchBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -113,7 +112,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
     private fun openDetailedFragment(id: String){
-        val fragment = DetailFragment.newInstance(id)
+        val fragment = DetailFragment(Id(id))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .add(R.id.fragment_container, fragment)

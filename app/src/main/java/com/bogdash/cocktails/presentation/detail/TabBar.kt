@@ -19,11 +19,13 @@ import com.bogdash.cocktails.databinding.LayoutTabBarBinding
  * @param context the context in which the view is running
  * @param attrs the attributes of the XML tag that is inflating the view
  */
+typealias OnTabSelectedListener = ((Int) -> Unit)?
+
 class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, attrs) {
     private lateinit var listTabName: List<String>
     private var binding: LayoutTabBarBinding
     private var listTabTv: List<TextView> = emptyList()
-    private var tabSelectedListener: OnTabSelectedListener? = null
+    private var onTabSelectedListener: OnTabSelectedListener = null
 
     init {
         binding = LayoutTabBarBinding.inflate(LayoutInflater.from(context), this, true)
@@ -37,7 +39,7 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
      * @param listener the listener to notify
      */
     fun setOnTabSelectedListener(listener: OnTabSelectedListener) {
-        tabSelectedListener = listener
+        onTabSelectedListener = listener
     }
 
     /**
@@ -119,7 +121,7 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
      * @param index the index of the selected tab
      */
     private fun onTabSelected(index: Int) {
-        tabSelectedListener?.onTabSelected(index)
+        onTabSelectedListener?.let { it(index) }
         ObjectAnimator.ofFloat(
             binding.viewIndicator,
             View.TRANSLATION_X,
@@ -140,9 +142,3 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
     }
 }
 
-/**
- * Interface definition fpr a callback to be invoked when a tab is selected.
- */
-interface OnTabSelectedListener {
-    fun onTabSelected(index: Int)
-}

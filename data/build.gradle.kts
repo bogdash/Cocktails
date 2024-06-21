@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version "2.0.0"
 }
 
 android {
@@ -55,4 +56,10 @@ dependencies {
     implementation (libs.androidx.room.runtime)
     kapt (libs.androidx.room.compiler)
     implementation (libs.androidx.room.ktx)
+
+    // QR
+    implementation(libs.zxing.android.embedded)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }

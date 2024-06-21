@@ -69,13 +69,30 @@
             android:src="@drawable/test_png_for_detail"
             app:siRadius="18dp" />
 
-        <TextView
-            android:id="@+id/category"
-            style="@style/DirectionsTextStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/category" />
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/category"
+                style="@style/DirectionsTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:text="@string/category" />
+
+            <ImageButton
+                android:id="@+id/btnShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/bg_button_on_title"
+                android:src="@drawable/share_selector" />
+        </LinearLayout>
 
         <com.bogdash.cocktails.presentation.detail.TabBar
             android:id="@+id/tab_layout"
@@ -87,13 +104,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="20dp">
-
         </androidx.fragment.app.FragmentContainerView>
     </LinearLayout>
 </ScrollView>

@@ -13,4 +13,9 @@
         android:id="@+id/search"
         android:icon="@drawable/ic_search_menu_selector"
         android:title="@string/search_title_menu" />
+
+    <item
+        android:id="@+id/qr"
+        android:icon="@drawable/ic_qr_scanner_selector"
+        android:title="@string/qr" />
 </menu>

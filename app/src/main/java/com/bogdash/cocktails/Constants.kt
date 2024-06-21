@@ -2,6 +2,10 @@ package com.bogdash.cocktails
 
 object Constants {
 
+    object Main {
+        const val EXTRA_CAMERA_FACING = "android.intent.extras.CAMERA_FACING"
+    }
+
     object Splash {
         const val DELAY_TIME: Long = 2000
     }
@@ -22,4 +26,8 @@ object Constants {
     object Saved{
         const val FROM_SAVED = "from_saved"
     }
+    object DetailFragment {
+        const val FROM_SCANNER = "from_scanner"
+    }
+
 }

@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
+    kotlin("plugin.serialization") version "2.0.0"
 }
 
 android {
@@ -79,4 +80,8 @@ dependencies {
     // Room
     implementation (libs.androidx.room.runtime)
     kapt (libs.androidx.room.compiler)
+
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.zxing.android.embedded)
 }

@@ -100,4 +100,10 @@ class DataModule {
         return OnboardingRepositoryImplementation(sharedPreferences)
     }
 
+    @Provides
+    @Singleton
+    fun provideApplicationContext(@ApplicationContext context: Context): Context {
+        return context
+    }
+
 }

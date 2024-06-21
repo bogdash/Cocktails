@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogdash.cocktails.databinding.FragmentIngredientsBinding
 import com.bogdash.cocktails.presentation.detail.models.ParcelableIngredient
+import com.bogdash.cocktails.presentation.detail.models.mappers.toParcelable
+import com.bogdash.domain.models.Drink
 
 class IngredientsFragment : Fragment() {
 
@@ -17,7 +19,7 @@ class IngredientsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentIngredientsBinding.inflate(inflater, container, false)
         setupRecyclerView()
         return binding.root
@@ -51,6 +53,14 @@ class IngredientsFragment : Fragment() {
             val fragment = IngredientsFragment()
             fragment.arguments = Bundle().apply {
                 putParcelableArrayList(ARG_INGREDIENTS, ArrayList(ingredients))
+            }
+            return fragment
+        }
+
+        fun newInstance(cocktail: Drink): IngredientsFragment {
+            val fragment = IngredientsFragment()
+            fragment.arguments = Bundle().apply {
+                putParcelableArrayList(ARG_INGREDIENTS, ArrayList(cocktail.ingredients.toParcelable()))
             }
             return fragment
         }

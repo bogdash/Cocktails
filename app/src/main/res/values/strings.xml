@@ -57,4 +57,7 @@
     <string name="error_database">An error occurred while saving. Try again later</string>
     <string name="no_queries_search">No queries match the search</string>
     <string name="error_select_saved">An error occurred. Try again later</string>
+
+    <!--QR-->
+    <string name="qr">QR</string>
 </resources>

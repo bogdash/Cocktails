@@ -5,7 +5,6 @@ import com.bogdash.data.mappers.IngredientMapper
 import com.bogdash.data.storage.database.dao.DrinkDao
 import com.bogdash.data.storage.database.dao.IngredientDao
 import com.bogdash.data.storage.network.ConstantsForNetwork.DATE_FORMAT_PATTERN
-import com.bogdash.data.storage.network.ConstantsForNetwork.INGREDIENT_PARAMETER
 import com.bogdash.data.storage.network.retrofit.CocktailsApiService
 import com.bogdash.data.storage.preferences.CocktailPreferences
 import com.bogdash.domain.models.Cocktails
@@ -54,12 +53,12 @@ class CocktailRepositoryImplementation(
         }
     }
 
-    override suspend fun getCocktailDetailsById(id: String): Cocktails {
+    override suspend fun getCocktailDetailsById(id: String): Drink {
         return withContext(Dispatchers.IO) {
             val dataCocktails = cocktailApiService.getCocktailDetailsById(id)
             val domainCocktails = Cocktails(dataCocktails.drinks.map { it.toDomain() })
 
-            domainCocktails
+            domainCocktails.drinks.first()
         }
     }
 
@@ -74,14 +73,14 @@ class CocktailRepositoryImplementation(
         }
     }
 
-    override suspend fun getCocktailById(id: String): Cocktails {
+    override suspend fun getCocktailById(id: String): Drink {
         return withContext(Dispatchers.IO) {
             val drinkEntity = drinkDao.getDrinkById(id)
             val ingredientEntities = ingredientDao.getIngredientsByDrinkId(id)
 
             if (drinkEntity != null && ingredientEntities.isNotEmpty()) {
                 val drink = DrinkMapper.fromEntity(drinkEntity, ingredientEntities)
-                Cocktails(listOf(drink))
+                drink
             } else {
                 throw Exception(DRINK_NOT_FOUND)
             }
