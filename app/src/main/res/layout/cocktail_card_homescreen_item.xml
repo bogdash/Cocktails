@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
     android:layoutAnimation="@anim/layout_animation">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewRoundCorners"
-        android:layout_width="wrap_content"
+    <com.github.siyamed.shapeimageview.RoundedImageView
+        android:id="@+id/iv_item_home"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:cardCornerRadius="18dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/test_png" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:siRadius="18dp" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -32,8 +24,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/title_text"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/cardViewRoundCorners"
-        app:layout_constraintStart_toStartOf="@id/cardViewRoundCorners"
-        app:layout_constraintTop_toBottomOf="@id/cardViewRoundCorners" />
+        app:layout_constraintEnd_toEndOf="@id/iv_item_home"
+        app:layout_constraintStart_toStartOf="@id/iv_item_home"
+        app:layout_constraintTop_toBottomOf="@id/iv_item_home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

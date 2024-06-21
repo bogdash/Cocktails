@@ -43,18 +43,21 @@ class HomeViewModel @Inject constructor(
     private val allCocktails = mutableListOf<Drink>()
     private var currentPage = 0
 
+    var isFilterChanged = false
+
     init {
         loadInitialCocktails()
     }
 
     fun setAlcoholicFilterType(type: String) {
         isAlcoholFilterApplied = true
+        isFilterChanged = true
         _alcoholicFilterType.value = type
-
     }
 
     fun setIngredientsFilter(ingredients: List<String>) {
         isAlcoholFilterApplied = false
+        isFilterChanged = true
         _ingredientsFilterType.value = ingredients
     }
 

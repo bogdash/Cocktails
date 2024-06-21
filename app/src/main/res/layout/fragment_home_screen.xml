@@ -22,11 +22,10 @@
 
         <ImageButton
             android:id="@+id/btnFilter"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_ic_filter"
+            android:background="@drawable/bg_button_on_title"
             android:src="@drawable/ic_btn_filter" />
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -39,7 +38,7 @@
         android:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewHomeScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
