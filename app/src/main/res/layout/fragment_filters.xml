@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_filer_screen"
     android:padding="30dp">
 
@@ -13,13 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_filters"
-        app:layout_constraintBottom_toBottomOf="@id/imgClose"
+        app:layout_constraintBottom_toBottomOf="@id/btnClose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imgClose" />
+        app:layout_constraintTop_toTopOf="@id/btnClose" />
 
     <ImageButton
-        android:id="@+id/imgClose"
+        android:id="@+id/btnClose"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:backgroundTint="#00FFFFFF"
@@ -53,6 +52,7 @@
             style="@style/ChipFilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/filter_alcoholic" />
 
         <com.google.android.material.chip.Chip
@@ -61,13 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_non_alcoholic" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipOptional"
-            style="@style/ChipFilterButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_optional" />
     </com.google.android.material.chip.ChipGroup>
 
     <TextView
@@ -94,6 +87,7 @@
             style="@style/ChipFilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tag="@string/filter_vodka"
             android:text="@string/filter_vodka" />
 
         <com.google.android.material.chip.Chip
@@ -101,6 +95,7 @@
             style="@style/ChipFilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tag="@string/filter_gin"
             android:text="@string/filter_gin" />
 
         <com.google.android.material.chip.Chip
@@ -108,6 +103,7 @@
             style="@style/ChipFilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tag="@string/filter_tequila"
             android:text="@string/filter_tequila" />
 
         <com.google.android.material.chip.Chip
@@ -115,6 +111,7 @@
             style="@style/ChipFilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tag="@string/filter_rum"
             android:text="@string/filter_rum" />
 
         <com.google.android.material.chip.Chip
@@ -122,6 +119,7 @@
             style="@style/ChipFilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tag="@string/filter_whiskey"
             android:text="@string/filter_whiskey" />
 
         <com.google.android.material.chip.Chip
@@ -129,6 +127,7 @@
             style="@style/ChipFilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tag="@string/filter_brandy"
             android:text="@string/filter_brandy" />
 
         <com.google.android.material.chip.Chip
@@ -136,6 +135,7 @@
             style="@style/ChipFilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tag="@string/filter_champagne"
             android:text="@string/filter_champagne" />
     </com.google.android.material.chip.ChipGroup>
 
@@ -144,7 +144,7 @@
         style="@style/TextOnButtonFilters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/bg_btn_bottom_filter"
         android:text="@string/filter_btn_reset"
         android:textColor="@color/white"
@@ -153,8 +153,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintTop_toBottomOf="@id/chipGroupIngredients" />
 
     <Button
         android:id="@+id/btnApply"
@@ -168,6 +167,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chipGroupIngredients"
         app:layout_constraintVertical_bias="0.95" />
 </androidx.constraintlayout.widget.ConstraintLayout>

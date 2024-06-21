@@ -154,14 +154,18 @@ class DetailFragment(input: Input) : Fragment() {
                         DetailViewModel.Tab.INSTRUCTIONS -> InstructionsFragment.newInstance(cocktail)
                     }
 
-                    childFragmentManager
-                        .beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.fragmentContainer, fragment)
-                        .commit()
+                    replaceFragment(fragment)
                 }
             }
         }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        childFragmentManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
 
     private fun observeUiMessageChannel() {

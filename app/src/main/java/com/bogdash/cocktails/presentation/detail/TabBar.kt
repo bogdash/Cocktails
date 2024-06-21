@@ -13,6 +13,12 @@ import androidx.core.content.ContextCompat
 import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.LayoutTabBarBinding
 
+/**
+ * Custom tab bar view for displaying tabs with an indicator.
+ *
+ * @param context the context in which the view is running
+ * @param attrs the attributes of the XML tag that is inflating the view
+ */
 typealias OnTabSelectedListener = ((Int) -> Unit)?
 
 class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, attrs) {
@@ -27,10 +33,20 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
         setupUI()
     }
 
+    /**
+     * Sets a listener that will be notified when a tab is selected.
+     *
+     * @param listener the listener to notify
+     */
     fun setOnTabSelectedListener(listener: OnTabSelectedListener) {
         onTabSelectedListener = listener
     }
 
+    /**
+     * Initializes the attributes from the XML layout.
+     *
+     * @param attrs the attributes of the XML tag that is inflating the view
+     */
     private fun setupAttrs(attrs: AttributeSet?) {
         val typedArray = context.theme.obtainStyledAttributes(
             attrs, R.styleable.TabBar,
@@ -46,6 +62,9 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
         typedArray.recycle()
     }
 
+    /**
+     * Sets up the user interface og the tab bar.
+     */
     private fun setupUI() {
         listTabTv = listTabName.mapIndexed { index, tabName ->
             initTabTv(tabName, index)
@@ -65,6 +84,13 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
         onTabSelected(0)
     }
 
+    /**
+     * Initializes a TextView for a tab.
+     *
+     * @param tabName the name of the tab
+     * @param index the index of the tab
+     * @return the initialized TextView
+     */
     private fun initTabTv(tabName: String, index: Int) = TextView(context).apply {
         text = tabName
         layoutParams = LinearLayout.LayoutParams(
@@ -89,6 +115,11 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
         }
     }
 
+    /**
+     * Handles the event of selecting a tab.
+     *
+     * @param index the index of the selected tab
+     */
     private fun onTabSelected(index: Int) {
         onTabSelectedListener?.let { it(index) }
         ObjectAnimator.ofFloat(

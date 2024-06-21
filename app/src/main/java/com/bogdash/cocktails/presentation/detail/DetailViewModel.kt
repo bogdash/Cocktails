@@ -9,6 +9,7 @@ import com.bogdash.cocktails.presentation.qrScanner.QRCodeEncoder
 import com.bogdash.domain.models.Drink
 import com.bogdash.domain.usecases.DeleteCocktailByIdUseCase
 import com.bogdash.domain.usecases.GetCocktailDetailsByIdUseCase
+import com.bogdash.domain.usecases.GetSavedCocktailDetailsByIdUseCase
 import com.bogdash.domain.usecases.IsCocktailSavedUseCase
 import com.bogdash.domain.usecases.SaveCocktailByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getCocktailDetailsByIdUseCase: GetCocktailDetailsByIdUseCase,
+    private val getSavedCocktailDetailsByIdUseCase: GetSavedCocktailDetailsByIdUseCase,
     private val saveCocktailByIdUseCase: SaveCocktailByIdUseCase,
     private val deleteCocktailByIdUseCase: DeleteCocktailByIdUseCase,
     private val isCocktailSavedUseCase: IsCocktailSavedUseCase,
@@ -57,12 +59,21 @@ class DetailViewModel @Inject constructor(
 
     fun getCocktailDetailsById(id: String) {
         viewModelScope.launch {
-            try {
-                val cocktail = getCocktailDetailsByIdUseCase.execute(id).drinks.first()
-                commonInit(cocktail)
-            } catch (e: Exception) {
-                _uiMessageChannel.emit(R.string.no_internet_connection)
+            var cocktail: Drink? = null
+            if (_isFavorite.value) {
+                try {
+                    cocktail = getSavedCocktailDetailsByIdUseCase.execute(id)
+                } catch (e: Exception) {
+                    _uiMessageChannel.emit(R.string.error_select_saved)
+                }
+            } else {
+                try {
+                    cocktail = getCocktailDetailsByIdUseCase.execute(id)
+                } catch (e: Exception) {
+                    _uiMessageChannel.emit(R.string.no_internet_connection)
+                }
             }
+            cocktail?.let { commonInit(it) }
         }
     }
 

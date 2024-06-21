@@ -18,5 +18,4 @@ object IngredientMapper {
             Ingredient(it.name, it.measure)
         }
     }
-
 }
