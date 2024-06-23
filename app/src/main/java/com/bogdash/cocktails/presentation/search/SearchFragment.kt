@@ -44,7 +44,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         initObservers()
         initListeners()
         initRecycler()
-        openExceptionFragment("")
+        openExceptionFragment(getString(R.string.start_typing_cocktail))
     }
 
     private fun setupSearchView(){
@@ -68,6 +68,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         lifecycleScope.launch{
             searchViewModel.uiMessageChannel.collect {
                 binding.searchRv.visibility = View.GONE
+                parentFragmentManager.popBackStack()
                 openExceptionFragment(getString(it))
             }
         }
@@ -80,8 +81,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
             override fun onQueryTextChange(newText: String): Boolean {
                 if(newText.isEmpty()){
+                    binding.searchRv.visibility = View.GONE
                     parentFragmentManager.popBackStack()
-                    openExceptionFragment("")
+                    openExceptionFragment(getString(R.string.start_typing_cocktail))
                 }
                 else{
                     searchViewModel.searchCocktailsByName(newText)

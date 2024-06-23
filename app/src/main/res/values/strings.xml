@@ -60,4 +60,7 @@
 
     <!--QR-->
     <string name="qr">QR</string>
+
+    <!--Search screen-->
+    <string name="start_typing_cocktail">Start typing the name of the cocktail</string>
 </resources>
