@@ -44,7 +44,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         initObservers()
         initListeners()
         initRecycler()
-        openExceptionFragment(getString(R.string.start_typing_cocktail))
+        openExceptionFragment(getString(R.string.error_search))
     }
 
     private fun setupSearchView(){
@@ -83,7 +83,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 if(newText.isEmpty()){
                     binding.searchRv.visibility = View.GONE
                     parentFragmentManager.popBackStack()
-                    openExceptionFragment(getString(R.string.start_typing_cocktail))
+                    openExceptionFragment(getString(R.string.error_search))
                 }
                 else{
                     searchViewModel.searchCocktailsByName(newText)
