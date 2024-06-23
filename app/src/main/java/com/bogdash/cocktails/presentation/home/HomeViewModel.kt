@@ -37,13 +37,16 @@ class HomeViewModel @Inject constructor(
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
 
+
+
     var isAlcoholFilterApplied = true
         private set
 
+    private var scrollPosition = 0
+    private var scrollOffset = 0
     private val allCocktails = mutableListOf<Drink>()
     private var currentPage = 0
-
-    var isFilterChanged = false
+    private var isFilterChanged = true
 
     init {
         loadInitialCocktails()
@@ -67,8 +70,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFilteredCocktailsByAlcoholType(type: String) {
-        resetCocktails()
-        if (isAlcoholFilterApplied) {
+        if (isAlcoholFilterApplied && isFilterChanged) {
+            resetCocktails()
             viewModelScope.launch {
                 try {
                     loadingMutable.value = true
@@ -86,8 +89,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFilteredCocktailsByIngredients(ingredients: List<String>) {
-        resetCocktails()
-        if (!isAlcoholFilterApplied) {
+        if (!isAlcoholFilterApplied && isFilterChanged) {
+            resetCocktails()
             viewModelScope.launch {
                 try {
                     loadingMutable.value = true
@@ -114,6 +117,30 @@ class HomeViewModel @Inject constructor(
                 _uiMessageChannel.emit(R.string.error_loading_cocktails)
             }
         }
+    }
+
+    fun getIsFilterChanged(): Boolean {
+        return isFilterChanged
+    }
+
+    fun setIsFilterChanged(isFilterChanged: Boolean) {
+        this.isFilterChanged = isFilterChanged
+    }
+
+    fun setScrollPosition(scrollPosition: Int) {
+        this.scrollPosition = scrollPosition
+    }
+
+    fun getScrollPosition(): Int {
+        return scrollPosition
+    }
+
+    fun setScrollOffset(scrollOffset: Int) {
+        this.scrollOffset = scrollOffset
+    }
+
+    fun getScrollOffset(): Int {
+        return scrollOffset
     }
 
     private fun loadInitialCocktails() {

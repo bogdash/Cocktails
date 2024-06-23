@@ -46,12 +46,35 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         setupRecyclerView()
     }
 
+    override fun onPause() {
+        super.onPause()
+        saveScrollPosition()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        restoreScrollPosition()
+    }
+
     private fun setupRecyclerView() {
         homeItemsAdapter = HomeItemsAdapter(emptyList(), this)
         binding.recyclerViewHomeScreen.apply {
             adapter = homeItemsAdapter
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun saveScrollPosition() {
+        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
+        homeViewModel.setScrollPosition(layoutManager.findFirstVisibleItemPosition())
+        val view = layoutManager.findViewByPosition(homeViewModel.getScrollPosition())
+        homeViewModel.setScrollOffset(view?.top ?: 0)
+    }
+
+    private fun restoreScrollPosition() {
+        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
+        layoutManager.scrollToPositionWithOffset(homeViewModel.getScrollPosition(), homeViewModel.getScrollOffset())
     }
 
     private fun observeViewModel() {
@@ -65,9 +88,9 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun observeResultCocktails() {
         homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
             homeItemsAdapter.updateCocktails(cocktails.drinks)
-            if (homeViewModel.isFilterChanged) {
+            if (homeViewModel.getIsFilterChanged()) {
                 binding.recyclerViewHomeScreen.scrollToPosition(0)
-                homeViewModel.isFilterChanged = false
+                homeViewModel.setIsFilterChanged(false)
             }
             binding.progressBar.visibility =
                 if (cocktails.drinks.isEmpty()) View.VISIBLE else View.GONE
@@ -127,7 +150,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         val fragment = DetailFragment(Id(drinkId))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .add(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
@@ -135,7 +158,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun openExceptionFragment(exText: String) {
         val fragment = ExceptionFragment.newInstance(exText)
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .add(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
