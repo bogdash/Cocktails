@@ -151,7 +151,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         val fragment = DetailFragment(Id(drinkId))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.fragment_container, fragment)
+            .add(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
