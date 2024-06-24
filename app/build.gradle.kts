@@ -76,12 +76,13 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
 
-
     // Room
     implementation (libs.androidx.room.runtime)
     kapt (libs.androidx.room.compiler)
 
+    // Serialization
     implementation(libs.kotlinx.serialization.json)
 
+    // QR
     implementation(libs.zxing.android.embedded)
 }

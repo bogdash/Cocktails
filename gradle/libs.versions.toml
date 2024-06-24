@@ -2,7 +2,6 @@
 [versions]
 agp = "8.3.1"
 converterGson = "2.11.0"
-fragmentKtx = "1.7.1"
 fragmentKtxVersion = "1.7.0"
 glide = "4.16.0"
 hiltAndroid = "2.51.1"
@@ -28,7 +27,6 @@ kotlinxSerializationJson = "1.6.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-fragment-ktx-v170 = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtxVersion" }
 androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycleCommon" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
