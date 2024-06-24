@@ -100,7 +100,7 @@ class FilterHandler(
     }
 
     private fun restoreFilters() {
-        if (homeViewModel.isAlcoholFilterApplied)
+        if (homeViewModel.isAlcoholFilterApplied.value == true)
             homeViewModel.alcoholicFilterType.value?.let { filterType ->
                 when (filterType) {
                     ALCOHOLIC -> binding.chipAlcoholic.isChecked = true

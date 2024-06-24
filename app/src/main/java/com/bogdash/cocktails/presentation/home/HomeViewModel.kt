@@ -37,35 +37,41 @@ class HomeViewModel @Inject constructor(
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
 
-    var isAlcoholFilterApplied = true
-        private set
+    private var _isAlcoholFilterApplied = MutableLiveData<Boolean>()
+    var isAlcoholFilterApplied: LiveData<Boolean> = _isAlcoholFilterApplied
 
+
+    private var scrollPosition = 0
+    private var scrollOffset = 0
     private val allCocktails = mutableListOf<Drink>()
     private var currentPage = 0
+    private var isFilterChanged = true
 
     init {
+        _isAlcoholFilterApplied.value = true
         loadInitialCocktails()
     }
 
     fun setAlcoholicFilterType(type: String) {
-        isAlcoholFilterApplied = true
+        _isAlcoholFilterApplied.value = true
+        isFilterChanged = true
         _alcoholicFilterType.value = type
-
     }
 
     fun setIngredientsFilter(ingredients: List<String>) {
-        isAlcoholFilterApplied = false
+        _isAlcoholFilterApplied.value = false
+        isFilterChanged = true
         _ingredientsFilterType.value = ingredients
     }
 
     fun setDefaultFilterType() {
-        isAlcoholFilterApplied = true
+        _isAlcoholFilterApplied.value = true
         _alcoholicFilterType.value = DEFAULT_FILTER
     }
 
     fun getFilteredCocktailsByAlcoholType(type: String) {
-        resetCocktails()
-        if (isAlcoholFilterApplied) {
+        if (_isAlcoholFilterApplied.value == true && isFilterChanged) {
+            resetCocktails()
             viewModelScope.launch {
                 try {
                     loadingMutable.value = true
@@ -83,8 +89,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFilteredCocktailsByIngredients(ingredients: List<String>) {
-        resetCocktails()
-        if (!isAlcoholFilterApplied) {
+        if (_isAlcoholFilterApplied.value == false && isFilterChanged) {
+            resetCocktails()
             viewModelScope.launch {
                 try {
                     loadingMutable.value = true
@@ -111,6 +117,30 @@ class HomeViewModel @Inject constructor(
                 _uiMessageChannel.emit(R.string.no_internet_connection)
             }
         }
+    }
+
+    fun getIsFilterChanged(): Boolean {
+        return isFilterChanged
+    }
+
+    fun setIsFilterChanged(isFilterChanged: Boolean) {
+        this.isFilterChanged = isFilterChanged
+    }
+
+    fun setScrollPosition(scrollPosition: Int) {
+        this.scrollPosition = scrollPosition
+    }
+
+    fun getScrollPosition(): Int {
+        return scrollPosition
+    }
+
+    fun setScrollOffset(scrollOffset: Int) {
+        this.scrollOffset = scrollOffset
+    }
+
+    fun getScrollOffset(): Int {
+        return scrollOffset
     }
 
     private fun loadInitialCocktails() {

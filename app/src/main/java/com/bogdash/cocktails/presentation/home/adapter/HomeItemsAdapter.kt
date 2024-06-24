@@ -20,7 +20,7 @@ class HomeItemsAdapter(private var drinks: List<Drink>, private val listener: Li
             val context = binding.root.context
             with(binding) {
                 tvTitle.text = drink.name
-                Glide.with(context).load(drink.thumb).into(imageView)
+                Glide.with(context).load(drink.thumb).into(ivItemHome)
                 initListeners(binding.root, drink, listener)
             }
         }

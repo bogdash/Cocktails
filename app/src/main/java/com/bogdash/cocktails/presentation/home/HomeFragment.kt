@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -46,12 +47,34 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         setupRecyclerView()
     }
 
+    override fun onPause() {
+        super.onPause()
+        saveScrollPosition()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        restoreScrollPosition()
+    }
+
     private fun setupRecyclerView() {
         homeItemsAdapter = HomeItemsAdapter(emptyList(), this)
-        binding.recyclerView.apply {
+        binding.recyclerViewHomeScreen.apply {
             adapter = homeItemsAdapter
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun saveScrollPosition() {
+        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
+        homeViewModel.setScrollPosition(layoutManager.findFirstVisibleItemPosition())
+        val view = layoutManager.findViewByPosition(homeViewModel.getScrollPosition())
+        homeViewModel.setScrollOffset(view?.top ?: 0)
+    }
+
+    private fun restoreScrollPosition() {
+        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
+        layoutManager.scrollToPositionWithOffset(homeViewModel.getScrollPosition(), homeViewModel.getScrollOffset())
     }
 
     private fun observeViewModel() {
@@ -65,8 +88,13 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun observeResultCocktails() {
         homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
             homeItemsAdapter.updateCocktails(cocktails.drinks)
-            binding.progressBar.visibility =
-                if (cocktails.drinks.isEmpty()) View.VISIBLE else View.GONE
+
+            if (homeViewModel.getIsFilterChanged()) {
+                binding.recyclerViewHomeScreen.scrollToPosition(0)
+                homeViewModel.setIsFilterChanged(false)
+            }
+
+            binding.progressBar.isVisible = cocktails.drinks.isEmpty()
         }
     }
 
@@ -101,7 +129,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     }
 
     private fun initListeners() {
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.recyclerViewHomeScreen.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
