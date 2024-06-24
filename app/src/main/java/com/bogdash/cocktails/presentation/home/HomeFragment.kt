@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -87,12 +88,13 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun observeResultCocktails() {
         homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
             homeItemsAdapter.updateCocktails(cocktails.drinks)
+
             if (homeViewModel.getIsFilterChanged()) {
                 binding.recyclerViewHomeScreen.scrollToPosition(0)
                 homeViewModel.setIsFilterChanged(false)
             }
-            binding.progressBar.visibility =
-                if (cocktails.drinks.isEmpty()) View.VISIBLE else View.GONE
+
+            binding.progressBar.isVisible = cocktails.drinks.isEmpty()
         }
     }
 
@@ -157,7 +159,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun openExceptionFragment(exText: String) {
         val fragment = ExceptionFragment.newInstance(exText)
         parentFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
