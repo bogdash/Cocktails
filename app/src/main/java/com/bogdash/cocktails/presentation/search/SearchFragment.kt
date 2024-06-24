@@ -1,11 +1,17 @@
 package com.bogdash.cocktails.presentation.search
 
+import android.annotation.SuppressLint
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.view.KeyEvent.ACTION_DOWN
 import android.view.LayoutInflater
+import android.view.MotionEvent.ACTION_MOVE
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
@@ -20,6 +26,7 @@ import com.bogdash.cocktails.presentation.search.adapter.SearchAdapter
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search) {
@@ -44,7 +51,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         initObservers()
         initListeners()
         initRecycler()
-        openExceptionFragment("")
+        openExceptionFragment(getString(R.string.error_search))
     }
 
     private fun setupSearchView(){
@@ -67,7 +74,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
         lifecycleScope.launch{
             searchViewModel.uiMessageChannel.collect {
-                binding.searchRv.visibility = View.GONE
+                binding.searchRv.isVisible = false
+                parentFragmentManager.popBackStack()
                 openExceptionFragment(getString(it))
             }
         }
@@ -80,8 +88,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
             override fun onQueryTextChange(newText: String): Boolean {
                 if(newText.isEmpty()){
+                    binding.searchRv.isVisible = false
                     parentFragmentManager.popBackStack()
-                    openExceptionFragment("")
+                    openExceptionFragment(getString(R.string.error_search))
                 }
                 else{
                     searchViewModel.searchCocktailsByName(newText)
@@ -89,6 +98,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 return true
             }
         })
+
+        initClickView()
     }
     private fun initRecycler() {
         binding.searchRv.apply{
@@ -98,20 +109,42 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
     private fun setAdapter(list: List<Drink>) {
         searchAdapter.submitList(list.toMutableList())
-        binding.searchRv.visibility = View.VISIBLE
+        binding.searchRv.isVisible = true
     }
     private fun showLoadingState() {
         with(binding) {
-            progressBar.visibility = View.VISIBLE
-            searchRv.visibility = View.GONE
+            progressBar.isVisible = true
+            searchRv.isVisible = false
         }
     }
     private fun hideLoadingState() {
         with(binding) {
-            progressBar.visibility = View.GONE
+            progressBar.isVisible = false
         }
     }
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initClickView(){
+        with(binding){
+            searchRv.setOnTouchListener { view, event ->
+                if (event.action == ACTION_MOVE) {
+                    hideKeyboard(view)
+                }
+                false
+            }
+            rootContainer.setOnTouchListener{view, event ->
+                if (event.action == ACTION_DOWN) {
+                    hideKeyboard(view)
+                }
+                false
+            }
+        }
+    }
+    private fun hideKeyboard(view: View){
+        val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
     private fun openDetailedFragment(id: String){
+        hideKeyboard(requireActivity().window.decorView)
         val fragment = DetailFragment(Id(id))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
