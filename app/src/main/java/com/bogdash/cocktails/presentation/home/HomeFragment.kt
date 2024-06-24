@@ -53,7 +53,6 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
     override fun onResume() {
         super.onResume()
-
         restoreScrollPosition()
     }
 

@@ -37,10 +37,9 @@ class HomeViewModel @Inject constructor(
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
 
+    private var _isAlcoholFilterApplied = MutableLiveData<Boolean>()
+    var isAlcoholFilterApplied: LiveData<Boolean> = _isAlcoholFilterApplied
 
-
-    var isAlcoholFilterApplied = true
-        private set
 
     private var scrollPosition = 0
     private var scrollOffset = 0
@@ -49,28 +48,29 @@ class HomeViewModel @Inject constructor(
     private var isFilterChanged = true
 
     init {
+        _isAlcoholFilterApplied.value = true
         loadInitialCocktails()
     }
 
     fun setAlcoholicFilterType(type: String) {
-        isAlcoholFilterApplied = true
+        _isAlcoholFilterApplied.value = true
         isFilterChanged = true
         _alcoholicFilterType.value = type
     }
 
     fun setIngredientsFilter(ingredients: List<String>) {
-        isAlcoholFilterApplied = false
+        _isAlcoholFilterApplied.value = false
         isFilterChanged = true
         _ingredientsFilterType.value = ingredients
     }
 
     fun setDefaultFilterType() {
-        isAlcoholFilterApplied = true
+        _isAlcoholFilterApplied.value = true
         _alcoholicFilterType.value = DEFAULT_FILTER
     }
 
     fun getFilteredCocktailsByAlcoholType(type: String) {
-        if (isAlcoholFilterApplied && isFilterChanged) {
+        if (_isAlcoholFilterApplied.value == true && isFilterChanged) {
             resetCocktails()
             viewModelScope.launch {
                 try {
@@ -89,7 +89,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFilteredCocktailsByIngredients(ingredients: List<String>) {
-        if (!isAlcoholFilterApplied && isFilterChanged) {
+        if (_isAlcoholFilterApplied.value == false && isFilterChanged) {
             resetCocktails()
             viewModelScope.launch {
                 try {
