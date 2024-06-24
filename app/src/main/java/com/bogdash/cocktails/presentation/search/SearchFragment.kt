@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
@@ -74,7 +74,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
         lifecycleScope.launch{
             searchViewModel.uiMessageChannel.collect {
-                binding.searchRv.visibility = View.GONE
+                binding.searchRv.isVisible = false
                 parentFragmentManager.popBackStack()
                 openExceptionFragment(getString(it))
             }
@@ -88,7 +88,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
             override fun onQueryTextChange(newText: String): Boolean {
                 if(newText.isEmpty()){
-                    binding.searchRv.visibility = View.GONE
+                    binding.searchRv.isVisible = false
                     parentFragmentManager.popBackStack()
                     openExceptionFragment(getString(R.string.error_search))
                 }
@@ -109,17 +109,17 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
     private fun setAdapter(list: List<Drink>) {
         searchAdapter.submitList(list.toMutableList())
-        binding.searchRv.visibility = View.VISIBLE
+        binding.searchRv.isVisible = true
     }
     private fun showLoadingState() {
         with(binding) {
-            progressBar.visibility = View.VISIBLE
-            searchRv.visibility = View.GONE
+            progressBar.isVisible = true
+            searchRv.isVisible = false
         }
     }
     private fun hideLoadingState() {
         with(binding) {
-            progressBar.visibility = View.GONE
+            progressBar.isVisible = false
         }
     }
     @SuppressLint("ClickableViewAccessibility")
