@@ -1,6 +1,7 @@
 package com.bogdash.cocktails.presentation.home
 
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,9 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
 import com.bogdash.cocktails.presentation.exceptions.ExceptionFragment
-import com.bogdash.cocktails.presentation.home.filters.FilterHandler
 import com.bogdash.cocktails.presentation.detail.DetailFragment.Input.Id
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
+import com.bogdash.cocktails.presentation.home.filters.FiltersFragment
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,16 +28,14 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
     private lateinit var binding: FragmentHomeScreenBinding
     private lateinit var homeItemsAdapter: HomeItemsAdapter
-    private lateinit var filterHandler: FilterHandler
     private val homeViewModel: HomeViewModel by activityViewModels()
+    private var recyclerViewState: Parcelable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
-        filterHandler =
-            FilterHandler(requireContext(), homeViewModel, layoutInflater)
         return binding.root
     }
 
@@ -45,16 +44,22 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         observeViewModel()
         initListeners()
         setupRecyclerView()
+        restoreRecyclerViewState()
     }
 
     override fun onPause() {
         super.onPause()
-        saveScrollPosition()
+        saveRecyclerViewState()
     }
 
-    override fun onResume() {
-        super.onResume()
-        restoreScrollPosition()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("recyclerViewState", recyclerViewState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        recyclerViewState = savedInstanceState?.getParcelable("recyclerViewState")
     }
 
     private fun setupRecyclerView() {
@@ -65,16 +70,14 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         }
     }
 
-    private fun saveScrollPosition() {
-        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
-        homeViewModel.setScrollPosition(layoutManager.findFirstVisibleItemPosition())
-        val view = layoutManager.findViewByPosition(homeViewModel.getScrollPosition())
-        homeViewModel.setScrollOffset(view?.top ?: 0)
+    private fun saveRecyclerViewState() {
+        recyclerViewState = binding.recyclerViewHomeScreen.layoutManager?.onSaveInstanceState()
     }
 
-    private fun restoreScrollPosition() {
-        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
-        layoutManager.scrollToPositionWithOffset(homeViewModel.getScrollPosition(), homeViewModel.getScrollOffset())
+    private fun restoreRecyclerViewState() {
+        recyclerViewState?.let {
+            binding.recyclerViewHomeScreen.layoutManager?.onRestoreInstanceState(it)
+        }
     }
 
     private fun observeViewModel() {
@@ -88,13 +91,11 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun observeResultCocktails() {
         homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
             homeItemsAdapter.updateCocktails(cocktails.drinks)
-
-            if (homeViewModel.getIsFilterChanged()) {
+            binding.progressBar.isVisible = cocktails.drinks.isEmpty()
+            if (homeViewModel.isFilterChanged.value == true) {
                 binding.recyclerViewHomeScreen.scrollToPosition(0)
                 homeViewModel.setIsFilterChanged(false)
             }
-
-            binding.progressBar.isVisible = cocktails.drinks.isEmpty()
         }
     }
 
@@ -139,7 +140,8 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         })
 
         binding.btnFilter.setOnClickListener {
-            filterHandler.showBottomSheetDialog()
+            val filtersFragment = FiltersFragment.newInstance()
+            filtersFragment.show(parentFragmentManager, filtersFragment.tag)
         }
     }
 
