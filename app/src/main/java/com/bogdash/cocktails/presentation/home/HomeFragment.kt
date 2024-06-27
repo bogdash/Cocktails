@@ -1,7 +1,6 @@
 package com.bogdash.cocktails.presentation.home
 
 import android.os.Bundle
-import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -82,11 +81,13 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private fun observeResultCocktails() {
         homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
             homeItemsAdapter.updateCocktails(cocktails.drinks)
-            binding.progressBar.isVisible = cocktails.drinks.isEmpty()
+
             if (homeViewModel.isFilterChanged.value == true) {
                 binding.recyclerViewHomeScreen.scrollToPosition(0)
                 homeViewModel.setIsFilterChanged(false)
             }
+
+            binding.progressBar.isVisible = cocktails.drinks.isEmpty()
         }
     }
 
