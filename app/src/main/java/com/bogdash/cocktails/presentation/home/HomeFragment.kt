@@ -29,7 +29,6 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     private lateinit var binding: FragmentHomeScreenBinding
     private lateinit var homeItemsAdapter: HomeItemsAdapter
     private val homeViewModel: HomeViewModel by activityViewModels()
-    private var recyclerViewState: Parcelable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +43,6 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         observeViewModel()
         initListeners()
         setupRecyclerView()
-        restoreRecyclerViewState()
     }
 
     override fun onPause() {
@@ -52,31 +50,24 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         saveRecyclerViewState()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable("recyclerViewState", recyclerViewState)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        recyclerViewState = savedInstanceState?.getParcelable("recyclerViewState")
+    private fun saveRecyclerViewState() {
+        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
+        val scrollPosition = layoutManager.findFirstVisibleItemPosition()
+        val view = layoutManager.findViewByPosition(scrollPosition)
+        val scrollOffset = view?.top ?: 0
+        homeViewModel.saveUiState(scrollPosition, scrollOffset)
     }
 
     private fun setupRecyclerView() {
         homeItemsAdapter = HomeItemsAdapter(emptyList(), this)
         binding.recyclerViewHomeScreen.apply {
             adapter = homeItemsAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
-    }
-
-    private fun saveRecyclerViewState() {
-        recyclerViewState = binding.recyclerViewHomeScreen.layoutManager?.onSaveInstanceState()
-    }
-
-    private fun restoreRecyclerViewState() {
-        recyclerViewState?.let {
-            binding.recyclerViewHomeScreen.layoutManager?.onRestoreInstanceState(it)
+            layoutManager = LinearLayoutManager(context).apply {
+                val uiState = homeViewModel.uiState.value
+                if (uiState != null) {
+                    scrollToPositionWithOffset(uiState.scrollPosition, uiState.scrollOffset)
+                }
+            }
         }
     }
 
@@ -130,7 +121,8 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     }
 
     private fun initListeners() {
-        binding.recyclerViewHomeScreen.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.recyclerViewHomeScreen.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {

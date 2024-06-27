@@ -37,26 +37,29 @@ class HomeViewModel @Inject constructor(
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
 
-    private val _uiState = MutableLiveData<UIState>()
+    private val _uiState = MutableLiveData<UIState>().apply {
+        value = UIState(
+            scrollPosition = 0,
+            scrollOffset = 0,
+            currentPage = 0
+        )
+    }
     val uiState: LiveData<UIState> = _uiState
 
-    private val _isFilterChanged = MutableLiveData<Boolean>()
+    private val _isFilterChanged = MutableLiveData<Boolean>().apply {
+        value = true
+    }
     val isFilterChanged: LiveData<Boolean> = _isFilterChanged
 
-    private val _isAlcoholFilterApplied = MutableLiveData<Boolean>()
+    private val _isAlcoholFilterApplied = MutableLiveData<Boolean>().apply {
+        value = true
+    }
     val isAlcoholFilterApplied: LiveData<Boolean> = _isAlcoholFilterApplied
 
 
     private val allCocktails = mutableListOf<Drink>()
 
     init {
-        _uiState.value = UIState(
-            scrollPosition = 0,
-            scrollOffset = 0,
-            currentPage = 0
-        )
-        _isFilterChanged.value = true
-        _isAlcoholFilterApplied.value = true
         loadInitialCocktails()
     }
 
@@ -119,7 +122,8 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val currentState = _uiState.value ?: return@launch
-                val nextPageCocktails = allCocktails.take((currentState.currentPage + 1) * PAGE_SIZE)
+                val nextPageCocktails =
+                    allCocktails.take((currentState.currentPage + 1) * PAGE_SIZE)
                 cocktailsMutable.value = Cocktails(nextPageCocktails)
 
                 val newState = currentState.copy(currentPage = currentState.currentPage + 1)
@@ -130,22 +134,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
-//    fun setScrollPosition(position: Int) {
-//        _uiState.value = _uiState.value?.copy(scrollPosition = position)
-//    }
-//
-//    fun setScrollOffset(offset: Int) {
-//        _uiState.value = _uiState.value?.copy(scrollOffset = offset)
-//    }
-//
-//    fun setCurrentPage(page: Int) {
-//        _uiState.value = _uiState.value?.copy(currentPage = page)
-//    }
-//
     fun setIsFilterChanged(isChanged: Boolean) {
-        //_uiState.value = _uiState.value?.copy(isFilterChanged = isChanged)
         _isFilterChanged.value = isChanged
+    }
+
+    fun saveUiState(scrollPosition: Int, scrollOffset: Int) {
+        _uiState.value = _uiState.value?.copy(
+            scrollPosition = scrollPosition,
+            scrollOffset = scrollOffset
+        )
     }
 
     private fun loadInitialCocktails() {
