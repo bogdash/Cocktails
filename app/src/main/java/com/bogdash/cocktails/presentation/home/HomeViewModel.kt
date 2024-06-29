@@ -40,7 +40,6 @@ class HomeViewModel @Inject constructor(
     private var _isAlcoholFilterApplied = MutableLiveData<Boolean>()
     var isAlcoholFilterApplied: LiveData<Boolean> = _isAlcoholFilterApplied
 
-
     private var scrollPosition = 0
     private var scrollOffset = 0
     private val allCocktails = mutableListOf<Drink>()
@@ -155,4 +154,5 @@ class HomeViewModel @Inject constructor(
     companion object {
         private const val PAGE_SIZE = 10
     }
+
 }

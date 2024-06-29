@@ -16,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchCocktailsByNameUseCase: SearchCocktailsByNameUseCase
-) : ViewModel(){
+) : ViewModel() {
+    
     private val cocktailsMutable = MutableLiveData<Cocktails>()
     val resultCocktails: LiveData<Cocktails> = cocktailsMutable
 
@@ -39,4 +40,5 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
+
 }

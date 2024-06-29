@@ -7,7 +7,6 @@ import androidx.annotation.Px
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 
-
 class ListDividerItemDecoration(
     @ColorInt private val color: Int,
     @Px private val heightPx: Int,
@@ -36,4 +35,5 @@ class ListDividerItemDecoration(
             }
         }
     }
+
 }

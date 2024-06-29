@@ -23,9 +23,10 @@ object Constants {
         const val DEFAULT_FILTER = HomeScreen.ALCOHOLIC
     }
 
-    object Saved{
+    object Saved {
         const val FROM_SAVED = "from_saved"
     }
+
     object DetailFragment {
         const val FROM_SCANNER = "from_scanner"
     }

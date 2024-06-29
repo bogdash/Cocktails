@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdash.cocktails.databinding.IngredientItemBinding
 import com.bogdash.cocktails.presentation.detail.models.ParcelableIngredient
 
-class IngredientAdapter(private var ingredientsList: List<ParcelableIngredient>) : RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
+class IngredientAdapter(private var ingredientsList: List<ParcelableIngredient>) :
+    RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
 
-    inner class IngredientViewHolder(private val binding: IngredientItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class IngredientViewHolder(private val binding: IngredientItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(ingredient: ParcelableIngredient) {
             binding.ingredientName.text = ingredient.name
             binding.ingredientMeasure.text = ingredient.measure
@@ -17,7 +19,8 @@ class IngredientAdapter(private var ingredientsList: List<ParcelableIngredient>)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
-        val binding = IngredientItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            IngredientItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return IngredientViewHolder(binding)
     }
 

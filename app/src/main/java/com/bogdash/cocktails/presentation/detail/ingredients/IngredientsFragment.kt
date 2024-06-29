@@ -60,9 +60,13 @@ class IngredientsFragment : Fragment() {
         fun newInstance(cocktail: Drink): IngredientsFragment {
             val fragment = IngredientsFragment()
             fragment.arguments = Bundle().apply {
-                putParcelableArrayList(ARG_INGREDIENTS, ArrayList(cocktail.ingredients.toParcelable()))
+                putParcelableArrayList(
+                    ARG_INGREDIENTS,
+                    ArrayList(cocktail.ingredients.toParcelable())
+                )
             }
             return fragment
         }
     }
+
 }

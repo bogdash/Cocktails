@@ -22,6 +22,7 @@ import com.bogdash.cocktails.databinding.LayoutTabBarBinding
 typealias OnTabSelectedListener = ((Int) -> Unit)?
 
 class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+
     private lateinit var listTabName: List<String>
     private var binding: LayoutTabBarBinding
     private var listTabTv: List<TextView> = emptyList()
@@ -140,5 +141,5 @@ class TabBar(context: Context?, attrs: AttributeSet) : RelativeLayout(context, a
             }
         }
     }
-}
 
+}

@@ -14,4 +14,5 @@ class SearchDiffCallback : DiffUtil.ItemCallback<Drink>() {
         oldItem: Drink,
         newItem: Drink
     ): Boolean = oldItem == newItem
+
 }

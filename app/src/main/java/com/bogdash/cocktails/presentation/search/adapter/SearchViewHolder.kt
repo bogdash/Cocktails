@@ -7,7 +7,7 @@ import com.bogdash.cocktails.databinding.ItemSearchRvBinding
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 
-class SearchViewHolder (
+class SearchViewHolder(
     private val binding: ItemSearchRvBinding,
     private val action: (String) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -36,4 +36,5 @@ class SearchViewHolder (
             action
         )
     }
+
 }

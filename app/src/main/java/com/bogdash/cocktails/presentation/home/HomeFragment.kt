@@ -33,7 +33,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
         filterHandler =
             FilterHandler(requireContext(), homeViewModel, layoutInflater)
@@ -74,7 +74,10 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
     private fun restoreScrollPosition() {
         val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
-        layoutManager.scrollToPositionWithOffset(homeViewModel.getScrollPosition(), homeViewModel.getScrollOffset())
+        layoutManager.scrollToPositionWithOffset(
+            homeViewModel.getScrollPosition(),
+            homeViewModel.getScrollOffset()
+        )
     }
 
     private fun observeViewModel() {
@@ -168,4 +171,5 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         @JvmStatic
         fun newInstance() = HomeFragment()
     }
+
 }
