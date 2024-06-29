@@ -37,23 +37,19 @@ class HomeViewModel @Inject constructor(
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
 
-    private val _uiState = MutableLiveData<UIState>().apply {
-        value = UIState(
+    private val _uiState = MutableLiveData(
+        UIState(
             scrollPosition = 0,
             scrollOffset = 0,
             currentPage = 0
         )
-    }
+    )
     val uiState: LiveData<UIState> = _uiState
 
-    private val _isFilterChanged = MutableLiveData<Boolean>().apply {
-        value = true
-    }
+    private val _isFilterChanged = MutableLiveData(true)
     val isFilterChanged: LiveData<Boolean> = _isFilterChanged
 
-    private val _isAlcoholFilterApplied = MutableLiveData<Boolean>().apply {
-        value = true
-    }
+    private val _isAlcoholFilterApplied = MutableLiveData(true)
     val isAlcoholFilterApplied: LiveData<Boolean> = _isAlcoholFilterApplied
 
 
@@ -96,7 +92,6 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun getFilteredCocktailsByIngredients(ingredients: List<String>) {
@@ -115,18 +110,17 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun getNextPageCocktails() {
         viewModelScope.launch {
             try {
                 val currentState = _uiState.value ?: return@launch
-                val nextPageCocktails =
-                    allCocktails.take((currentState.currentPage + 1) * PAGE_SIZE)
+                val nextPage = currentState.currentPage + 1
+                val nextPageCocktails = allCocktails.take(nextPage * PAGE_SIZE)
                 cocktailsMutable.value = Cocktails(nextPageCocktails)
 
-                val newState = currentState.copy(currentPage = currentState.currentPage + 1)
+                val newState = currentState.copy(currentPage = nextPage)
                 _uiState.value = newState
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.no_internet_connection)

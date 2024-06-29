@@ -39,21 +39,21 @@ class FiltersFragment : BottomSheetDialogFragment() {
     }
 
     private fun initListeners() {
-        binding.btnClose.setOnClickListener {
-            dismiss()
-        }
+        with(binding) {
+            btnClose.setOnClickListener {
+                dismiss()
+            }
 
-        binding.btnReset.setOnClickListener {
-            with(binding) {
+            btnReset.setOnClickListener {
                 chipAlcoholic.isChecked = true
                 chipGroupIngredients.clearCheck()
+                homeViewModel.setDefaultFilterType()
             }
-            homeViewModel.setDefaultFilterType()
-        }
 
-        binding.btnApply.setOnClickListener {
-            applyFilters()
-            dismiss()
+            btnApply.setOnClickListener {
+                applyFilters()
+                dismiss()
+            }
         }
     }
 
@@ -112,7 +112,8 @@ class FiltersFragment : BottomSheetDialogFragment() {
                 homeViewModel.alcoholicFilterType.value?.let { filterType ->
                     when (filterType) {
                         Constants.HomeScreen.ALCOHOLIC -> binding.chipAlcoholic.isChecked = true
-                        Constants.HomeScreen.NON_ALCOHOLIC -> binding.chipNonAlcoholic.isChecked = true
+                        Constants.HomeScreen.NON_ALCOHOLIC -> binding.chipNonAlcoholic.isChecked =
+                            true
                     }
                 }
             else {
