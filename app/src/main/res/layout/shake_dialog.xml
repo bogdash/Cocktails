@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shake_dialog_rounded_corner"
@@ -19,25 +18,20 @@
 
     <TextView
         android:id="@+id/tv_name_cocktail"
+        style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/google_sans_medium"
         android:text="@string/mock_mojito"
-        android:textColor="@color/tiber"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/img_cocktail"
         app:layout_constraintTop_toBottomOf="@+id/img_cocktail" />
 
     <TextView
         android:id="@+id/tv_alcohol"
+        style="@style/MeasureTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/google_sans_regular"
         android:text="@string/mock_alcohol"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/tv_name_cocktail"
         app:layout_constraintTop_toBottomOf="@+id/tv_name_cocktail" />
 
@@ -53,39 +47,31 @@
 
     <TextView
         android:id="@+id/tv_numbers_of_ingredients"
+        style="@style/MeasureTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:fontFamily="@font/google_sans_regular"
         android:text="@string/mock_ingredients"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/img_ingredients"
         app:layout_constraintTop_toBottomOf="@+id/tv_name_cocktail" />
 
     <TextView
         android:id="@+id/tv_cancel"
+        style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/google_sans_medium"
         android:text="@string/cancel"
-        android:textColor="@color/tiber"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_alcohol"
         app:layout_constraintTop_toBottomOf="@+id/tv_alcohol" />
 
     <TextView
         android:id="@+id/tv_read_more"
+        style="@style/TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/google_sans_medium"
         android:text="@string/read_more"
-        android:textColor="@color/tiber"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_numbers_of_ingredients" />
 </androidx.constraintlayout.widget.ConstraintLayout>

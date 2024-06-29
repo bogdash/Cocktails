@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/solitude"/>
+    <solid android:color="@color/solitude" />
     <corners android:radius="10dp" />
-    <padding android:right="8dp" android:left="8dp" android:top="8dp" android:bottom="8dp" />
-    <size android:width="42dp" android:height="40dp" />
+    <padding
+        android:bottom="8dp"
+        android:left="8dp"
+        android:right="8dp"
+        android:top="8dp" />
+    <size
+        android:width="42dp"
+        android:height="40dp" />
 </shape>

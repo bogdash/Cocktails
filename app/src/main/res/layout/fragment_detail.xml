@@ -11,11 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="visible"
-        android:indeterminate="true"/>
+        android:indeterminate="true"
+        android:visibility="visible" />
 
     <include
         android:id="@+id/contentLayout"
         layout="@layout/content_layout" />
-
 </FrameLayout>

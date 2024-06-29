@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/tablayout_background"
-    android:layout_height="41dp">
+    android:layout_width="match_parent"
+    android:layout_height="41dp"
+    android:background="@drawable/tablayout_background">
 
     <LinearLayout
         android:id="@+id/view_indicator_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        tools:weightSum="3"
-        >
+        tools:weightSum="3">
+
         <View
             android:id="@+id/view_indicator"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:background="@drawable/shape_indicator"
-            />
+            android:layout_weight="1"
+            android:background="@drawable/shape_indicator" />
     </LinearLayout>
 
     <LinearLayout
@@ -26,9 +25,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        tools:weightSum="3">
-
-
-    </LinearLayout>
-
+        tools:weightSum="3" />
 </RelativeLayout>
