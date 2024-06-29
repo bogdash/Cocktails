@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object CocktailsRetrofitClient {
+
     lateinit var client: Retrofit
         private set
 
@@ -18,5 +19,5 @@ object CocktailsRetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-}
 
+}

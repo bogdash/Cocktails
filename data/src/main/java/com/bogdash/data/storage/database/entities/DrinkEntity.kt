@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "drink")
-data class DrinkEntity (
+data class DrinkEntity(
     @PrimaryKey val id: String,
     val name: String?,
     val tags: String?,

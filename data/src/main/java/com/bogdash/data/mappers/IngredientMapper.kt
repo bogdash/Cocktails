@@ -13,9 +13,4 @@ object IngredientMapper {
         )
     }
 
-    fun fromEntities(ingredientEntities: List<IngredientEntity>): List<Ingredient> {
-        return ingredientEntities.map {
-            Ingredient(it.name, it.measure)
-        }
-    }
 }
