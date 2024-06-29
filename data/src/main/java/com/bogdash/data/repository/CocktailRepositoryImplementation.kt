@@ -67,8 +67,8 @@ class CocktailRepositoryImplementation(
             drinkDao.insertDrink(drinkEntity)
 
             val ingredientEntities =
-                drink.ingredients?.map { IngredientMapper.toEntity(it, drink.id) }
-            ingredientEntities?.let { ingredientDao.insertIngredients(it) }
+                drink.ingredients.map { IngredientMapper.toEntity(it, drink.id) }
+            ingredientEntities.let { ingredientDao.insertIngredients(it) }
         }
     }
 
