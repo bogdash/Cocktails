@@ -48,7 +48,7 @@ class CocktailOfTheDay(
         cocktailName.text = drink.name
         numberOfIngredientsTextView.text = numberOfIngredientsText
         alcoholicCocktail.text = drink.alcoholic
-        Glide.with(FragmentActivity()).load(drink.thumb).into(cocktailImage)
+        Glide.with(activity).load(drink.thumb).into(cocktailImage)
 
         with(builder) {
             setView(view)
