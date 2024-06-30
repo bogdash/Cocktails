@@ -1,7 +1,5 @@
 package com.bogdash.cocktails.presentation.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogdash.cocktails.R
@@ -18,16 +16,18 @@ class MainViewModel @Inject constructor(
     private val getCocktailOfTheDayUseCase: GetCocktailOfTheDayUseCase
 ) : ViewModel() {
 
-    private val cocktailOfTheDayMutable = MutableLiveData<Drink>()
+    private val _cocktailOfTheDay = MutableSharedFlow<Drink>()
+    val cocktailOfTheDay = _cocktailOfTheDay.asSharedFlow()
+
     private val _uiMessageChannel: MutableSharedFlow<Int> = MutableSharedFlow()
     val uiMessageChannel = _uiMessageChannel.asSharedFlow()
-    val resultCocktailOfTheDay: LiveData<Drink> = cocktailOfTheDayMutable
 
     fun getCocktailOfTheDay() {
         viewModelScope.launch {
             try {
                 val cocktails = getCocktailOfTheDayUseCase.execute()
-                cocktailOfTheDayMutable.value = cocktails.drinks.first()
+                val drink = cocktails.drinks.first()
+                _cocktailOfTheDay.emit(drink)
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.no_internet_connection)
             }

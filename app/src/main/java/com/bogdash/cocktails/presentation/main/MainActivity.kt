@@ -27,6 +27,7 @@ import com.journeyapps.barcodescanner.ScanOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.bogdash.cocktails.Constants.Main.EXTRA_CAMERA_FACING
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -133,9 +134,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeCocktailOfTheDay() {
-        mainViewModel.resultCocktailOfTheDay.observe(this) { drink ->
-            if (drink != null) {
-                val dialog = CocktailOfTheDay(this, drink)
+        lifecycleScope.launch {
+            mainViewModel.cocktailOfTheDay.collectLatest { drink ->
+                val dialog = CocktailOfTheDay(this@MainActivity, drink)
                 isDialogOpen = true
                 dialog.dialog()
             }
