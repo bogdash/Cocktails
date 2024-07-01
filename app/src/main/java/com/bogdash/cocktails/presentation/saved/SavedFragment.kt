@@ -102,7 +102,7 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         val fragment = DetailFragment(Id(id))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .add(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(FROM_SAVED)
             .commit()
     }

@@ -37,29 +37,36 @@ class HomeViewModel @Inject constructor(
     private val _ingredientsFilterType = MutableLiveData<List<String>>()
     val ingredientsFilterType: LiveData<List<String>> = _ingredientsFilterType
 
-    private var _isAlcoholFilterApplied = MutableLiveData<Boolean>()
-    var isAlcoholFilterApplied: LiveData<Boolean> = _isAlcoholFilterApplied
+    private val _uiState = MutableLiveData(
+        UIState(
+            scrollPosition = 0,
+            scrollOffset = 0,
+            currentPage = 0
+        )
+    )
+    val uiState: LiveData<UIState> = _uiState
 
-    private var scrollPosition = 0
-    private var scrollOffset = 0
+    private val _isFilterChanged = MutableLiveData(true)
+    val isFilterChanged: LiveData<Boolean> = _isFilterChanged
+
+    private val _isAlcoholFilterApplied = MutableLiveData(true)
+    val isAlcoholFilterApplied: LiveData<Boolean> = _isAlcoholFilterApplied
+
     private val allCocktails = mutableListOf<Drink>()
-    private var currentPage = 0
-    private var isFilterChanged = true
 
     init {
-        _isAlcoholFilterApplied.value = true
         loadInitialCocktails()
     }
 
     fun setAlcoholicFilterType(type: String) {
         _isAlcoholFilterApplied.value = true
-        isFilterChanged = true
+        _isFilterChanged.value = true
         _alcoholicFilterType.value = type
     }
 
     fun setIngredientsFilter(ingredients: List<String>) {
         _isAlcoholFilterApplied.value = false
-        isFilterChanged = true
+        _isFilterChanged.value = true
         _ingredientsFilterType.value = ingredients
     }
 
@@ -69,7 +76,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFilteredCocktailsByAlcoholType(type: String) {
-        if (_isAlcoholFilterApplied.value == true && isFilterChanged) {
+        if (_isAlcoholFilterApplied.value == true && _isFilterChanged.value == true) {
             resetCocktails()
             viewModelScope.launch {
                 try {
@@ -84,11 +91,10 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun getFilteredCocktailsByIngredients(ingredients: List<String>) {
-        if (_isAlcoholFilterApplied.value == false && isFilterChanged) {
+        if (_isAlcoholFilterApplied.value == false && _isFilterChanged.value == true) {
             resetCocktails()
             viewModelScope.launch {
                 try {
@@ -103,43 +109,33 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun getNextPageCocktails() {
         viewModelScope.launch {
             try {
-                val nextPageCocktails = allCocktails.take((currentPage + 1) * PAGE_SIZE)
+                val currentState = _uiState.value ?: return@launch
+                val nextPage = currentState.currentPage + 1
+                val nextPageCocktails = allCocktails.take(nextPage * PAGE_SIZE)
                 cocktailsMutable.value = Cocktails(nextPageCocktails)
-                currentPage++
+
+                val newState = currentState.copy(currentPage = nextPage)
+                _uiState.value = newState
             } catch (e: Exception) {
                 _uiMessageChannel.emit(R.string.no_internet_connection)
             }
         }
     }
 
-    fun getIsFilterChanged(): Boolean {
-        return isFilterChanged
+    fun setIsFilterChanged(isChanged: Boolean) {
+        _isFilterChanged.value = isChanged
     }
 
-    fun setIsFilterChanged(isFilterChanged: Boolean) {
-        this.isFilterChanged = isFilterChanged
-    }
-
-    fun setScrollPosition(scrollPosition: Int) {
-        this.scrollPosition = scrollPosition
-    }
-
-    fun getScrollPosition(): Int {
-        return scrollPosition
-    }
-
-    fun setScrollOffset(scrollOffset: Int) {
-        this.scrollOffset = scrollOffset
-    }
-
-    fun getScrollOffset(): Int {
-        return scrollOffset
+    fun saveUiState(scrollPosition: Int, scrollOffset: Int) {
+        _uiState.value = _uiState.value?.copy(
+            scrollPosition = scrollPosition,
+            scrollOffset = scrollOffset
+        )
     }
 
     private fun loadInitialCocktails() {
@@ -148,7 +144,7 @@ class HomeViewModel @Inject constructor(
 
     private fun resetCocktails() {
         allCocktails.clear()
-        currentPage = 0
+        _uiState.value = _uiState.value?.copy(currentPage = 0)
     }
 
     companion object {

@@ -15,9 +15,9 @@ import com.bogdash.cocktails.R
 import com.bogdash.cocktails.databinding.FragmentHomeScreenBinding
 import com.bogdash.cocktails.presentation.detail.DetailFragment
 import com.bogdash.cocktails.presentation.exceptions.ExceptionFragment
-import com.bogdash.cocktails.presentation.home.filters.FilterHandler
 import com.bogdash.cocktails.presentation.detail.DetailFragment.Input.Id
 import com.bogdash.cocktails.presentation.home.adapter.HomeItemsAdapter
+import com.bogdash.cocktails.presentation.home.filters.FiltersFragment
 import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,7 +27,6 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
     private lateinit var binding: FragmentHomeScreenBinding
     private lateinit var homeItemsAdapter: HomeItemsAdapter
-    private lateinit var filterHandler: FilterHandler
     private val homeViewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -35,8 +34,6 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
-        filterHandler =
-            FilterHandler(requireContext(), homeViewModel, layoutInflater)
         return binding.root
     }
 
@@ -49,35 +46,28 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
 
     override fun onPause() {
         super.onPause()
-        saveScrollPosition()
+        saveRecyclerViewState()
     }
 
-    override fun onResume() {
-        super.onResume()
-        restoreScrollPosition()
+    private fun saveRecyclerViewState() {
+        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
+        val scrollPosition = layoutManager.findFirstVisibleItemPosition()
+        val view = layoutManager.findViewByPosition(scrollPosition)
+        val scrollOffset = view?.top ?: 0
+        homeViewModel.saveUiState(scrollPosition, scrollOffset)
     }
 
     private fun setupRecyclerView() {
         homeItemsAdapter = HomeItemsAdapter(emptyList(), this)
         binding.recyclerViewHomeScreen.apply {
             adapter = homeItemsAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context).apply {
+                val uiState = homeViewModel.uiState.value
+                if (uiState != null) {
+                    scrollToPositionWithOffset(uiState.scrollPosition, uiState.scrollOffset)
+                }
+            }
         }
-    }
-
-    private fun saveScrollPosition() {
-        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
-        homeViewModel.setScrollPosition(layoutManager.findFirstVisibleItemPosition())
-        val view = layoutManager.findViewByPosition(homeViewModel.getScrollPosition())
-        homeViewModel.setScrollOffset(view?.top ?: 0)
-    }
-
-    private fun restoreScrollPosition() {
-        val layoutManager = binding.recyclerViewHomeScreen.layoutManager as LinearLayoutManager
-        layoutManager.scrollToPositionWithOffset(
-            homeViewModel.getScrollPosition(),
-            homeViewModel.getScrollOffset()
-        )
     }
 
     private fun observeViewModel() {
@@ -92,7 +82,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         homeViewModel.resultCocktails.observe(viewLifecycleOwner) { cocktails ->
             homeItemsAdapter.updateCocktails(cocktails.drinks)
 
-            if (homeViewModel.getIsFilterChanged()) {
+            if (homeViewModel.isFilterChanged.value == true) {
                 binding.recyclerViewHomeScreen.scrollToPosition(0)
                 homeViewModel.setIsFilterChanged(false)
             }
@@ -132,7 +122,8 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     }
 
     private fun initListeners() {
-        binding.recyclerViewHomeScreen.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.recyclerViewHomeScreen.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
@@ -142,7 +133,8 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         })
 
         binding.btnFilter.setOnClickListener {
-            filterHandler.showBottomSheetDialog()
+            val filtersFragment = FiltersFragment.newInstance()
+            filtersFragment.show(parentFragmentManager, filtersFragment.tag)
         }
     }
 
@@ -171,5 +163,5 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         @JvmStatic
         fun newInstance() = HomeFragment()
     }
-
+    
 }
