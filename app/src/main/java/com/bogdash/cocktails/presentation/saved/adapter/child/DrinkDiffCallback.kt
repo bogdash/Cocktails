@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.bogdash.domain.models.Drink
 
 class DrinkDiffCallback : DiffUtil.ItemCallback<Drink>() {
+
     override fun areItemsTheSame(
         oldItem: Drink,
         newItem: Drink
@@ -13,4 +14,5 @@ class DrinkDiffCallback : DiffUtil.ItemCallback<Drink>() {
         oldItem: Drink,
         newItem: Drink
     ): Boolean = oldItem == newItem
+
 }

@@ -32,7 +32,7 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -163,4 +163,5 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen), HomeItemsAdapter.L
         @JvmStatic
         fun newInstance() = HomeFragment()
     }
+    
 }

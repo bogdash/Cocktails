@@ -34,7 +34,11 @@ class HomeItemsAdapter(private var drinks: List<Drink>, private val listener: Li
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsViewHolder {
-        val binding = CocktailCardHomescreenItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = CocktailCardHomescreenItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ItemsViewHolder(binding)
     }
 
@@ -56,4 +60,5 @@ class HomeItemsAdapter(private var drinks: List<Drink>, private val listener: Li
     interface Listener {
         fun onClick(drink: Drink)
     }
+
 }

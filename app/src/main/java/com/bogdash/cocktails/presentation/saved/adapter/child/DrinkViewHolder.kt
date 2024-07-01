@@ -7,7 +7,7 @@ import com.bogdash.cocktails.databinding.ItemChildSavedRvBinding
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 
-class DrinkViewHolder (
+class DrinkViewHolder(
     private val binding: ItemChildSavedRvBinding,
     private val action: (String) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -35,4 +35,5 @@ class DrinkViewHolder (
             action
         )
     }
+
 }

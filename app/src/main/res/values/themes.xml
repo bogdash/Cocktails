@@ -1,9 +1,7 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="Base.Theme.Cocktails" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="Theme.Cocktails" parent="Base.Theme.Cocktails" />
-
 </resources>

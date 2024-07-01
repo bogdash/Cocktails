@@ -16,20 +16,21 @@ import javax.inject.Inject
 @HiltViewModel
 class SavedViewModel @Inject constructor(
     private val getSavedCocktailsUseCase: GetSavedCocktailsUseCase
-) : ViewModel(){
+) : ViewModel() {
 
     private val cocktailsWithCategoriesMutable = MutableLiveData<List<CocktailsWithCategory>>()
-    val resultCocktailsWithCategories: LiveData<List<CocktailsWithCategory>> = cocktailsWithCategoriesMutable
+    val resultCocktailsWithCategories: LiveData<List<CocktailsWithCategory>> =
+        cocktailsWithCategoriesMutable
 
     private val _uiMessageChannel: MutableSharedFlow<Int> = MutableSharedFlow()
     val uiMessageChannel = _uiMessageChannel.asSharedFlow()
 
     private val loadingStateMutable = MutableLiveData<Boolean>()
     val loadingState: LiveData<Boolean> = loadingStateMutable
-    fun getCocktailsWithCategories(){
+    fun getCocktailsWithCategories() {
         loadingStateMutable.value = true
         viewModelScope.launch {
-            try{
+            try {
                 val cocktailsWithCategory = getSavedCocktailsUseCase.execute()
                 cocktailsWithCategoriesMutable.value = cocktailsWithCategory
             } catch (e: Exception) {
@@ -39,4 +40,5 @@ class SavedViewModel @Inject constructor(
             }
         }
     }
+
 }

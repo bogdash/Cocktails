@@ -1,8 +1,6 @@
 package com.bogdash.cocktails.presentation.cocktailoftheday
 
 import android.app.Activity
-import android.app.Dialog
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -14,7 +12,6 @@ import com.bogdash.cocktails.presentation.main.MainActivity
 import com.bogdash.domain.models.Drink
 import com.bumptech.glide.Glide
 import com.bogdash.cocktails.presentation.detail.DetailFragment.Input.Id
-
 
 /**
  * Cocktail of the day dialog wrapper.
@@ -39,8 +36,8 @@ class CocktailOfTheDay(
         val numberOfIngredientsTextView = view.findViewById<TextView>(R.id.tv_numbers_of_ingredients)
         val alcoholicCocktail = view.findViewById<TextView>(R.id.tv_alcohol)
 
-        val numberOfIngredients = drink.ingredients?.size
-        val numberOfIngredientsText = numberOfIngredients?.let {
+        val numberOfIngredients = drink.ingredients.size
+        val numberOfIngredientsText = numberOfIngredients.let {
             activity.resources.getQuantityString(
                 R.plurals.number_of_ingredients,
                 it,

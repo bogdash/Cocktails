@@ -31,7 +31,7 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSavedBinding.inflate(inflater,container,false)
+        binding = FragmentSavedBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -54,19 +54,20 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
             }
         }
         savedViewModel.resultCocktailsWithCategories.observe(viewLifecycleOwner) {
-            if (it.isEmpty()){
+            if (it.isEmpty()) {
                 openExceptionFragment(getString(R.string.no_saved_cocktails))
             } else {
                 setAdapter(it)
             }
 
         }
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             savedViewModel.uiMessageChannel.collect {
                 openExceptionFragment(getString(it))
             }
         }
     }
+
     private fun initRecycler() {
         binding.parentSavedRv.apply {
             adapter = cocktailsWithCategoryAdapter
@@ -78,22 +79,26 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
             )
         }
     }
+
     private fun setAdapter(list: List<CocktailsWithCategory>) {
         cocktailsWithCategoryAdapter.submitList(list.toMutableList())
     }
+
     private fun showLoadingState() {
         with(binding) {
             progressBar.visibility = View.VISIBLE
             parentSavedRv.visibility = View.GONE
         }
     }
+
     private fun hideLoadingState() {
         with(binding) {
             progressBar.visibility = View.GONE
             parentSavedRv.visibility = View.VISIBLE
         }
     }
-    private fun openDetailedFragment(id: String){
+
+    private fun openDetailedFragment(id: String) {
         val fragment = DetailFragment(Id(id))
         parentFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -109,8 +114,10 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
             .addToBackStack(null)
             .commit()
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = SavedFragment()
     }
+
 }

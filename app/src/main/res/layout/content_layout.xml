@@ -2,17 +2,17 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/detail_scroll_view"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:visibility="visible">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:orientation="vertical">
+        android:paddingEnd="20dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:contentInsetStart="0dp"
-            app:titleMarginStart="72dp"
-            app:titleMarginEnd="72dp">
+            app:titleMarginEnd="72dp"
+            app:titleMarginStart="72dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/btnBack"
@@ -42,10 +42,10 @@
                     style="@style/ToolBarText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="center"
+                    android:layout_weight="1"
                     android:ellipsize="end"
+                    android:gravity="center"
                     android:singleLine="true"
                     android:text="@string/fish_dabu_dabu" />
 
@@ -57,8 +57,6 @@
                     android:background="@drawable/bg_button_on_title"
                     android:src="@drawable/favorite_selector" />
             </LinearLayout>
-
-
         </androidx.appcompat.widget.Toolbar>
 
         <com.github.siyamed.shapeimageview.RoundedImageView
@@ -72,9 +70,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/category"
@@ -98,8 +96,8 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/tabs"
             android:layout_marginTop="20dp"
+            android:entries="@array/tabs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -108,7 +106,6 @@
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="20dp">
-        </androidx.fragment.app.FragmentContainerView>
+            android:paddingVertical="20dp" />
     </LinearLayout>
 </ScrollView>

@@ -21,4 +21,5 @@ class DiffUtilDrinks(
                 oldLIst[oldItemPosition].name == newList[newItemPosition].name &&
                 oldLIst[oldItemPosition].thumb == newList[newItemPosition].thumb
     }
+
 }

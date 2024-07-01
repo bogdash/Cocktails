@@ -20,4 +20,5 @@ class CocktailsWithCategoryAdapter (
             else ArrayList(list)
         )
     }
+
 }

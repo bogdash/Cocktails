@@ -17,8 +17,7 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-private const val DRINK_NOT_FOUND = "Drink not found"
+import com.bogdash.data.storage.network.ConstantsForNetwork.DRINK_NOT_FOUND
 
 class CocktailRepositoryImplementation(
     private val cocktailApiService: CocktailsApiService,
@@ -68,8 +67,8 @@ class CocktailRepositoryImplementation(
             drinkDao.insertDrink(drinkEntity)
 
             val ingredientEntities =
-                drink.ingredients?.map { IngredientMapper.toEntity(it, drink.id) }
-            ingredientEntities?.let { ingredientDao.insertIngredients(it) }
+                drink.ingredients.map { IngredientMapper.toEntity(it, drink.id) }
+            ingredientEntities.let { ingredientDao.insertIngredients(it) }
         }
     }
 
@@ -110,14 +109,14 @@ class CocktailRepositoryImplementation(
             domainCocktails
         }
     }
+
     override suspend fun searchCocktailsByName(name: String): Cocktails {
         return withContext(Dispatchers.IO) {
-                val cocktails = cocktailApiService.searchCocktailsByName(name)
-                val domainCocktails = Cocktails(cocktails.drinks.map { it.toDomain() })
-                domainCocktails
-            }
+            val cocktails = cocktailApiService.searchCocktailsByName(name)
+            val domainCocktails = Cocktails(cocktails.drinks.map { it.toDomain() })
+            domainCocktails
         }
-
+    }
 
     override suspend fun getFilteredCocktailsByIngredient(ingredients: List<String>): Cocktails {
         return withContext(Dispatchers.IO) {
@@ -126,12 +125,13 @@ class CocktailRepositoryImplementation(
             domainCocktails
         }
     }
+
     override suspend fun getSavedCocktails(): Cocktails {
         return withContext(Dispatchers.IO) {
             val dataCocktails = drinkDao.getAllDrinks()
-            val domainCocktails = Cocktails(dataCocktails.map { drinkEntity->
+            val domainCocktails = Cocktails(dataCocktails.map { drinkEntity ->
                 val ingredientEntities = ingredientDao.getIngredientsByDrinkId(drinkEntity.id)
-                DrinkMapper.fromEntity(drinkEntity, ingredientEntities )
+                DrinkMapper.fromEntity(drinkEntity, ingredientEntities)
             })
 
             domainCocktails
@@ -139,7 +139,7 @@ class CocktailRepositoryImplementation(
     }
 
     override suspend fun getCocktailCategories(): List<String> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             drinkDao.getCocktailCategories()
         }
     }
@@ -147,28 +147,29 @@ class CocktailRepositoryImplementation(
     override suspend fun getSavedCocktailsByCategory(category: String): Cocktails {
         return withContext(Dispatchers.IO) {
             val dataCocktails = drinkDao.getDrinksByCategory(category)
-            val domainCocktails = Cocktails(dataCocktails.map { drinkEntity->
+            val domainCocktails = Cocktails(dataCocktails.map { drinkEntity ->
                 val ingredientEntities = ingredientDao.getIngredientsByDrinkId(drinkEntity.id)
-                DrinkMapper.fromEntity(drinkEntity,ingredientEntities )
+                DrinkMapper.fromEntity(drinkEntity, ingredientEntities)
             })
 
             domainCocktails
         }
     }
+
     override suspend fun getCocktailsWithCategories(): List<CocktailsWithCategory> {
         return withContext(Dispatchers.IO) {
             val categories = drinkDao.getCocktailCategories()
             val listCocktailsWithCategories = mutableListOf<CocktailsWithCategory>()
-            for (category in categories){
+            for (category in categories) {
                 val dataCocktails = drinkDao.getDrinksByCategory(category)
-                val domainCocktails = Cocktails(dataCocktails.map { drinkEntity->
+                val domainCocktails = Cocktails(dataCocktails.map { drinkEntity ->
                     val ingredientEntities = ingredientDao.getIngredientsByDrinkId(drinkEntity.id)
-                    DrinkMapper.fromEntity(drinkEntity, ingredientEntities )
+                    DrinkMapper.fromEntity(drinkEntity, ingredientEntities)
                 })
-                listCocktailsWithCategories.add(toCocktailsWithCategory(category,domainCocktails))
+                listCocktailsWithCategories.add(toCocktailsWithCategory(category, domainCocktails))
             }
             listCocktailsWithCategories
         }
     }
-}
 
+}

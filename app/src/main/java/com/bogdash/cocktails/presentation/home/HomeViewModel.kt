@@ -52,7 +52,6 @@ class HomeViewModel @Inject constructor(
     private val _isAlcoholFilterApplied = MutableLiveData(true)
     val isAlcoholFilterApplied: LiveData<Boolean> = _isAlcoholFilterApplied
 
-
     private val allCocktails = mutableListOf<Drink>()
 
     init {
@@ -151,4 +150,5 @@ class HomeViewModel @Inject constructor(
     companion object {
         private const val PAGE_SIZE = 10
     }
+
 }

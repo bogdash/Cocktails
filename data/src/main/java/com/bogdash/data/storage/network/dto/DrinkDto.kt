@@ -83,6 +83,4 @@ class DrinkDto(
             strIngredient15?.let { Ingredient(it, strMeasure15) }
         ).filter { it.name.isNotEmpty() }
 
-
-
 }

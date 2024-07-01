@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bogdash.domain.models.Drink
 
-class DrinkAdapter (
+class DrinkAdapter(
     private val action: (String) -> Unit
 ) : ListAdapter<Drink, DrinkViewHolder>(DrinkDiffCallback()) {
 
@@ -20,4 +20,5 @@ class DrinkAdapter (
             else ArrayList(list)
         )
     }
+
 }

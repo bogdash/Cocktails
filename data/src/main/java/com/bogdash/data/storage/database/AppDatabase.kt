@@ -9,6 +9,8 @@ import com.bogdash.data.storage.database.entities.IngredientEntity
 
 @Database(entities = [DrinkEntity::class, IngredientEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
+
     abstract fun drinkDao(): DrinkDao
     abstract fun ingredientDao(): IngredientDao
+
 }

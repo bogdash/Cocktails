@@ -5,7 +5,6 @@ data class CocktailsWithCategory(
     val cocktails: Cocktails
 )
 
-fun toCocktailsWithCategory(category: String, cocktails: Cocktails): CocktailsWithCategory{
-    return CocktailsWithCategory(category,cocktails)
+fun toCocktailsWithCategory(category: String, cocktails: Cocktails): CocktailsWithCategory {
+    return CocktailsWithCategory(category, cocktails)
 }
-

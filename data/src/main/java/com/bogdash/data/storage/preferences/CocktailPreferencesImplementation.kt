@@ -31,4 +31,5 @@ class CocktailPreferencesImplementation(context: Context) : CocktailPreferences 
     override fun getLastUpdateDate(): String? {
         return sharedPreferences.getString(LAST_UPDATE_DATE, null)
     }
+
 }

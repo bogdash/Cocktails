@@ -1,10 +1,10 @@
 package com.bogdash.cocktails.presentation.saved.adapter.parent
 
-
 import androidx.recyclerview.widget.DiffUtil
 import com.bogdash.domain.models.CocktailsWithCategory
 
 class CocktailsWithCategoryDiffCallback : DiffUtil.ItemCallback<CocktailsWithCategory>() {
+
     override fun areItemsTheSame(
         oldItem: CocktailsWithCategory,
         newItem: CocktailsWithCategory
@@ -14,4 +14,5 @@ class CocktailsWithCategoryDiffCallback : DiffUtil.ItemCallback<CocktailsWithCat
         oldItem: CocktailsWithCategory,
         newItem: CocktailsWithCategory
     ): Boolean = oldItem == newItem
+
 }

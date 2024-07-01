@@ -8,6 +8,7 @@ import com.bogdash.data.storage.database.entities.IngredientEntity
 
 @Dao
 interface IngredientDao {
+
     @Query("SELECT * FROM ingredient WHERE drinkId = :drinkId")
     suspend fun getIngredientsByDrinkId(drinkId: String): List<IngredientEntity>
 
@@ -16,4 +17,5 @@ interface IngredientDao {
 
     @Query("DELETE FROM ingredient WHERE drinkId = :drinkId")
     suspend fun deleteIngredientsByDrinkId(drinkId: String)
+
 }

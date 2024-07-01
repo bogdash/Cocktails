@@ -14,7 +14,7 @@ class ExceptionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentExceptionBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -36,4 +36,5 @@ class ExceptionFragment : Fragment() {
             }
         }
     }
+
 }

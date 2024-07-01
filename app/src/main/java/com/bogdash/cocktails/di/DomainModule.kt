@@ -76,4 +76,5 @@ class DomainModule {
     fun provideGetSavedCocktailDetailsByIdUseCase(repository: CocktailRepository): GetSavedCocktailDetailsByIdUseCase {
         return GetSavedCocktailDetailsByIdUseCase(repository)
     }
+
 }

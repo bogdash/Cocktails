@@ -27,7 +27,6 @@ import com.bogdash.domain.models.Drink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
@@ -38,7 +37,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchBinding.inflate(inflater,container,false)
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -54,12 +53,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         openExceptionFragment(getString(R.string.error_search))
     }
 
-    private fun setupSearchView(){
+    private fun setupSearchView() {
         val searchView = binding.searchSv
         val txtSearch = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-        txtSearch.setHintTextColor(resources.getColor(R.color.submarine,null))
-        txtSearch.setTextColor(resources.getColor(R.color.black,null))
+        txtSearch.setHintTextColor(resources.getColor(R.color.submarine, null))
+        txtSearch.setTextColor(resources.getColor(R.color.black, null))
     }
+
     private fun initObservers() {
         searchViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
@@ -72,7 +72,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             parentFragmentManager.popBackStack()
             setAdapter(it.drinks)
         }
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             searchViewModel.uiMessageChannel.collect {
                 binding.searchRv.isVisible = false
                 parentFragmentManager.popBackStack()
@@ -80,19 +80,20 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         }
     }
+
     private fun initListeners() {
         binding.searchSv.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchViewModel.searchCocktailsByName(query)
                 return true
             }
+
             override fun onQueryTextChange(newText: String): Boolean {
-                if(newText.isEmpty()){
+                if (newText.isEmpty()) {
                     binding.searchRv.isVisible = false
                     parentFragmentManager.popBackStack()
                     openExceptionFragment(getString(R.string.error_search))
-                }
-                else{
+                } else {
                     searchViewModel.searchCocktailsByName(newText)
                 }
                 return true
@@ -101,37 +102,42 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         initClickView()
     }
+
     private fun initRecycler() {
-        binding.searchRv.apply{
+        binding.searchRv.apply {
             adapter = searchAdapter
             layoutManager = GridLayoutManager(context, SPAN_COUNT)
         }
     }
+
     private fun setAdapter(list: List<Drink>) {
         searchAdapter.submitList(list.toMutableList())
         binding.searchRv.isVisible = true
     }
+
     private fun showLoadingState() {
         with(binding) {
             progressBar.isVisible = true
             searchRv.isVisible = false
         }
     }
+
     private fun hideLoadingState() {
         with(binding) {
             progressBar.isVisible = false
         }
     }
+
     @SuppressLint("ClickableViewAccessibility")
-    private fun initClickView(){
-        with(binding){
+    private fun initClickView() {
+        with(binding) {
             searchRv.setOnTouchListener { view, event ->
                 if (event.action == ACTION_MOVE) {
                     hideKeyboard(view)
                 }
                 false
             }
-            rootContainer.setOnTouchListener{view, event ->
+            rootContainer.setOnTouchListener { view, event ->
                 if (event.action == ACTION_DOWN) {
                     hideKeyboard(view)
                 }
@@ -139,11 +145,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         }
     }
-    private fun hideKeyboard(view: View){
+
+    private fun hideKeyboard(view: View) {
         val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
-    private fun openDetailedFragment(id: String){
+
+    private fun openDetailedFragment(id: String) {
         hideKeyboard(requireActivity().window.decorView)
         val fragment = DetailFragment(Id(id))
         parentFragmentManager.beginTransaction()
@@ -152,6 +160,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             .addToBackStack(null)
             .commit()
     }
+
     private fun openExceptionFragment(exText: String) {
         val fragment = ExceptionFragment.newInstance(exText)
         parentFragmentManager.beginTransaction()
@@ -159,9 +168,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             .addToBackStack(null)
             .commit()
     }
+
     companion object {
         private const val SPAN_COUNT = 2
+
         @JvmStatic
         fun newInstance() = SearchFragment()
     }
+
 }

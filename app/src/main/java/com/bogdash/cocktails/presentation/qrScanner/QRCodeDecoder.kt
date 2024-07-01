@@ -46,4 +46,5 @@ class QRCodeEncoder(context: Context) {
             setPixels(pixels, 0, size, 0, 0, size, size)
         }
     }
+
 }
